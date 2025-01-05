@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
+import { App } from './bootstrap/App.tsx';
 
 // Note: Does not matter here
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
