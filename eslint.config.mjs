@@ -2,6 +2,7 @@
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import hooksPlugin from "eslint-plugin-react-hooks";
 
 export default tseslint.config(
     eslint.configs.recommended,
@@ -14,5 +15,11 @@ export default tseslint.config(
                 tsconfigRootDir: import.meta.dirname,
             },
         },
-    }
+    },
+    {
+        plugins: {
+          "react-hooks": hooksPlugin,
+        },
+        rules: hooksPlugin.configs.recommended.rules,
+      },
 );
