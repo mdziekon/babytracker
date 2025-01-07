@@ -1,0 +1,11 @@
+.contentContainerRoot.contentContainer {
+    max-width: $mantine-breakpoint-xs;
+
+    @media (min-width: $mantine-breakpoint-xs) {
+        max-width: $mantine-breakpoint-xs;
+    }
+
+    @media (min-width: $mantine-breakpoint-sm) {
+        max-width: $mantine-breakpoint-sm;
+    }
+}

@@ -2,6 +2,7 @@ import {
     ActionIcon,
     AppShell,
     Center,
+    Container,
     Group,
     Loader,
     Text,
@@ -10,10 +11,10 @@ import { IconHome, IconNotebook } from '@tabler/icons-react';
 import { NavLink, Outlet } from 'react-router';
 import { useAppStore } from '../../common/store/store';
 
+import classes from './MainLayout.module.css';
+
 export const MainLayout = () => {
     const isLoading = useAppStore((state) => !state.meta.hasHydrated);
-
-    console.log('isLoading', isLoading);
 
     return (
         <AppShell
@@ -34,8 +35,12 @@ export const MainLayout = () => {
                     </Text>
                 </Group>
             </AppShell.Header>
-            <AppShell.Main>
-                {isLoading ? <Loader color="primary" /> : <Outlet />}
+            <AppShell.Main px={{ base: '0rem', xs: '1rem' }}>
+                <Container
+                    className={`${classes.contentContainer} ${classes.contentContainerRoot}`}
+                >
+                    {isLoading ? <Loader color="primary" /> : <Outlet />}
+                </Container>
             </AppShell.Main>
             <AppShell.Footer>
                 <Center h="100%" px="md">

@@ -1,10 +1,17 @@
-import { Anchor, Text, Title } from '@mantine/core';
+import { Text, Title } from '@mantine/core';
 import classes from './Home.module.css';
+import { ActionsGridCard } from './ActionsGridCard';
+import { ComponentProps } from 'react';
+import {
+    IconBabyBottle,
+    IconBrandMcdonalds,
+    IconDiaper,
+} from '@tabler/icons-react';
 
 export const Home = () => {
     return (
         <>
-            <Title className={classes.title} ta="center" mt={100}>
+            <Title className={classes.title} ta="center" mt={'2rem'}>
                 Welcome to{' '}
                 <Text
                     inherit
@@ -12,17 +19,22 @@ export const Home = () => {
                     component="span"
                     gradient={{ from: 'pink', to: 'yellow' }}
                 >
-                    Mantine
+                    BabyTracker
                 </Text>
             </Title>
-            <Text c="dimmed" ta="center" size="lg" maw={580} mx="auto" mt="xl">
-                This starter Vite project includes a minimal setup, if you want
-                to learn more on Mantine + Vite integration follow{' '}
-                <Anchor href="https://mantine.dev/guides/vite/" size="lg">
-                    this guide
-                </Anchor>
-                . To get started edit pages/Home.page.tsx file.
-            </Text>
+            <ActionsGridCard actions={actions} actionsInProgress={1} />
         </>
     );
 };
+
+const actions = [
+    { title: 'Bottle Feeding', icon: IconBabyBottle, color: 'cyan' },
+    { title: 'Breast Feeding', icon: IconBrandMcdonalds, color: 'lime' },
+    undefined,
+    {
+        title: 'Diaper change',
+        icon: IconDiaper,
+        color: 'indigo',
+        linkLocation: '/event/add/DiaperChange',
+    },
+] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
