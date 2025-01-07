@@ -1,15 +1,11 @@
 import { Fragment, useMemo } from 'react';
-import { LogEntry } from '../DataStorage/DataStorageContext';
 import dayjs from 'dayjs';
 import { Table } from '@mantine/core';
 import { LogEntryDisplay } from './LogEntryDisplay';
+import { useAppStore } from '../../common/store/store';
 
-type LogEntriesProps = {
-    entries: LogEntry[];
-};
-
-export const LogEntries = (props: LogEntriesProps) => {
-    const { entries } = props;
+export const LogEntries = () => {
+    const entries = useAppStore((state) => state.data.logs);
 
     const entriesGroups = useMemo(() => {
         return Object.groupBy(entries, (entry) => {

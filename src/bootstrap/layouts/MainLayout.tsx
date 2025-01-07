@@ -1,8 +1,20 @@
-import { ActionIcon, AppShell, Center, Group, Text } from '@mantine/core';
+import {
+    ActionIcon,
+    AppShell,
+    Center,
+    Group,
+    Loader,
+    Text,
+} from '@mantine/core';
 import { IconHome, IconNotebook } from '@tabler/icons-react';
 import { NavLink, Outlet } from 'react-router';
+import { useAppStore } from '../../common/store/store';
 
 export const MainLayout = () => {
+    const isLoading = useAppStore((state) => !state.meta.hasHydrated);
+
+    console.log('isLoading', isLoading);
+
     return (
         <AppShell
             header={{ height: 60 }}
@@ -23,7 +35,7 @@ export const MainLayout = () => {
                 </Group>
             </AppShell.Header>
             <AppShell.Main>
-                <Outlet />
+                {isLoading ? <Loader color="primary" /> : <Outlet />}
             </AppShell.Main>
             <AppShell.Footer>
                 <Center h="100%" px="md">

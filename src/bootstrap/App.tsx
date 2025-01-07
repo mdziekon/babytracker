@@ -4,7 +4,6 @@ import { MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 import { theme } from './theme';
-import { DataStorage } from '../features/DataStorage/DataStorage';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -33,11 +32,9 @@ export const App = () => {
     return (
         <>
             <MantineProvider theme={theme} defaultColorScheme="dark">
-                <DataStorage>
-                    <BrowserRouter>
-                        <AppRouting />
-                    </BrowserRouter>
-                </DataStorage>
+                <BrowserRouter>
+                    <AppRouting />
+                </BrowserRouter>
             </MantineProvider>
         </>
     );

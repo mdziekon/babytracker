@@ -1,9 +1,4 @@
 import { ActionIcon, Avatar, Box, Table } from '@mantine/core';
-import {
-    DateISO8601,
-    EntryType,
-    LogEntry,
-} from '../DataStorage/DataStorageContext';
 import dayjs from 'dayjs';
 import {
     IconBabyBottle,
@@ -12,6 +7,11 @@ import {
     IconDots,
     IconWeight,
 } from '@tabler/icons-react';
+import {
+    DateISO8601,
+    EntryType,
+    LogEntry,
+} from '../../common/store/store.types';
 
 type LogEntryProps = {
     entry: LogEntry;

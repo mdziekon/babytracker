@@ -1,5 +1,3 @@
-import { createContext } from 'react';
-
 export enum EntryType {
     BreastFeeding = 'EntryType.BreastFeeding',
     BottleFeeding = 'EntryType.BottleFeeding',
@@ -7,34 +5,34 @@ export enum EntryType {
     WeightMeasurement = 'EntryType.WeightMeasurement',
 }
 
-export type EntryBreastFeedingVariant = {
+export interface EntryBreastFeedingVariant {
     entryType: EntryType.BreastFeeding;
     params: {
         type: 'LEFT_BREAST' | 'RIGHT_BREAST' | 'BOTH';
         startedAt: DateISO8601;
         endedAt?: DateISO8601;
     };
-};
-export type EntryBottleFeedingVariant = {
+}
+export interface EntryBottleFeedingVariant {
     entryType: EntryType.BottleFeeding;
     params: {
         fluidVolume?: number;
         startedAt: DateISO8601;
         endedAt?: DateISO8601;
     };
-};
-export type EntryDiaperChangeVariant = {
+}
+export interface EntryDiaperChangeVariant {
     entryType: EntryType.DiaperChange;
     params: {
         reason: 'STOOL' | 'URINE' | 'STOOL_AND_URINE' | 'OTHER';
     };
-};
-export type EntryWeightMeasurementVariant = {
+}
+export interface EntryWeightMeasurementVariant {
     entryType: EntryType.WeightMeasurement;
     params: {
         weightValue: number;
     };
-};
+}
 
 export type EntryVariants =
     | EntryBreastFeedingVariant
@@ -44,31 +42,20 @@ export type EntryVariants =
 
 export type DateISO8601 = string;
 
-export type EntryMetadata = {
+export interface EntryMetadata {
     createdAt: DateISO8601;
     modifications: {
         modifiedAt: DateISO8601;
     }[];
     deletedAt?: DateISO8601;
     notes?: string;
-};
+}
 
 export type LogEntry = EntryVariants & { metadata: EntryMetadata };
 
-export type DataStorageContextData = {
+export interface StoreData {
     schema: {
-        version: string;
+        version: number;
     };
     logs: LogEntry[];
-};
-
-export type DataStorageContextValue = {
-    data: DataStorageContextData;
-    api: {
-        addEntry: (data: LogEntry) => void;
-    };
-};
-
-export const DataStorageContext = createContext<
-    DataStorageContextValue | undefined
->(undefined);
+}
