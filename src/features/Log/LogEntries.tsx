@@ -32,7 +32,7 @@ export const LogEntries = () => {
 
                     return (
                         <Fragment key={groupTitle}>
-                            <Table.Tr>
+                            <Table.Tr bg="gray.8">
                                 <Table.Th colSpan={4}>{groupTitle}</Table.Th>
                             </Table.Tr>
                             {groupedEntries.map((groupedEntry) => {

@@ -3,6 +3,7 @@ import { IconDiaper } from '@tabler/icons-react';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
 
 export const DiaperChangeEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
@@ -12,6 +13,7 @@ export const DiaperChangeEvent = () => {
         addEntry({
             entryType: EntryType.DiaperChange,
             metadata: {
+                uid: uuidv4(),
                 createdAt: new Date().toISOString(),
                 modifications: [],
             },

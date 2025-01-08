@@ -1,4 +1,4 @@
-import { ActionIcon, Avatar, Box, Table } from '@mantine/core';
+import { ActionIcon, Avatar, Table } from '@mantine/core';
 import dayjs from 'dayjs';
 import {
     IconBabyBottle,
@@ -13,9 +13,9 @@ import {
     LogEntry,
 } from '../../common/store/store.types';
 
-type LogEntryProps = {
+interface LogEntryProps {
     entry: LogEntry;
-};
+}
 
 export const LogEntryDisplay = (props: LogEntryProps) => {
     const { entry } = props;
@@ -80,15 +80,6 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 >
                     {entryTypeDisplay}
                 </Avatar>
-                {/* TODO: Testing long entries visual */}
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                test
             </Table.Td>
             <Table.Td>
                 {entryTime.length === 1

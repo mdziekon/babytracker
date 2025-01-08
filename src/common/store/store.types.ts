@@ -3,6 +3,8 @@ export enum EntryType {
     BottleFeeding = 'EntryType.BottleFeeding',
     DiaperChange = 'EntryType.DiaperChange',
     WeightMeasurement = 'EntryType.WeightMeasurement',
+    Sleep = 'EntryType.Sleep',
+    BellyPosition = 'EntryType.BellyPosition',
 }
 
 export interface EntryBreastFeedingVariant {
@@ -33,16 +35,34 @@ export interface EntryWeightMeasurementVariant {
         weightValue: number;
     };
 }
+export interface EntrySleepVariant {
+    entryType: EntryType.Sleep;
+    params: {
+        startedAt: DateISO8601;
+        endedAt?: DateISO8601;
+    };
+}
+export interface EntryBellyPositionVariant {
+    entryType: EntryType.BellyPosition;
+    params: {
+        startedAt: DateISO8601;
+        endedAt?: DateISO8601;
+    };
+}
 
 export type EntryVariants =
     | EntryBreastFeedingVariant
     | EntryBottleFeedingVariant
     | EntryDiaperChangeVariant
-    | EntryWeightMeasurementVariant;
+    | EntryWeightMeasurementVariant
+    | EntrySleepVariant
+    | EntryBellyPositionVariant;
 
+export type UUIDv4 = string;
 export type DateISO8601 = string;
 
 export interface EntryMetadata {
+    uid: UUIDv4;
     createdAt: DateISO8601;
     modifications: {
         modifiedAt: DateISO8601;

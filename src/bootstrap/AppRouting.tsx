@@ -10,7 +10,14 @@ export const AppRouting = () => {
             <Route path="" element={<MainLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/log" element={<Log />} />
-                <Route path="/event/add/:eventType" element={<EventEditor />} />
+                <Route
+                    path="/event/add/:eventType"
+                    element={<EventEditor mode="add" />}
+                />
+                <Route
+                    path="/event/edit/:eventUid"
+                    element={<EventEditor mode="edit" />}
+                />
             </Route>
         </Routes>
     );

@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { LogEntry, StoreData } from './store.types';
 import { persist, devtools } from 'zustand/middleware';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AppState {
     data: StoreData;
     api: {
         addEntry: (entry: LogEntry) => void;
+        editEntry: (entryUid: string, entry: LogEntry) => void;
     };
     meta: {
         hasHydrated: boolean;
@@ -16,7 +18,7 @@ interface AppState {
 /**
  * Latest version identifier
  */
-const APP_STORE_VERSION = 1;
+const APP_STORE_VERSION = 2;
 
 // TODO: Perform this inside React, in main component maybe with a modal informing the user about this?
 void navigator.storage.persist().then((persistent) => {
@@ -40,12 +42,35 @@ export const useAppStore = create<AppState>()(
                     logs: [],
                 },
                 api: {
-                    addEntry: (entry: LogEntry) => {
+                    addEntry: (entry) => {
                         set((state) => {
                             return {
                                 data: {
                                     ...state.data,
                                     logs: [entry, ...state.data.logs],
+                                },
+                            };
+                        });
+                    },
+                    editEntry: (entryUid, entry) => {
+                        set((state) => {
+                            const entryIdx = state.data.logs.findIndex(
+                                (logEntry) => logEntry.metadata.uid === entryUid
+                            );
+
+                            if (entryIdx === -1) {
+                                return state;
+                            }
+
+                            // TODO: Use immer or other more efficient data storage
+                            return {
+                                data: {
+                                    ...state.data,
+                                    logs: [
+                                        ...state.data.logs.slice(0, entryIdx),
+                                        entry,
+                                        ...state.data.logs.slice(entryIdx + 1),
+                                    ],
                                 },
                             };
                         });
@@ -71,7 +96,7 @@ export const useAppStore = create<AppState>()(
                 onRehydrateStorage: (prevState) => {
                     console.log('Store rehydration starts...');
 
-                    return (newState, error) => {
+                    return (_newState, error) => {
                         if (error) {
                             console.error('Store rehydration failed...', error);
                         } else {
@@ -81,13 +106,45 @@ export const useAppStore = create<AppState>()(
                         prevState.meta.setHasHydrated(true);
                     };
                 },
+                // TODO: Move to separate file?
                 migrate: (persistedState, persistedVersion) => {
-                    // TODO: Perform migrations here
-                    if (persistedVersion === 0) {
-                        return persistedState;
+                    let migratedState = persistedState;
+                    let migratedVersion = persistedVersion;
+
+                    if (migratedVersion === 1) {
+                        /**
+                         * Changelog:
+                         * - Added `data.logs[].metadata.uid`
+                         */
+                        console.log(
+                            `Migrating persistedState to version ${String(migratedVersion + 1)}`
+                        );
+
+                        const oldState = migratedState as AppState;
+
+                        migratedState = {
+                            ...oldState,
+                            data: {
+                                ...oldState.data,
+                                logs: oldState.data.logs.map((entry) => {
+                                    return {
+                                        ...entry,
+                                        metadata: {
+                                            ...entry.metadata,
+                                            uid: uuidv4(),
+                                        },
+                                    };
+                                }),
+                            },
+                        };
+                        migratedVersion = 1;
+
+                        console.log(
+                            `Migrated persistedState to version ${String(migratedVersion)}`
+                        );
                     }
 
-                    return persistedState;
+                    return migratedState;
                 },
                 partialize: (state) => {
                     return {

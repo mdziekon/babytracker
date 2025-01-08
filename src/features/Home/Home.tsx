@@ -6,6 +6,8 @@ import {
     IconBabyBottle,
     IconBrandMcdonalds,
     IconDiaper,
+    IconMoonStars,
+    IconScubaDiving,
 } from '@tabler/icons-react';
 
 export const Home = () => {
@@ -36,5 +38,17 @@ const actions = [
         icon: IconDiaper,
         color: 'indigo',
         linkLocation: '/event/add/DiaperChange',
+    },
+    {
+        title: 'Sleep',
+        icon: IconMoonStars,
+        color: 'violet',
+        linkLocation: '/event/add/Sleep',
+    },
+    {
+        title: 'Belly Position',
+        icon: IconScubaDiving,
+        color: 'pink',
+        linkLocation: '/event/add/BellyPosition',
     },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];

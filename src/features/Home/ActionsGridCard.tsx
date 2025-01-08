@@ -12,7 +12,7 @@ import {
 import classes from './ActionsGridCard.module.css';
 import { FunctionComponent } from 'react';
 import { IconProps } from '@tabler/icons-react';
-import { Link, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 
 interface ActionsGridCardProps {
     actions: (
