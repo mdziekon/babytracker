@@ -1,17 +1,11 @@
 import { ActionIcon, Avatar, Table } from '@mantine/core';
 import dayjs from 'dayjs';
+import { IconDots } from '@tabler/icons-react';
+import { DateISO8601, LogEntry } from '../../common/store/store.types';
 import {
-    IconBabyBottle,
-    IconBrandMcdonalds,
-    IconDiaper,
-    IconDots,
-    IconWeight,
-} from '@tabler/icons-react';
-import {
-    DateISO8601,
-    EntryType,
-    LogEntry,
-} from '../../common/store/store.types';
+    mapEntryTypeToIcon,
+    mapEntryTypeToName,
+} from '../../common/utils/entryMappers';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -43,42 +37,16 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         return [entry.metadata.createdAt] as const;
     })();
 
-    const entryTypeDisplay = (() => {
-        switch (entry.entryType) {
-            case EntryType.BottleFeeding:
-                return (
-                    <IconBabyBottle style={{ width: '70%', height: '70%' }} />
-                );
-            case EntryType.BreastFeeding:
-                return (
-                    <IconBrandMcdonalds
-                        style={{ width: '70%', height: '70%' }}
-                    />
-                );
-            case EntryType.DiaperChange:
-                return <IconDiaper style={{ width: '70%', height: '70%' }} />;
-            case EntryType.WeightMeasurement:
-                return <IconWeight style={{ width: '70%', height: '70%' }} />;
-        }
-
-        return (
-            <span>
-                {(entry as { entryType: string }).entryType.replace(
-                    'EntryType.',
-                    ''
-                )}
-            </span>
-        );
-    })();
+    const EntryTypeIcon = mapEntryTypeToIcon(entry.entryType);
 
     return (
         <Table.Tr key={entry.metadata.createdAt}>
             <Table.Td>
                 <Avatar
-                    title={entry.entryType.replace('EntryType.', '')}
+                    title={mapEntryTypeToName(entry.entryType)}
                     color="primary"
                 >
-                    {entryTypeDisplay}
+                    <EntryTypeIcon style={{ width: '70%', height: '70%' }} />
                 </Avatar>
             </Table.Td>
             <Table.Td>

@@ -1,9 +1,9 @@
-import { Avatar, Button, Paper, Text } from '@mantine/core';
-import { IconDiaper } from '@tabler/icons-react';
+import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
+import { EventCard } from '../EventCard/EventCard';
 
 export const DiaperChangeEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
@@ -26,14 +26,7 @@ export const DiaperChangeEvent = () => {
     };
 
     return (
-        <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)">
-            <Avatar size={120} radius={120} mx="auto">
-                <IconDiaper style={{ width: '70%', height: '70%' }} />
-            </Avatar>
-            <Text ta="center" fz="lg" fw={500} mt="md">
-                Diaper change
-            </Text>
-
+        <EventCard eventType={EntryType.DiaperChange}>
             <Button
                 variant="primary"
                 fullWidth
@@ -42,6 +35,6 @@ export const DiaperChangeEvent = () => {
             >
                 Add event
             </Button>
-        </Paper>
+        </EventCard>
     );
 };

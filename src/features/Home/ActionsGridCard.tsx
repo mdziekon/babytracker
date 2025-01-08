@@ -10,15 +10,17 @@ import {
     useMantineTheme,
 } from '@mantine/core';
 import classes from './ActionsGridCard.module.css';
-import { FunctionComponent } from 'react';
-import { IconProps } from '@tabler/icons-react';
 import { NavLink } from 'react-router';
+import { EntryType } from '../../common/store/store.types';
+import {
+    mapEntryTypeToIcon,
+    mapEntryTypeToName,
+} from '../../common/utils/entryMappers';
 
 interface ActionsGridCardProps {
     actions: (
         | {
-              title: string;
-              icon: FunctionComponent<IconProps>;
+              entryType: EntryType;
               color?: string;
               linkLocation?: string;
           }
@@ -37,22 +39,26 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
         if (!action) {
             return <Box visibleFrom="xs" key={actionIdx} />;
         }
+
+        const title = mapEntryTypeToName(action.entryType);
+        const EntryTypeIcon = mapEntryTypeToIcon(action.entryType);
+
         return (
             <UnstyledButton
-                key={action.title}
+                key={title}
                 className={classes.item}
                 style={{ padding: '0.5rem' }}
                 component={NavLink}
                 to={action.linkLocation ?? ''}
             >
-                <action.icon
+                <EntryTypeIcon
                     color={
                         action.color ? theme.colors[action.color][6] : undefined
                     }
                     size={32}
                 />
                 <Text ta="center" size="xs" mt={7} fw="bold">
-                    {action.title}
+                    {title}
                 </Text>
             </UnstyledButton>
         );

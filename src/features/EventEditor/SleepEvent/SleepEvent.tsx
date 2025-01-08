@@ -1,9 +1,9 @@
-import { Avatar, Button, Paper, Text } from '@mantine/core';
-import { IconMoonStars } from '@tabler/icons-react';
+import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
+import { EventCard } from '../EventCard/EventCard';
 
 interface SleepEventProps {
     eventUid?: string;
@@ -105,16 +105,5 @@ export const SleepEvent = (props: SleepEventProps) => {
         );
     })();
 
-    return (
-        <Paper radius="md" withBorder p="lg" bg="var(--mantine-color-body)">
-            <Avatar size={120} radius={120} mx="auto">
-                <IconMoonStars style={{ width: '70%', height: '70%' }} />
-            </Avatar>
-            <Text ta="center" fz="lg" fw={500} mt="md">
-                Sleep
-            </Text>
-
-            {actions}
-        </Paper>
-    );
+    return <EventCard eventType={EntryType.Sleep}>{actions}</EventCard>;
 };

@@ -2,13 +2,7 @@ import { Text, Title } from '@mantine/core';
 import classes from './Home.module.css';
 import { ActionsGridCard } from './ActionsGridCard';
 import { ComponentProps } from 'react';
-import {
-    IconBabyBottle,
-    IconBrandMcdonalds,
-    IconDiaper,
-    IconMoonStars,
-    IconScubaDiving,
-} from '@tabler/icons-react';
+import { EntryType } from '../../common/store/store.types';
 
 export const Home = () => {
     return (
@@ -30,24 +24,27 @@ export const Home = () => {
 };
 
 const actions = [
-    { title: 'Bottle Feeding', icon: IconBabyBottle, color: 'cyan' },
-    { title: 'Breast Feeding', icon: IconBrandMcdonalds, color: 'lime' },
+    {
+        entryType: EntryType.BottleFeeding,
+        color: 'cyan',
+    },
+    {
+        entryType: EntryType.BreastFeeding,
+        color: 'lime',
+    },
     undefined,
     {
-        title: 'Diaper change',
-        icon: IconDiaper,
+        entryType: EntryType.DiaperChange,
         color: 'indigo',
         linkLocation: '/event/add/DiaperChange',
     },
     {
-        title: 'Sleep',
-        icon: IconMoonStars,
+        entryType: EntryType.Sleep,
         color: 'violet',
         linkLocation: '/event/add/Sleep',
     },
     {
-        title: 'Belly Position',
-        icon: IconScubaDiving,
+        entryType: EntryType.BellyPosition,
         color: 'pink',
         linkLocation: '/event/add/BellyPosition',
     },
