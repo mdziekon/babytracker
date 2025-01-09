@@ -62,12 +62,7 @@ export const SleepEvent = (props: SleepEventProps) => {
         if (!event) {
             return (
                 <>
-                    <Button
-                        variant="filled"
-                        fullWidth
-                        mt="md"
-                        onClick={handleAddEvent}
-                    >
+                    <Button variant="filled" fullWidth onClick={handleAddEvent}>
                         Start counter
                     </Button>
                 </>
@@ -77,7 +72,7 @@ export const SleepEvent = (props: SleepEventProps) => {
         if (!event.params.endedAt) {
             return (
                 <>
-                    <Button variant="outline" disabled fullWidth mt="md">
+                    <Button variant="outline" disabled fullWidth>
                         Started: xxx ago
                     </Button>
                     <Button
@@ -95,7 +90,7 @@ export const SleepEvent = (props: SleepEventProps) => {
 
         return (
             <>
-                <Button variant="outline" disabled fullWidth mt="md">
+                <Button variant="outline" disabled fullWidth>
                     Started: xxx ago
                 </Button>
                 <Button variant="outline" disabled fullWidth mt="md">
@@ -105,5 +100,5 @@ export const SleepEvent = (props: SleepEventProps) => {
         );
     })();
 
-    return <EventCard eventType={EntryType.Sleep}>{actions}</EventCard>;
+    return <EventCard eventType={EntryType.Sleep} footer={actions} />;
 };

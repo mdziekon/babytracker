@@ -71,15 +71,20 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
                     {/* TODO: Localize */}
                     What would you like to log?
                 </Text>
-                <Anchor size="xs" c="dimmed" style={{ lineHeight: 1 }}>
-                    <Badge
-                        color={hasActionsInProgress ? 'indigo' : 'grey'}
-                        variant={hasActionsInProgress ? 'filled' : 'outline'}
-                    >
-                        {/* TODO: Localize */}
-                        {`${String(actionsInProgress)} action(s) in progress`}
-                    </Badge>
-                </Anchor>
+                <NavLink to="/log/in-progress">
+                    {() => (
+                        <Badge
+                            color={hasActionsInProgress ? 'indigo' : 'grey'}
+                            variant={
+                                hasActionsInProgress ? 'filled' : 'outline'
+                            }
+                            style={{ cursor: 'unset' }}
+                        >
+                            {/* TODO: Localize */}
+                            {`${String(actionsInProgress)} action(s) in progress`}
+                        </Badge>
+                    )}
+                </NavLink>
             </Group>
             <SimpleGrid
                 cols={{

@@ -10,7 +10,7 @@ export enum EntryType {
 export interface EntryBreastFeedingVariant {
     entryType: EntryType.BreastFeeding;
     params: {
-        type: 'LEFT_BREAST' | 'RIGHT_BREAST' | 'BOTH';
+        type: 'LEFT_BREAST' | 'RIGHT_BREAST' | 'UNSPECIFIED';
         startedAt: DateISO8601;
         endedAt?: DateISO8601;
     };

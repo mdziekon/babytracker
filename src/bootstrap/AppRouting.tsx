@@ -11,6 +11,10 @@ export const AppRouting = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/log" element={<Log />} />
                 <Route
+                    path="/log/in-progress"
+                    element={<Log filterInProgress />}
+                />
+                <Route
                     path="/event/add/:eventType"
                     element={<EventEditor mode="add" />}
                 />

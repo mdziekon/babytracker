@@ -2,7 +2,13 @@ import { Table, Text, Title } from '@mantine/core';
 import classes from './Log.module.css';
 import { LogEntries } from './LogEntries';
 
-export const Log = () => {
+interface LogProps {
+    filterInProgress?: boolean;
+}
+
+export const Log = (props: LogProps) => {
+    const { filterInProgress } = props;
+
     return (
         <>
             <Title className={classes.title} ta="center" mt={16}>
@@ -17,7 +23,7 @@ export const Log = () => {
             </Title>
             <Table striped highlightOnHover className={classes.logTable}>
                 <Table.Tbody>
-                    <LogEntries />
+                    <LogEntries filterInProgress={filterInProgress} />
                 </Table.Tbody>
             </Table>
         </>

@@ -3,9 +3,27 @@ import dayjs from 'dayjs';
 import { Table } from '@mantine/core';
 import { LogEntryDisplay } from './LogEntryDisplay';
 import { useAppStore } from '../../common/store/store';
+import { isTimedEntry } from '../../common/utils/entryGuards';
 
-export const LogEntries = () => {
-    const entries = useAppStore((state) => state.data.logs);
+interface LogEntriesProps {
+    filterInProgress?: boolean;
+}
+
+export const LogEntries = (props: LogEntriesProps) => {
+    const { filterInProgress } = props;
+    const rawEntries = useAppStore((state) => state.data.logs);
+
+    const entries = useMemo(() => {
+        let newEntries = rawEntries;
+
+        if (filterInProgress) {
+            newEntries = newEntries
+                .filter(isTimedEntry)
+                .filter((entry) => !entry.params.endedAt);
+        }
+
+        return newEntries;
+    }, [filterInProgress, rawEntries]);
 
     const entriesGroups = useMemo(() => {
         return Object.groupBy(entries, (entry) => {

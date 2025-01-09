@@ -3,8 +3,18 @@ import classes from './Home.module.css';
 import { ActionsGridCard } from './ActionsGridCard';
 import { ComponentProps } from 'react';
 import { EntryType } from '../../common/store/store.types';
+import { useAppStore } from '../../common/store/store';
+import { isTimedEntry } from '../../common/utils/entryGuards';
 
 export const Home = () => {
+    const events = useAppStore((store) => {
+        return store.data.logs;
+    });
+
+    const actionsInProgress = events
+        .filter(isTimedEntry)
+        .filter((entry) => !entry.params.endedAt).length;
+
     return (
         <>
             <Title className={classes.title} ta="center" mt={'2rem'}>
@@ -18,7 +28,10 @@ export const Home = () => {
                     BabyTracker
                 </Text>
             </Title>
-            <ActionsGridCard actions={actions} actionsInProgress={1} />
+            <ActionsGridCard
+                actions={actions}
+                actionsInProgress={actionsInProgress}
+            />
         </>
     );
 };
@@ -31,6 +44,7 @@ const actions = [
     {
         entryType: EntryType.BreastFeeding,
         color: 'lime',
+        linkLocation: '/event/add/BreastFeeding',
     },
     undefined,
     {
