@@ -6,6 +6,7 @@ import {
     mapEntryTypeToIcon,
     mapEntryTypeToName,
 } from '../../common/utils/entryMappers';
+import { useNavigate } from 'react-router';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -13,6 +14,7 @@ interface LogEntryProps {
 
 export const LogEntryDisplay = (props: LogEntryProps) => {
     const { entry } = props;
+    const navigate = useNavigate();
 
     const entryTime = (() => {
         const hasStartedAt = (
@@ -40,7 +42,12 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
     const EntryTypeIcon = mapEntryTypeToIcon(entry.entryType);
 
     return (
-        <Table.Tr key={entry.metadata.createdAt}>
+        <Table.Tr
+            key={entry.metadata.createdAt}
+            onClick={() => {
+                void navigate(`/event/edit/${entry.metadata.uid}`);
+            }}
+        >
             <Table.Td>
                 <Avatar
                     title={mapEntryTypeToName(entry.entryType)}
@@ -55,7 +62,11 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                     : `${dayjs(entryTime[0]).format('HH:mm')} - ${entryTime[1] ? dayjs(entryTime[1]).format('HH:mm') : '...'}`}
             </Table.Td>
             <Table.Td>0m</Table.Td>
-            <Table.Td>
+            <Table.Td
+                onClick={(event) => {
+                    event.stopPropagation();
+                }}
+            >
                 <ActionIcon variant="default" size="sm">
                     <IconDots style={{ width: '70%', height: '70%' }} />
                 </ActionIcon>
