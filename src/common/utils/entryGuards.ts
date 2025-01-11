@@ -15,6 +15,7 @@ type TimedLogEntries = WithTimedLogParams<LogEntry>;
 
 export const isTimedEntry = (entry: LogEntry): entry is TimedLogEntries => {
     return Boolean(
-        (entry as LogEntry & { params: { startedAt: string } }).params.startedAt
+        (entry as LogEntry & { params?: { startedAt?: string } }).params
+            ?.startedAt
     );
 };
