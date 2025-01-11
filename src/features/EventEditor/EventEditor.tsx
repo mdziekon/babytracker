@@ -40,6 +40,9 @@ export const EventEditor = (props: EventEditorProps) => {
         if (eventType === 'BellyPosition') {
             return <AddBareTimedEvent eventType={EntryType.BellyPosition} />;
         }
+        if (eventType === 'Walk') {
+            return <AddBareTimedEvent eventType={EntryType.Walk} />;
+        }
         if (eventType === 'BreastFeeding') {
             return <AddBreastFeedingEvent />;
         }
@@ -53,6 +56,7 @@ export const EventEditor = (props: EventEditorProps) => {
             event.entryType === EntryType.Sleep ||
             event.entryType === EntryType.BellyPosition ||
             event.entryType === EntryType.BottleFeeding ||
+            event.entryType === EntryType.Walk ||
             event.entryType === EntryType.BreastFeeding
         ) {
             if (!event.params.endedAt) {
