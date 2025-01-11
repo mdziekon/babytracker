@@ -6,6 +6,7 @@ import { AddBareTimedEvent } from './AddBareTimedEvent/AddBareTimedEvent';
 import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingEvent';
 import { FinishTimedEvent } from './FinishTimedEvent/FinishTimedEvent';
 import { CompleteEvent } from './CompleteEvent/CompleteEvent';
+import { AddBathEvent } from './AddBathEvent/AddBathEvent';
 
 interface EventEditorProps {
     mode: 'add' | 'edit';
@@ -31,6 +32,9 @@ export const EventEditor = (props: EventEditorProps) => {
             throw new Error('Missing event type');
         }
 
+        if (eventType === 'Bath') {
+            return <AddBathEvent />;
+        }
         if (eventType === 'DiaperChange') {
             return <AddDiaperChangeEvent />;
         }
@@ -63,6 +67,10 @@ export const EventEditor = (props: EventEditorProps) => {
                 return <FinishTimedEvent event={event} />;
             }
 
+            return <CompleteEvent event={event} />;
+        }
+
+        if (event.entryType === EntryType.Bath) {
             return <CompleteEvent event={event} />;
         }
     }
