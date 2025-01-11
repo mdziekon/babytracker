@@ -53,6 +53,7 @@ export interface EntryBellyPositionVariant {
 }
 export interface EntryBathVariant {
     entryType: EntryType.Bath;
+    params?: undefined;
 }
 export interface EntryWalkVariant {
     entryType: EntryType.Walk;

@@ -20,12 +20,12 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         const hasStartedAt = (
             entry: LogEntry
         ): entry is LogEntry & { params: { startedAt: DateISO8601 } } => {
-            return Object.hasOwn(entry.params, 'startedAt');
+            return Object.hasOwn(entry.params ?? {}, 'startedAt');
         };
         const hasEndedAt = (
             entry: LogEntry
         ): entry is LogEntry & { params: { endedAt: DateISO8601 } } => {
-            return Object.hasOwn(entry.params, 'endedAt');
+            return Object.hasOwn(entry.params ?? {}, 'endedAt');
         };
 
         if (hasStartedAt(entry)) {
