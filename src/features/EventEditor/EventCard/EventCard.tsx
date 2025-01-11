@@ -6,6 +6,7 @@ import {
 } from '../../../common/utils/entryMappers';
 
 import classes from './EventCard.module.css';
+import { Children } from 'react';
 
 interface EventCardProps {
     eventType: EntryType;
@@ -29,9 +30,11 @@ export const EventCard = (props: EventCardProps) => {
                 {mapEntryTypeToName(eventType)}
             </Text>
 
-            {Boolean(middle) && (
-                <Box className={classes.sectionWithDivider}>{middle}</Box>
-            )}
+            {Children.map(middle, (child) => {
+                return (
+                    <Box className={classes.sectionWithDivider}>{child}</Box>
+                );
+            })}
 
             {Boolean(footer) && (
                 <Card.Section className={classes.footer}>{footer}</Card.Section>
