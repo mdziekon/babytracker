@@ -7,6 +7,7 @@ import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingE
 import { FinishTimedEvent } from './FinishTimedEvent/FinishTimedEvent';
 import { CompleteEvent } from './CompleteEvent/CompleteEvent';
 import { AddBathEvent } from './AddBathEvent/AddBathEvent';
+import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
 
 interface EventEditorProps {
     mode: 'add' | 'edit';
@@ -50,6 +51,9 @@ export const EventEditor = (props: EventEditorProps) => {
         if (eventType === 'BreastFeeding') {
             return <AddBreastFeedingEvent />;
         }
+        if (eventType === 'WeightMeasurement') {
+            return <AddWeightMeasurementEvent />;
+        }
     }
     if (mode === 'edit') {
         if (!event) {
@@ -57,22 +61,17 @@ export const EventEditor = (props: EventEditorProps) => {
         }
 
         if (
-            event.entryType === EntryType.Sleep ||
-            event.entryType === EntryType.BellyPosition ||
-            event.entryType === EntryType.BottleFeeding ||
-            event.entryType === EntryType.Walk ||
-            event.entryType === EntryType.BreastFeeding
+            (event.entryType === EntryType.Sleep ||
+                event.entryType === EntryType.BellyPosition ||
+                event.entryType === EntryType.BottleFeeding ||
+                event.entryType === EntryType.Walk ||
+                event.entryType === EntryType.BreastFeeding) &&
+            !event.params.endedAt
         ) {
-            if (!event.params.endedAt) {
-                return <FinishTimedEvent event={event} />;
-            }
-
-            return <CompleteEvent event={event} />;
+            return <FinishTimedEvent event={event} />;
         }
 
-        if (event.entryType === EntryType.Bath) {
-            return <CompleteEvent event={event} />;
-        }
+        return <CompleteEvent event={event} />;
     }
 
     throw new Error('Unknown event type');
