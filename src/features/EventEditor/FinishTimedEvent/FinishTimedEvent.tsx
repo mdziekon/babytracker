@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
-import { EntryType, LogEntry } from '../../../common/store/store.types';
+import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 
 type ObjectWithProps<T, Props> = T extends Props ? T : never;
@@ -35,7 +35,7 @@ export const FinishTimedEvent = (props: FinishTimedEventProps) => {
 
     return (
         <EventCard
-            eventType={EntryType.Sleep}
+            eventType={event.entryType}
             middle={<div>TODO: RENDER DETAILS HERE</div>}
             footer={
                 <>
