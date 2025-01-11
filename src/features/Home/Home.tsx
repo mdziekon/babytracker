@@ -40,6 +40,7 @@ const actions = [
     {
         entryType: EntryType.BottleFeeding,
         color: 'cyan',
+        linkLocation: '/event/add/BottleFeeding',
     },
     {
         entryType: EntryType.BreastFeeding,
