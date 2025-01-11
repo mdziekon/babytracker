@@ -1,5 +1,7 @@
 import {
     IconBabyBottle,
+    IconBabyCarriage,
+    IconBath,
     IconBrandMcdonalds,
     IconDiaper,
     IconMoonStars,
@@ -16,6 +18,8 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
         [EntryType.DiaperChange]: IconDiaper,
         [EntryType.Sleep]: IconMoonStars,
         [EntryType.WeightMeasurement]: IconWeight,
+        [EntryType.Bath]: IconBath,
+        [EntryType.Walk]: IconBabyCarriage,
     };
 
     return mapping[entryType];
@@ -29,6 +33,8 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
         [EntryType.DiaperChange]: 'Diaper Change',
         [EntryType.Sleep]: 'Sleep',
         [EntryType.WeightMeasurement]: 'Weight Measurement',
+        [EntryType.Bath]: 'Bath',
+        [EntryType.Walk]: 'Walk',
     };
 
     return mapping[entryType];

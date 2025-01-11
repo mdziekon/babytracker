@@ -62,4 +62,20 @@ const actions = [
         color: 'pink',
         linkLocation: '/event/add/BellyPosition',
     },
+    {
+        entryType: EntryType.Walk,
+        color: 'blue',
+        linkLocation: '/event/add/Walk',
+    },
+    {
+        entryType: EntryType.Bath,
+        color: 'orange',
+        linkLocation: '/event/add/Bath',
+    },
+    undefined,
+    {
+        entryType: EntryType.WeightMeasurement,
+        color: 'green',
+        linkLocation: '/event/add/WeightMeasurement',
+    },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
