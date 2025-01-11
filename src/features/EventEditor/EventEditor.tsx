@@ -1,11 +1,11 @@
 import { useParams } from 'react-router';
 import { AddDiaperChangeEvent } from './AddDiaperChangeEvent/AddDiaperChangeEvent';
-import { SleepEvent } from './SleepEvent/SleepEvent';
 import { useAppStore } from '../../common/store/store';
 import { EntryType } from '../../common/store/store.types';
 import { AddBareTimedEvent } from './AddBareTimedEvent/AddBareTimedEvent';
 import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingEvent';
 import { FinishTimedEvent } from './FinishTimedEvent/FinishTimedEvent';
+import { CompleteEvent } from './CompleteEvent/CompleteEvent';
 
 interface EventEditorProps {
     mode: 'add' | 'edit';
@@ -59,9 +59,7 @@ export const EventEditor = (props: EventEditorProps) => {
                 return <FinishTimedEvent event={event} />;
             }
 
-            if (event.entryType === EntryType.Sleep) {
-                return <SleepEvent eventUid={eventUid} />;
-            }
+            return <CompleteEvent event={event} />;
         }
     }
 
