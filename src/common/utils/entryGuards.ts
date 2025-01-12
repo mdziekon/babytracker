@@ -1,6 +1,5 @@
 import { LogEntry } from '../store/store.types';
-
-type ObjectWithProps<T, Props> = T extends Props ? T : never;
+import { ObjectWithProps } from './genericTypes';
 
 type WithTimedLogParams<T> = T extends {
     params: ObjectWithProps<

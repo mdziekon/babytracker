@@ -3,8 +3,7 @@ import { useAppStore } from '../../../common/store/store';
 import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
-
-type ObjectWithProps<T, Props> = T extends Props ? T : never;
+import { ObjectWithProps } from '../../../common/utils/genericTypes';
 
 type WithTimedLogParams<T> = T extends {
     params: ObjectWithProps<

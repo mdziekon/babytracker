@@ -4,12 +4,7 @@ import { LogEntry } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
-
-type ObjectWithExactlyProps<T, Props> = T extends Props
-    ? Exclude<keyof T, keyof Props> extends never
-        ? T
-        : never
-    : never;
+import { ObjectWithExactlyProps } from '../../../common/utils/genericTypes';
 
 type WithTimedLogParams<T> = T extends {
     params: ObjectWithExactlyProps<

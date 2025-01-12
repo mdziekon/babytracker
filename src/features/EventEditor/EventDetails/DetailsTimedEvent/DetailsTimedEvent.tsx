@@ -7,8 +7,7 @@ import {
     IconHourglassEmpty,
 } from '@tabler/icons-react';
 import { Duration, DurationFromNow } from './DurationFromNow';
-
-type ObjectWithProps<T, Props> = T extends Props ? T : never;
+import { ObjectWithProps } from '../../../../common/utils/genericTypes';
 
 type WithTimedLogParams<T> = T extends {
     params: ObjectWithProps<
