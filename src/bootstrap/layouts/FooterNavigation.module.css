@@ -1,0 +1,32 @@
+.footer {
+    background-color: light-dark(
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-6)
+    );
+
+    margin-bottom: env(safe-area-inset-bottom, 50px);
+}
+.icons {
+    height: 100%;
+}
+
+.link {
+    text-decoration: none;
+
+    &:visited {
+        color: unset;
+    }
+
+    .icon {
+        color: var(--mantine-color-gray-5);
+    }
+    .iconActive {
+        color: var(--mantine-color-primary-7);
+    }
+    .title {
+        color: var(--mantine-color-gray-5);
+    }
+    .titleActive {
+        color: var(--mantine-color-primary-7);
+    }
+}
