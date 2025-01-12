@@ -1,5 +1,6 @@
 import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
+import { EventDetails } from '../EventDetails/EventDetails';
 
 interface CompleteEventProps {
     event: LogEntry;
@@ -11,7 +12,7 @@ export const CompleteEvent = (props: CompleteEventProps) => {
     return (
         <EventCard
             eventType={event.entryType}
-            middle={<div>TODO: RENDER DETAILS HERE</div>}
+            middle={<EventDetails event={event} />}
         />
     );
 };

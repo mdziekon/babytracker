@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import isToday from 'dayjs/plugin/isToday';
 import isYesterday from 'dayjs/plugin/isYesterday';
+import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(relativeTime, {
     thresholds: [
@@ -27,6 +28,7 @@ dayjs.extend(relativeTime, {
 });
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
+dayjs.extend(duration);
 
 export const App = () => {
     return (
