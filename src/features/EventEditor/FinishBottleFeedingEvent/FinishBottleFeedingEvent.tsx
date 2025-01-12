@@ -7,6 +7,7 @@ import {
 } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 import { useState } from 'react';
+import { EventDetails } from '../EventDetails/EventDetails';
 
 interface FinishBottleFeedingEventProps {
     event: LogEntry & { entryType: EntryType.BottleFeeding };
@@ -34,7 +35,7 @@ export const FinishBottleFeedingEvent = (
         <EventCard
             eventType={event.entryType}
             middle={[
-                <div>TODO: RENDER DETAILS HERE</div>,
+                <EventDetails event={event} />,
                 <Box>
                     <NumberInput
                         rightSection={'ml'}
@@ -57,14 +58,10 @@ export const FinishBottleFeedingEvent = (
             ]}
             footer={
                 <>
-                    <Button variant="outline" disabled fullWidth>
-                        Started: xxx ago
-                    </Button>
                     <Button
                         variant="filled"
                         color="pink"
                         fullWidth
-                        mt="md"
                         onClick={handleFinishEventCounter}
                     >
                         Stop counter and save milk volume

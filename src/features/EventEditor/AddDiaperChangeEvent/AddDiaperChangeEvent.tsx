@@ -7,7 +7,7 @@ import {
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
-import { IconDroplet, IconPoo, IconQuestionMark } from '@tabler/icons-react';
+import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useState } from 'react';
 
 export const AddDiaperChangeEvent = () => {
@@ -88,7 +88,7 @@ export const AddDiaperChangeEvent = () => {
                                                                 height: rem(24),
                                                             }}
                                                         />
-                                                        <IconDroplet
+                                                        <IconDroplets
                                                             style={{
                                                                 width: rem(24),
                                                                 height: rem(24),
@@ -110,7 +110,7 @@ export const AddDiaperChangeEvent = () => {
                                                     }}
                                                     justify="flex-end"
                                                 >
-                                                    <IconDroplet
+                                                    <IconDroplets
                                                         style={{
                                                             width: rem(24),
                                                             height: rem(24),
