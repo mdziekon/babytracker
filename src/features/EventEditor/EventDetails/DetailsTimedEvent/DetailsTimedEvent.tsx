@@ -6,6 +6,7 @@ import {
     IconCalendarX,
     IconHourglassEmpty,
 } from '@tabler/icons-react';
+import { Duration, DurationFromNow } from './DurationFromNow';
 
 type ObjectWithProps<T, Props> = T extends Props ? T : never;
 
@@ -57,7 +58,7 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
         <Badge color="gray.7">{endedAtBadgeLabel}</Badge>
     );
 
-    const duration = endedAtDate.isValid()
+    const finalDuration = endedAtDate.isValid()
         ? dayjs.duration(endedAtDate.diff(startedAtDate))
         : undefined;
 
@@ -79,13 +80,19 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
                     {endedAtBadge}
                 </Group>
             )}
-            {duration && (
+            {!endedAtDate.isValid() && (
+                <Group>
+                    <IconCalendarX size={16} stroke={1.5} />
+                    <Text>
+                        Duration: <DurationFromNow startedAt={startedAtDate} />
+                    </Text>
+                </Group>
+            )}
+            {finalDuration && (
                 <Group>
                     <IconHourglassEmpty size={16} stroke={1.5} />
                     <Text>
-                        Duration:{' '}
-                        {duration.hours() > 0 ? duration.format('HH[h] ') : ''}
-                        {duration.format('mm[m] ss[s]')}
+                        Duration: <Duration duration={finalDuration} />
                     </Text>
                 </Group>
             )}
