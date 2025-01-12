@@ -16,8 +16,12 @@ table.logTable {
 
     tr:has(th) {
         position: sticky;
-        top: calc(3.75rem);
+        top: 0;
         z-index: 6;
+
+        @media (min-width: $mantine-breakpoint-md) {
+            top: calc(3.75rem);
+        }
     }
 
     @media (max-width: $mantine-breakpoint-xs) {
