@@ -1,22 +1,9 @@
 import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
-import { LogEntry } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
-import { ObjectWithExactlyProps } from '../../../common/utils/genericTypes';
-
-type WithTimedLogParams<T> = T extends {
-    params: ObjectWithExactlyProps<
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        infer _U,
-        { startedAt: string; endedAt?: string }
-    >;
-}
-    ? T
-    : never;
-type BareTimedLogEntries = WithTimedLogParams<LogEntry>;
-type BareTimedLogEntryTypes = BareTimedLogEntries['entryType'];
+import { BareTimedLogEntryTypes } from '../../../common/store/store.helperTypes';
 
 interface AddBareTimedEventProps {
     eventType: BareTimedLogEntryTypes;

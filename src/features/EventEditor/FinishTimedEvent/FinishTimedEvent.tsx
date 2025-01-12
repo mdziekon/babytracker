@@ -3,19 +3,7 @@ import { useAppStore } from '../../../common/store/store';
 import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
-import { ObjectWithProps } from '../../../common/utils/genericTypes';
-
-type WithTimedLogParams<T> = T extends {
-    params: ObjectWithProps<
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        infer _U,
-        { startedAt: string; endedAt?: string }
-    >;
-}
-    ? T
-    : never;
-type TimedLogEntries = WithTimedLogParams<LogEntry>;
-type TimedLogEntryTypes = TimedLogEntries['entryType'];
+import { TimedLogEntryTypes } from '../../../common/store/store.helperTypes';
 
 interface FinishTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
