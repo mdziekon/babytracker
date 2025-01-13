@@ -5,6 +5,7 @@ import { ComponentProps } from 'react';
 import { EntryType } from '../../common/store/store.types';
 import { useAppStore } from '../../common/store/store';
 import { isTimedEntry } from '../../common/utils/entryGuards';
+import { mapEntryTypeToColor } from '../../common/utils/entryMappers';
 
 export const Home = () => {
     const events = useAppStore((store) => {
@@ -39,44 +40,44 @@ export const Home = () => {
 const actions = [
     {
         entryType: EntryType.BottleFeeding,
-        color: 'cyan',
         linkLocation: '/event/add/BottleFeeding',
     },
     {
         entryType: EntryType.BreastFeeding,
-        color: 'lime',
         linkLocation: '/event/add/BreastFeeding',
     },
     undefined,
     {
         entryType: EntryType.DiaperChange,
-        color: 'indigo',
         linkLocation: '/event/add/DiaperChange',
     },
     {
         entryType: EntryType.Sleep,
-        color: 'violet',
         linkLocation: '/event/add/Sleep',
     },
     {
         entryType: EntryType.BellyPosition,
-        color: 'pink',
         linkLocation: '/event/add/BellyPosition',
     },
     {
         entryType: EntryType.Walk,
-        color: 'blue',
         linkLocation: '/event/add/Walk',
     },
     {
         entryType: EntryType.Bath,
-        color: 'orange',
         linkLocation: '/event/add/Bath',
     },
     undefined,
     {
         entryType: EntryType.WeightMeasurement,
-        color: 'green',
         linkLocation: '/event/add/WeightMeasurement',
     },
-] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
+].map((action) => {
+    if (!action) {
+        return;
+    }
+    return {
+        ...action,
+        color: mapEntryTypeToColor(action.entryType),
+    };
+}) satisfies ComponentProps<typeof ActionsGridCard>['actions'];

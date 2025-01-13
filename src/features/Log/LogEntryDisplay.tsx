@@ -1,8 +1,9 @@
-import { ActionIcon, Avatar, Table } from '@mantine/core';
+import { ActionIcon, Avatar, rem, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { IconDots } from '@tabler/icons-react';
 import { DateISO8601, LogEntry } from '../../common/store/store.types';
 import {
+    mapEntryTypeToColor,
     mapEntryTypeToIcon,
     mapEntryTypeToName,
 } from '../../common/utils/entryMappers';
@@ -48,18 +49,35 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 void navigate(`/event/edit/${entry.metadata.uid}`);
             }}
         >
-            <Table.Td>
+            <Table.Td w={rem(64)}>
                 <Avatar
                     title={mapEntryTypeToName(entry.entryType)}
-                    color="primary"
+                    color={mapEntryTypeToColor(entry.entryType)}
                 >
-                    <EntryTypeIcon style={{ width: '70%', height: '70%' }} />
+                    <EntryTypeIcon
+                        style={{
+                            width: rem(24),
+                            height: rem(24),
+                        }}
+                    />
                 </Avatar>
             </Table.Td>
             <Table.Td>
-                {entryTime.length === 1
-                    ? dayjs(entryTime[0]).format('HH:mm')
-                    : `${dayjs(entryTime[0]).format('HH:mm')} - ${entryTime[1] ? dayjs(entryTime[1]).format('HH:mm') : '...'}`}
+                {entryTime.length === 1 ? (
+                    dayjs(entryTime[0]).format('HH:mm')
+                ) : (
+                    <>
+                        {dayjs(entryTime[0]).format('HH:mm')}
+                        {' - '}
+                        {entryTime[1] ? (
+                            dayjs(entryTime[1]).format('HH:mm')
+                        ) : (
+                            <Text component="span" fs="italic">
+                                In progress
+                            </Text>
+                        )}
+                    </>
+                )}
             </Table.Td>
             <Table.Td>0m</Table.Td>
             <Table.Td

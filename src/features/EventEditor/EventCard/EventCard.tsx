@@ -1,6 +1,7 @@
 import { Avatar, Box, Card, Text } from '@mantine/core';
 import { EntryType } from '../../../common/store/store.types';
 import {
+    mapEntryTypeToColor,
     mapEntryTypeToIcon,
     mapEntryTypeToName,
 } from '../../../common/utils/entryMappers';
@@ -21,7 +22,12 @@ export const EventCard = (props: EventCardProps) => {
     return (
         <Card withBorder padding="lg" radius="md" className={classes.card}>
             <Card.Section px="xs" py="lg">
-                <Avatar size={120} radius={120} mx="auto">
+                <Avatar
+                    color={mapEntryTypeToColor(eventType)}
+                    size={120}
+                    radius={120}
+                    mx="auto"
+                >
                     <EntryTypeIcon style={{ width: '70%', height: '70%' }} />
                 </Avatar>
             </Card.Section>

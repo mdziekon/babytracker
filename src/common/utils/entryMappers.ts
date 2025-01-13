@@ -39,3 +39,18 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
 
     return mapping[entryType];
 };
+
+export const mapEntryTypeToColor = (entryType: EntryType) => {
+    const mapping = {
+        [EntryType.BellyPosition]: 'pink',
+        [EntryType.BottleFeeding]: 'cyan',
+        [EntryType.BreastFeeding]: 'lime',
+        [EntryType.DiaperChange]: 'violet',
+        [EntryType.Sleep]: 'indigo',
+        [EntryType.WeightMeasurement]: 'green',
+        [EntryType.Bath]: 'orange',
+        [EntryType.Walk]: 'blue',
+    };
+
+    return mapping[entryType];
+};
