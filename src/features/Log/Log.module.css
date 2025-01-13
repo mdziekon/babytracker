@@ -30,6 +30,10 @@ table.logTable {
     td.ctaColumn {
         cursor: initial;
     }
+    td.durationColumn {
+        display: flex;
+        justify-content: flex-end;
+    }
 
     @media (max-width: $mantine-breakpoint-xs) {
         margin-inline: -1rem;

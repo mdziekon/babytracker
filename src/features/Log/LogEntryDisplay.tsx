@@ -1,6 +1,6 @@
 import { ActionIcon, Avatar, Box, Menu, rem, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
-import { IconDots, IconTrash } from '@tabler/icons-react';
+import { IconClock, IconDots, IconTrash } from '@tabler/icons-react';
 import { DateISO8601, LogEntry } from '../../common/store/store.types';
 import {
     mapEntryTypeToColor,
@@ -12,6 +12,8 @@ import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEve
 import classes from './Log.module.css';
 import { useDisclosure } from '@mantine/hooks';
 import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
+import { MiniDetailsEntry } from './LogEntryEventMiniDetails/MiniDetailsEntry/MiniDetailsEntry';
+import { Duration } from '../EventEditor/EventDetails/DetailsTimedEvent/DurationFromNow';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -46,6 +48,13 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         }
 
         return [entry.metadata.createdAt] as const;
+    })();
+    const entryDuration = (() => {
+        if (entryTime.length !== 2 || entryTime[1] === undefined) {
+            return;
+        }
+
+        return dayjs.duration(dayjs(entryTime[1]).diff(dayjs(entryTime[0])));
     })();
 
     const EntryTypeIcon = mapEntryTypeToIcon(entry.entryType);
@@ -92,6 +101,14 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                     <Box>
                         <LogEntryEventMiniDetails event={entry} />
                     </Box>
+                </Table.Td>
+                <Table.Td className={classes.durationColumn}>
+                    {entryDuration && (
+                        <MiniDetailsEntry
+                            icon={<IconClock title="Duration" />}
+                            title={<Duration duration={entryDuration} />}
+                        />
+                    )}
                 </Table.Td>
                 <Table.Td
                     onClick={(event) => {
