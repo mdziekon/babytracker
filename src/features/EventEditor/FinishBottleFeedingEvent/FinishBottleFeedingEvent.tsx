@@ -43,7 +43,9 @@ export const FinishBottleFeedingEvent = (
                         label="Milk volume"
                         placeholder="50"
                         decimalScale={0}
-                        maxLength={4}
+                        max={9_999}
+                        clampBehavior="strict"
+                        thousandSeparator=" "
                         allowNegative={false}
                         value={fluidVolumeInput}
                         onChange={(value) => {

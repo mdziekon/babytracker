@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Group, NumberFormatter, Text } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
 import { IconBabyBottle } from '@tabler/icons-react';
 
@@ -16,7 +16,14 @@ export const DetailsBottleFeedingEvent = (
             {event.params.fluidVolume !== undefined && (
                 <Group>
                     <IconBabyBottle size={16} stroke={1.5} />
-                    <Text>Volume: {event.params.fluidVolume}ml</Text>
+                    <Text>
+                        Volume:{' '}
+                        <NumberFormatter
+                            thousandSeparator=" "
+                            suffix="ml"
+                            value={event.params.fluidVolume}
+                        />
+                    </Text>
                 </Group>
             )}
         </>
