@@ -1,12 +1,7 @@
-import { ActionIcon, Avatar, Box, Menu, rem, Table, Text } from '@mantine/core';
+import { Box, rem, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
-import { IconClock, IconDots, IconTrash } from '@tabler/icons-react';
+import { IconClock } from '@tabler/icons-react';
 import { DateISO8601, LogEntry } from '../../common/store/store.types';
-import {
-    mapEntryTypeToColor,
-    mapEntryTypeToIcon,
-    mapEntryTypeToName,
-} from '../../common/utils/entryMappers';
 import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 import classes from './Log.module.css';
@@ -14,6 +9,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { MiniDetailsEntry } from './LogEntryEventMiniDetails/MiniDetailsEntry/MiniDetailsEntry';
 import { Duration } from '../EventEditor/EventDetails/DetailsTimedEvent/DurationFromNow';
+import { EntryTypeIcon } from './LogEntryDisplay/EntryTypeIcon';
+import { EntryActions } from './LogEntryDisplay/EntryActions';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -28,17 +25,6 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
     ] = useDisclosure(false);
 
     const entryTime = (() => {
-        const hasStartedAt = (
-            entry: LogEntry
-        ): entry is LogEntry & { params: { startedAt: DateISO8601 } } => {
-            return Object.hasOwn(entry.params ?? {}, 'startedAt');
-        };
-        const hasEndedAt = (
-            entry: LogEntry
-        ): entry is LogEntry & { params: { endedAt: DateISO8601 } } => {
-            return Object.hasOwn(entry.params ?? {}, 'endedAt');
-        };
-
         if (hasStartedAt(entry)) {
             if (hasEndedAt(entry)) {
                 return [entry.params.startedAt, entry.params.endedAt] as const;
@@ -57,8 +43,6 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         return dayjs.duration(dayjs(entryTime[1]).diff(dayjs(entryTime[0])));
     })();
 
-    const EntryTypeIcon = mapEntryTypeToIcon(entry.entryType);
-
     return (
         <>
             <Table.Tr
@@ -68,17 +52,7 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 }}
             >
                 <Table.Td w={rem(64)} h={rem(64)}>
-                    <Avatar
-                        title={mapEntryTypeToName(entry.entryType)}
-                        color={mapEntryTypeToColor(entry.entryType)}
-                    >
-                        <EntryTypeIcon
-                            style={{
-                                width: rem(24),
-                                height: rem(24),
-                            }}
-                        />
-                    </Avatar>
+                    <EntryTypeIcon entryType={entry.entryType} />
                 </Table.Td>
                 <Table.Td>
                     <Box>
@@ -118,31 +92,7 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                     w={rem(48)}
                     align="right"
                 >
-                    <Menu shadow="md" position="bottom-end">
-                        <Menu.Target>
-                            <ActionIcon variant="default" size="md">
-                                <IconDots
-                                    style={{ width: '70%', height: '70%' }}
-                                />
-                            </ActionIcon>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Item
-                                color="red"
-                                leftSection={
-                                    <IconTrash
-                                        style={{
-                                            width: rem(14),
-                                            height: rem(14),
-                                        }}
-                                    />
-                                }
-                                onClick={openConfirmDelete}
-                            >
-                                Delete entry
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
+                    <EntryActions onOpenConfirmDelete={openConfirmDelete} />
                 </Table.Td>
             </Table.Tr>
 
@@ -153,4 +103,15 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
             />
         </>
     );
+};
+
+const hasStartedAt = (
+    entry: LogEntry
+): entry is LogEntry & { params: { startedAt: DateISO8601 } } => {
+    return Object.hasOwn(entry.params ?? {}, 'startedAt');
+};
+const hasEndedAt = (
+    entry: LogEntry
+): entry is LogEntry & { params: { endedAt: DateISO8601 } } => {
+    return Object.hasOwn(entry.params ?? {}, 'endedAt');
 };
