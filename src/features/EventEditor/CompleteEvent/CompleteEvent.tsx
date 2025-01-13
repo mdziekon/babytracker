@@ -6,6 +6,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { EntryDeleteModal } from '../../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { useNavigate } from 'react-router';
 import { IconTrash } from '@tabler/icons-react';
+import { EventNotes } from '../EventNotes/EventNotes';
 
 interface CompleteEventProps {
     event: LogEntry;
@@ -24,7 +25,10 @@ export const CompleteEvent = (props: CompleteEventProps) => {
         <>
             <EventCard
                 eventType={event.entryType}
-                middle={<EventDetails event={event} />}
+                middle={[
+                    <EventDetails event={event} />,
+                    <EventNotes event={event} />,
+                ]}
                 footer={
                     <>
                         <Button
