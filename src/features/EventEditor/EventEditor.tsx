@@ -10,6 +10,7 @@ import { AddBathEvent } from './AddBathEvent/AddBathEvent';
 import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
 import { AddBottleFeedingEvent } from './AddBottleFeedingEvent/AddBottleFeedingEvent';
 import { FinishBottleFeedingEvent } from './FinishBottleFeedingEvent/FinishBottleFeedingEvent';
+import { FinishBreastFeedingEvent } from './FinishBreastFeedingEvent/FinishBreastFeedingEvent';
 
 interface EventEditorProps {
     mode: 'add' | 'edit';
@@ -68,11 +69,17 @@ export const EventEditor = (props: EventEditorProps) => {
         if (
             (event.entryType === EntryType.Sleep ||
                 event.entryType === EntryType.BellyPosition ||
-                event.entryType === EntryType.Walk ||
-                event.entryType === EntryType.BreastFeeding) &&
+                event.entryType === EntryType.Walk) &&
             !event.params.endedAt
         ) {
             return <FinishTimedEvent event={event} />;
+        }
+
+        if (
+            event.entryType === EntryType.BreastFeeding &&
+            !event.params.endedAt
+        ) {
+            return <FinishBreastFeedingEvent event={event} />;
         }
 
         if (
