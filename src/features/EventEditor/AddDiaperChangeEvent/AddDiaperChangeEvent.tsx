@@ -20,10 +20,12 @@ export const AddDiaperChangeEvent = () => {
         );
 
     const handleAddEvent = () => {
+        const newEventUid = uuidv4();
+
         addEntry({
             entryType: EntryType.DiaperChange,
             metadata: {
-                uid: uuidv4(),
+                uid: newEventUid,
                 createdAt: new Date().toISOString(),
                 modifications: [],
             },
@@ -32,7 +34,7 @@ export const AddDiaperChangeEvent = () => {
             },
         });
 
-        void navigate('/');
+        void navigate(`/event/edit/${newEventUid}`);
     };
 
     return (

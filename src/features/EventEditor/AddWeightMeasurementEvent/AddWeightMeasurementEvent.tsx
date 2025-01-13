@@ -17,10 +17,12 @@ export const AddWeightMeasurementEvent = () => {
         useState<EntryWeightMeasurementVariant['params']['weightValue']>(0);
 
     const handleAddEvent = () => {
+        const newEventUid = uuidv4();
+
         addEntry({
             entryType: EntryType.WeightMeasurement,
             metadata: {
-                uid: uuidv4(),
+                uid: newEventUid,
                 createdAt: new Date().toISOString(),
                 modifications: [],
             },
@@ -29,7 +31,7 @@ export const AddWeightMeasurementEvent = () => {
             },
         });
 
-        void navigate('/');
+        void navigate(`/event/edit/${newEventUid}`);
     };
 
     return (
