@@ -5,6 +5,7 @@ import { DetailsTimedEvent } from './DetailsTimedEvent/DetailsTimedEvent';
 import { DetailsDiaperChangeEvent } from './DetailsDiaperChangeEvent/DetailsDiaperChangeEvent';
 import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/DetailsWeightMeasurementEvent';
 import { DetailsBottleFeedingEvent } from './DetailsBottleFeedingEvent/DetailsBottleFeedingEvent';
+import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
 
 interface EventDetailsProps {
     event: LogEntry;
@@ -23,6 +24,8 @@ export const EventDetails = (props: EventDetailsProps) => {
         event.entryType === EntryType.BottleFeeding
     ) {
         details.push(<DetailsTimedEvent event={event} />);
+    } else {
+        details.push(<DetailsCreatedEvent event={event} />);
     }
 
     if (event.entryType === EntryType.BreastFeeding) {
