@@ -12,8 +12,8 @@ export const MainLayout = () => {
 
     return (
         <AppShell
-            header={{ height: 60 }}
-            footer={{ height: 60, collapsed: false }}
+            header={{ height: { base: 0, md: 60 } }}
+            footer={{ height: { base: 60, md: 0 }, collapsed: false }}
             padding="md"
         >
             <Box visibleFrom="md">
