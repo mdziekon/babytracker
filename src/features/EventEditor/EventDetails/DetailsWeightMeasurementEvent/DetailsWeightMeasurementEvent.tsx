@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Group, NumberFormatter, Text } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
 import { IconWeight } from '@tabler/icons-react';
 
@@ -15,7 +15,14 @@ export const DetailsWeightMeasurementEvent = (
         <>
             <Group>
                 <IconWeight size={16} stroke={1.5} />
-                <Text>Weight: {event.params.weightValue}kg</Text>
+                <Text>
+                    Weight:{' '}
+                    <NumberFormatter
+                        thousandSeparator=" "
+                        suffix="g"
+                        value={event.params.weightValue}
+                    />
+                </Text>
             </Group>
         </>
     );

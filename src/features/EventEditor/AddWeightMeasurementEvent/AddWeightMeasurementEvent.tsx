@@ -39,12 +39,15 @@ export const AddWeightMeasurementEvent = () => {
                 <>
                     <Box>
                         <NumberInput
-                            rightSection={'kg'}
+                            rightSection={'g'}
                             rightSectionPointerEvents="none"
                             label="Measured weight"
-                            placeholder="10"
+                            placeholder="5000"
                             mt="md"
-                            decimalScale={3}
+                            decimalScale={0}
+                            max={99_999}
+                            clampBehavior="strict"
+                            thousandSeparator=" "
                             allowNegative={false}
                             value={weightInput}
                             onChange={(value) => {
