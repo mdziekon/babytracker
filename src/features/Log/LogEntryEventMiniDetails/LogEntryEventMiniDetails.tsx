@@ -4,6 +4,8 @@ import { MiniDetailsBreastFeedingEvent } from './MiniDetailsBreastFeedingEvent/M
 import { MiniDetailsDiaperChangeEvent } from './MiniDetailsDiaperChangeEvent/MiniDetailsDiaperChangeEvent';
 import { MiniDetailsWeightMeasurementEvent } from './MiniDetailsWeightMeasurementEvent/MiniDetailsWeightMeasurementEvent';
 import { MiniDetailsBottleFeedingEvent } from './MiniDetailsBottleFeedingEvent/MiniDetailsBottleFeedingEvent';
+import { MiniDetailsEntry } from './MiniDetailsEntry/MiniDetailsEntry';
+import { IconNote } from '@tabler/icons-react';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -27,6 +29,12 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(<MiniDetailsWeightMeasurementEvent event={event} />);
+    }
+
+    if ((event.metadata.notes ?? '').length > 0) {
+        details.push(
+            <MiniDetailsEntry icon={<IconNote title="Contains notes" />} />
+        );
     }
 
     return <Group gap="0.25rem">{...details}</Group>;
