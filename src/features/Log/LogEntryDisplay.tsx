@@ -8,6 +8,7 @@ import {
     mapEntryTypeToName,
 } from '../../common/utils/entryMappers';
 import { useNavigate } from 'react-router';
+import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -63,21 +64,26 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 </Avatar>
             </Table.Td>
             <Table.Td>
-                {entryTime.length === 1 ? (
-                    dayjs(entryTime[0]).format('HH:mm')
-                ) : (
-                    <>
-                        {dayjs(entryTime[0]).format('HH:mm')}
-                        {' - '}
-                        {entryTime[1] ? (
-                            dayjs(entryTime[1]).format('HH:mm')
-                        ) : (
-                            <Text component="span" fs="italic">
-                                In progress
-                            </Text>
-                        )}
-                    </>
-                )}
+                <Box>
+                    {entryTime.length === 1 ? (
+                        dayjs(entryTime[0]).format('HH:mm')
+                    ) : (
+                        <>
+                            {dayjs(entryTime[0]).format('HH:mm')}
+                            {' - '}
+                            {entryTime[1] ? (
+                                dayjs(entryTime[1]).format('HH:mm')
+                            ) : (
+                                <Text component="span" fs="italic">
+                                    In progress
+                                </Text>
+                            )}
+                        </>
+                    )}
+                </Box>
+                <Box>
+                    <LogEntryEventMiniDetails event={entry} />
+                </Box>
             </Table.Td>
             <Table.Td>0m</Table.Td>
             <Table.Td
