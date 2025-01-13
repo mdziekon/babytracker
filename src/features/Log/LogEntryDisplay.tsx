@@ -93,7 +93,6 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                         <LogEntryEventMiniDetails event={entry} />
                     </Box>
                 </Table.Td>
-                <Table.Td>0m</Table.Td>
                 <Table.Td
                     onClick={(event) => {
                         event.stopPropagation();
