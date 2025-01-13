@@ -24,6 +24,13 @@ table.logTable {
         }
     }
 
+    tr {
+        cursor: pointer;
+    }
+    td.ctaColumn {
+        cursor: initial;
+    }
+
     @media (max-width: $mantine-breakpoint-xs) {
         margin-inline: -1rem;
         width: calc(100% + 2rem);

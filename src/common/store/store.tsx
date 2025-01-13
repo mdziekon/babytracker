@@ -8,6 +8,7 @@ interface AppState {
     api: {
         addEntry: (entry: LogEntry) => void;
         editEntry: (entryUid: string, entry: LogEntry) => void;
+        deleteEntry: (entryUid: string) => void;
     };
     meta: {
         hasHydrated: boolean;
@@ -69,6 +70,28 @@ export const useAppStore = create<AppState>()(
                                     logs: [
                                         ...state.data.logs.slice(0, entryIdx),
                                         entry,
+                                        ...state.data.logs.slice(entryIdx + 1),
+                                    ],
+                                },
+                            };
+                        });
+                    },
+                    deleteEntry: (entryUid) => {
+                        set((state) => {
+                            const entryIdx = state.data.logs.findIndex(
+                                (logEntry) => logEntry.metadata.uid === entryUid
+                            );
+
+                            if (entryIdx === -1) {
+                                return state;
+                            }
+
+                            // TODO: Use immer or other more efficient data storage
+                            return {
+                                data: {
+                                    ...state.data,
+                                    logs: [
+                                        ...state.data.logs.slice(0, entryIdx),
                                         ...state.data.logs.slice(entryIdx + 1),
                                     ],
                                 },
