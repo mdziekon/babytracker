@@ -1,15 +1,4 @@
-import {
-    ActionIcon,
-    Avatar,
-    Box,
-    Button,
-    Group,
-    Menu,
-    Modal,
-    rem,
-    Table,
-    Text,
-} from '@mantine/core';
+import { ActionIcon, Avatar, Box, Menu, rem, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { IconDots, IconTrash } from '@tabler/icons-react';
 import { DateISO8601, LogEntry } from '../../common/store/store.types';
@@ -22,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 import classes from './Log.module.css';
 import { useDisclosure } from '@mantine/hooks';
-import { useAppStore } from '../../common/store/store';
+import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -35,11 +24,6 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         isConfirmDeleteOpen,
         { open: openConfirmDelete, close: closeConfirmDelete },
     ] = useDisclosure(false);
-    const deleteEntry = useAppStore((store) => store.api.deleteEntry);
-
-    const handleDeleteEntry = () => {
-        deleteEntry(entry.metadata.uid);
-    };
 
     const entryTime = (() => {
         const hasStartedAt = (
@@ -146,26 +130,11 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 </Table.Td>
             </Table.Tr>
 
-            <Modal
-                opened={isConfirmDeleteOpen}
-                onClose={closeConfirmDelete}
-                title={<strong>Delete selected entry?</strong>}
-            >
-                Are you sure you want to delete entry{' '}
-                <strong>{mapEntryTypeToName(entry.entryType)}</strong> created{' '}
-                <strong>
-                    {dayjs(entryTime[0]).format('YYYY-MM-DD HH:mm')}
-                </strong>
-                ? This action cannot be undone.
-                <Group mt="lg" justify="flex-end">
-                    <Button onClick={closeConfirmDelete} variant="default">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleDeleteEntry} color="red">
-                        Delete
-                    </Button>
-                </Group>
-            </Modal>
+            <EntryDeleteModal
+                entry={entry}
+                isModalOpen={isConfirmDeleteOpen}
+                onModalClose={closeConfirmDelete}
+            />
         </>
     );
 };
