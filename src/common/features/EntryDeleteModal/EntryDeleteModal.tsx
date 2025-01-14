@@ -18,6 +18,7 @@ export const EntryDeleteModal = (props: EntryDeleteModalProps) => {
     const handleDeleteEntry = () => {
         deleteEntry(entry.metadata.uid);
 
+        onModalClose();
         onEntryDeleted?.();
     };
 

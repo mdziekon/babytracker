@@ -37,5 +37,9 @@ export const LogEntryEventMiniDetails = (
         );
     }
 
+    if (!details.length) {
+        return null;
+    }
+
     return <Group gap="0.25rem">{...details}</Group>;
 };
