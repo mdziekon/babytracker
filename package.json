@@ -1,5 +1,6 @@
 {
     "name": "babytracker",
+    "homepage": "https://mdziekon.github.com/babytracker/",
     "private": true,
     "version": "0.0.0",
     "type": "module",

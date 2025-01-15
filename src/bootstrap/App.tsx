@@ -34,7 +34,7 @@ export const App = () => {
     return (
         <>
             <MantineProvider theme={theme} defaultColorScheme="dark">
-                <BrowserRouter>
+                <BrowserRouter basename="/babytracker">
                     <AppRouting />
                 </BrowserRouter>
             </MantineProvider>
