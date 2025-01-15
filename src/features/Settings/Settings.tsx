@@ -9,6 +9,7 @@ const exportFilename = 'babytracker-data.json';
 export const Settings = () => {
     const data = useAppStore((state) => state.data);
     const mergeData = useAppStore((state) => state.meta.mergeData);
+    const resetData = useAppStore((state) => state.meta.resetData);
     const downloadElementRef = useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
@@ -27,6 +28,16 @@ export const Settings = () => {
             ':'
         );
     }, [data]);
+
+    const handleResetData = () => {
+        const hasConfirmed = confirm('Are you sure?');
+
+        if (!hasConfirmed) {
+            return;
+        }
+
+        resetData();
+    };
 
     const handleImportData = async (file: File) => {
         const reader = new FileReader();
@@ -131,6 +142,27 @@ export const Settings = () => {
                             </Button>
                         )}
                     </FileButton>
+                </Group>
+                <Group
+                    justify="space-between"
+                    className={classes.item}
+                    wrap="nowrap"
+                    gap="xl"
+                >
+                    <div>
+                        <Text>Reset data</Text>
+                        <Text size="xs" c="dimmed">
+                            Remove all data & start fresh
+                        </Text>
+                    </div>
+
+                    <Button
+                        variant="filled"
+                        color="red"
+                        onClick={handleResetData}
+                    >
+                        Reset
+                    </Button>
                 </Group>
             </Card>
         </>

@@ -15,6 +15,7 @@ interface AppState {
         hasHydrated: boolean;
         setHasHydrated: (hasHydrated: boolean) => void;
         mergeData: (data: StoreData) => void;
+        resetData: () => void;
     };
 }
 
@@ -160,6 +161,16 @@ export const useAppStore = create<AppState>()(
                                 data: {
                                     ...state.data,
                                     logs: mergedLogs,
+                                },
+                            };
+                        });
+                    },
+                    resetData: () => {
+                        set(() => {
+                            return {
+                                data: {
+                                    schema: { version: APP_STORE_VERSION },
+                                    logs: [],
                                 },
                             };
                         });
