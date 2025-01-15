@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router';
+import { HashRouter } from 'react-router';
 import { AppRouting } from './AppRouting';
 import { MantineProvider } from '@mantine/core';
 
@@ -34,9 +34,9 @@ export const App = () => {
     return (
         <>
             <MantineProvider theme={theme} defaultColorScheme="dark">
-                <BrowserRouter basename="/babytracker">
+                <HashRouter>
                     <AppRouting />
-                </BrowserRouter>
+                </HashRouter>
             </MantineProvider>
         </>
     );
