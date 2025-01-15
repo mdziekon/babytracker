@@ -18,10 +18,14 @@ export const Settings = () => {
             return;
         }
 
-        const blob = new Blob([JSON.stringify(data)], { type: 'text/plain' });
+        const blob = new Blob([JSON.stringify(data)], {
+            type: 'application/json',
+        });
         a.href = window.URL.createObjectURL(blob);
         a.download = exportFilename;
-        a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+        a.dataset.downloadurl = ['application/json', a.download, a.href].join(
+            ':'
+        );
     }, [data]);
 
     const handleImportData = async (file: File) => {
