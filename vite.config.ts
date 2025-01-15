@@ -9,7 +9,7 @@ export default defineConfig({
         react(),
         VitePWA({
             registerType: 'prompt',
-            injectRegister: false,
+            injectRegister: 'auto',
 
             pwaAssets: {
                 disabled: false,
