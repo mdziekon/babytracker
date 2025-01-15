@@ -3,6 +3,7 @@ import { Home } from '../features/Home/Home';
 import { MainLayout } from './layouts/MainLayout';
 import { Log } from '../features/Log/Log';
 import { EventEditor } from '../features/EventEditor/EventEditor';
+import { Settings } from '../features/Settings/Settings';
 
 export const AppRouting = () => {
     return (
@@ -22,6 +23,7 @@ export const AppRouting = () => {
                     path="/event/edit/:eventUid"
                     element={<EventEditor mode="edit" />}
                 />
+                <Route path="/settings" element={<Settings />} />
             </Route>
         </Routes>
     );

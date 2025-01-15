@@ -1,0 +1,23 @@
+.title {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-size: rem(100px);
+    font-weight: 900;
+    letter-spacing: rem(-2px);
+
+    @media (max-width: $mantine-breakpoint-md) {
+        font-size: rem(50px);
+    }
+}
+
+.card {
+    background-color: var(--mantine-color-body);
+}
+
+.item {
+    & + & {
+        padding-top: var(--mantine-spacing-sm);
+        margin-top: var(--mantine-spacing-sm);
+        border-top: 1px solid
+            light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+    }
+}

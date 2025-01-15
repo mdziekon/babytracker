@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { LogEntry, StoreData } from './store.types';
 import { persist, devtools } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
+import dayjs from 'dayjs';
 
 interface AppState {
     data: StoreData;
@@ -13,6 +14,7 @@ interface AppState {
     meta: {
         hasHydrated: boolean;
         setHasHydrated: (hasHydrated: boolean) => void;
+        mergeData: (data: StoreData) => void;
     };
 }
 
@@ -107,6 +109,57 @@ export const useAppStore = create<AppState>()(
                                 meta: {
                                     ...state.meta,
                                     hasHydrated,
+                                },
+                            };
+                        });
+                    },
+                    mergeData: (importedData) => {
+                        set((state) => {
+                            if (
+                                importedData.schema.version !==
+                                state.data.schema.version
+                            ) {
+                                return state;
+                            }
+
+                            /**
+                             * Assume existing entries are newer,
+                             * therefore filter out imported entries with same UID,
+                             * as they are considered older, potentially outdated.
+                             */
+                            const existingUids = new Set(
+                                state.data.logs.map(
+                                    (entry) => entry.metadata.uid
+                                )
+                            );
+
+                            const mergedLogs = [
+                                ...importedData.logs.filter(
+                                    (entry) =>
+                                        !existingUids.has(entry.metadata.uid)
+                                ),
+                                ...state.data.logs,
+                            ].sort((leftEntry, rightEntry) => {
+                                const leftCreatedAt = dayjs(
+                                    leftEntry.metadata.createdAt
+                                );
+                                const rightCreatedAt = dayjs(
+                                    rightEntry.metadata.createdAt
+                                );
+
+                                if (leftCreatedAt.isBefore(rightCreatedAt)) {
+                                    return 1;
+                                }
+                                if (leftCreatedAt.isAfter(rightCreatedAt)) {
+                                    return -1;
+                                }
+                                return 0;
+                            });
+
+                            return {
+                                data: {
+                                    ...state.data,
+                                    logs: mergedLogs,
                                 },
                             };
                         });

@@ -1,5 +1,5 @@
 import { AppShell, Box, Container, Loader } from '@mantine/core';
-import { IconHome, IconNotebook } from '@tabler/icons-react';
+import { IconHome, IconNotebook, IconSettings } from '@tabler/icons-react';
 import { Outlet } from 'react-router';
 import { useAppStore } from '../../common/store/store';
 
@@ -57,5 +57,10 @@ const navigationItems = [
         icon: <IconNotebook />,
         to: '/log',
         title: 'Log',
+    },
+    {
+        icon: <IconSettings />,
+        to: '/settings',
+        title: 'Settings',
     },
 ];
