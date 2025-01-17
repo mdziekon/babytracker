@@ -7,6 +7,8 @@ import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/D
 import { DetailsBottleFeedingEvent } from './DetailsBottleFeedingEvent/DetailsBottleFeedingEvent';
 import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
 
+import classes from './EventDetails.module.css';
+
 interface EventDetailsProps {
     event: LogEntry;
 }
@@ -41,5 +43,9 @@ export const EventDetails = (props: EventDetailsProps) => {
         details.push(<DetailsWeightMeasurementEvent event={event} />);
     }
 
-    return <Stack gap="0.125rem">{...details}</Stack>;
+    return (
+        <Stack gap="0.125rem" className={classes.detailsList}>
+            {...details}
+        </Stack>
+    );
 };

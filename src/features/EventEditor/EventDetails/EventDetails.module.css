@@ -1,0 +1,13 @@
+.detailsList {
+    & > * {
+        &:not(:first-child) {
+            padding-top: calc(var(--mantine-spacing-xs) / 2);
+            margin-top: calc(var(--mantine-spacing-xs) / 2);
+            border-top: 1px solid
+                light-dark(
+                    var(--mantine-color-gray-2),
+                    var(--mantine-color-dark-4)
+                );
+        }
+    }
+}
