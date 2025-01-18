@@ -1,0 +1,17 @@
+.inProgressDuration {
+    animation: breathingColor 2s ease-out infinite normal;
+}
+
+@keyframes breathingColor {
+    0% {
+        filter: brightness(60%);
+    }
+
+    50% {
+        filter: brightness(100%);
+    }
+
+    100% {
+        filter: brightness(60%);
+    }
+}

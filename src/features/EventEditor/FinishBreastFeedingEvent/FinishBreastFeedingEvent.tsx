@@ -1,10 +1,12 @@
-import { Button } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
+
+import classes from './FinishBreastFeedingEvent.module.css';
 
 const eventType = EntryType.BreastFeeding;
 
@@ -56,6 +58,32 @@ export const FinishBreastFeedingEvent = (
     return (
         <EventCard
             eventType={event.entryType}
+            eventIconBadges={{
+                ...(event.params.type === 'LEFT_BREAST'
+                    ? {
+                          'bottom-left': (
+                              <Badge
+                                  color="orange"
+                                  className={classes.inProgressDuration}
+                              >
+                                  <span>Left</span>
+                              </Badge>
+                          ),
+                      }
+                    : {}),
+                ...(event.params.type === 'RIGHT_BREAST'
+                    ? {
+                          'bottom-right': (
+                              <Badge
+                                  color="orange"
+                                  className={classes.inProgressDuration}
+                              >
+                                  <span>Right</span>
+                              </Badge>
+                          ),
+                      }
+                    : {}),
+            }}
             middle={<EventDetails event={event} />}
             footer={
                 <>
