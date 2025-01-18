@@ -8,6 +8,32 @@
         var(--mantine-font-family);
 }
 
+.avatarBox {
+    position: relative;
+    display: inline-block;
+}
+
+.avatarBadgeTopLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.avatarBadgeTopRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.avatarBadgeBottomLeft {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.avatarBadgeBottomRight {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .sectionWithDivider,
 .footer {
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
