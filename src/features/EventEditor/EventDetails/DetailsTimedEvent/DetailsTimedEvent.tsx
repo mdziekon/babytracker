@@ -9,6 +9,8 @@ import {
 import { Duration, DurationFromNow } from './DurationFromNow';
 import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 
+import classes from './DetailsTimedEvent.module.css';
+
 interface DetailsTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
 }
@@ -69,7 +71,11 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
             )}
             {!endedAtDate.isValid() && (
                 <Group>
-                    <IconCalendarX size={16} stroke={1.5} />
+                    <IconHourglassEmpty
+                        size={16}
+                        stroke={1.5}
+                        className={classes.inProgressDuration}
+                    />
                     <Text>
                         Duration: <DurationFromNow startedAt={startedAtDate} />
                     </Text>
