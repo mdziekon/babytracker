@@ -24,12 +24,17 @@
         var(--mantine-color-white),
         var(--mantine-color-dark-7)
     );
-    transition:
-        box-shadow 150ms ease,
-        transform 100ms ease;
+    transition: box-shadow 150ms ease;
 
     @mixin hover {
         box-shadow: var(--mantine-shadow-md);
-        transform: scale(1.05);
+    }
+}
+
+.itemContainer {
+    transition: transform 100ms ease;
+
+    @mixin hover {
+        transform: scale(1.1);
     }
 }

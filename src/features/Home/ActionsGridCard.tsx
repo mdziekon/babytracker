@@ -3,6 +3,7 @@ import {
     Box,
     Card,
     Group,
+    Indicator,
     SimpleGrid,
     Text,
     UnstyledButton,
@@ -12,27 +13,37 @@ import classes from './ActionsGridCard.module.css';
 import { NavLink } from 'react-router';
 import { EntryType } from '../../common/store/store.types';
 import {
+    mapEntryTypeToColor,
     mapEntryTypeToIcon,
     mapEntryTypeToName,
 } from '../../common/utils/entryMappers';
+import { TimedLogEntries } from '../../common/store/store.helperTypes';
 
 interface ActionsGridCardProps {
     actions: (
         | {
               entryType: EntryType;
-              color?: string;
-              linkLocation?: string;
           }
         | undefined
     )[];
-    actionsInProgress: number;
+    actionsInProgress: TimedLogEntries[];
 }
 
 export function ActionsGridCard(props: ActionsGridCardProps) {
     const { actions, actionsInProgress } = props;
     const theme = useMantineTheme();
 
-    const hasActionsInProgress = actionsInProgress > 0;
+    const hasActionsInProgress = actionsInProgress.length > 0;
+    const actionsInProgressByType = actionsInProgress.reduce<
+        Record<EntryType, TimedLogEntries>
+    >(
+        (grouping, action) => {
+            grouping[action.entryType] = action;
+
+            return grouping;
+        },
+        {} as Record<EntryType, TimedLogEntries>
+    );
 
     const actionElements = actions.map((action, actionIdx) => {
         if (!action) {
@@ -41,25 +52,41 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
 
         const title = mapEntryTypeToName(action.entryType);
         const EntryTypeIcon = mapEntryTypeToIcon(action.entryType);
+        const iconColor = mapEntryTypeToColor(action.entryType);
+
+        const inProgressAction = actionsInProgressByType[action.entryType];
+        const isEntryTypeInProgress = Boolean(inProgressAction);
+
+        const linkTarget = isEntryTypeInProgress
+            ? `/event/edit/${inProgressAction.metadata.uid}`
+            : `/event/add/${action.entryType.replace('EntryType.', '')}`;
 
         return (
-            <UnstyledButton
-                key={title}
-                className={classes.item}
-                style={{ padding: '0.5rem' }}
-                component={NavLink}
-                to={action.linkLocation ?? ''}
+            <Indicator
+                disabled={!isEntryTypeInProgress}
+                inline
+                processing
+                color="indigo"
+                size={16}
+                offset={4}
+                className={classes.itemContainer}
             >
-                <EntryTypeIcon
-                    color={
-                        action.color ? theme.colors[action.color][6] : undefined
-                    }
-                    size={32}
-                />
-                <Text ta="center" size="xs" mt={7} fw="bold">
-                    {title}
-                </Text>
-            </UnstyledButton>
+                <UnstyledButton
+                    key={title}
+                    className={classes.item}
+                    style={{ padding: '0.5rem' }}
+                    component={NavLink}
+                    to={linkTarget}
+                >
+                    <EntryTypeIcon
+                        color={theme.colors[iconColor][6]}
+                        size={32}
+                    />
+                    <Text ta="center" size="xs" mt={7} fw="bold">
+                        {title}
+                    </Text>
+                </UnstyledButton>
+            </Indicator>
         );
     });
 
@@ -80,7 +107,7 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
                             style={{ cursor: 'unset' }}
                         >
                             {/* TODO: Localize */}
-                            {`${String(actionsInProgress)} action(s) in progress`}
+                            {`${String(actionsInProgress.length)} action(s) in progress`}
                         </Badge>
                     )}
                 </NavLink>
