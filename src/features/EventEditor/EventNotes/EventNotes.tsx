@@ -1,8 +1,9 @@
-import { Button, Group, Stack, Text, Textarea } from '@mantine/core';
+import { Group, Stack, Text, Textarea } from '@mantine/core';
 import { LogEntry } from '../../../common/store/store.types';
 import { useState } from 'react';
 import { IconDeviceFloppy, IconNote } from '@tabler/icons-react';
 import { useAppStore } from '../../../common/store/store';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 interface EventNotesProps {
     event: LogEntry;
@@ -37,7 +38,7 @@ export const EventNotes = (props: EventNotesProps) => {
                     setNoteValue(event.currentTarget.value);
                 }}
             />
-            <Button
+            <ResponsiveButton
                 variant="light"
                 color="primary"
                 fullWidth
@@ -48,7 +49,7 @@ export const EventNotes = (props: EventNotesProps) => {
                 <Text component="span" ml="0.25rem">
                     Save notes
                 </Text>
-            </Button>
+            </ResponsiveButton>
         </Stack>
     );
 };

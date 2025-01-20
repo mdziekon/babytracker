@@ -1,11 +1,4 @@
-import {
-    Badge,
-    Box,
-    Button,
-    Group,
-    rem,
-    SegmentedControl,
-} from '@mantine/core';
+import { Badge, Box, Group, rem, SegmentedControl } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
@@ -17,6 +10,7 @@ import {
     IconLetterR,
     IconQuestionMark,
 } from '@tabler/icons-react';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 const eventType = EntryType.BreastFeeding;
 type FeedingType = (LogEntry & {
@@ -75,9 +69,13 @@ export const AddBreastFeedingEvent = () => {
 
     const actions = (
         <>
-            <Button variant="filled" fullWidth onClick={handleAddEvent}>
+            <ResponsiveButton
+                variant="filled"
+                fullWidth
+                onClick={handleAddEvent}
+            >
                 Start event
-            </Button>
+            </ResponsiveButton>
         </>
     );
 

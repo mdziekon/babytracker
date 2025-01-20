@@ -1,4 +1,4 @@
-import { Box, Button, NumberInput } from '@mantine/core';
+import { Box, NumberInput } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import {
     EntryBottleFeedingVariant,
@@ -8,6 +8,8 @@ import {
 import { EventCard } from '../EventCard/EventCard';
 import { useState } from 'react';
 import { EventDetails } from '../EventDetails/EventDetails';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 
 interface FinishBottleFeedingEventProps {
     event: LogEntry & { entryType: EntryType.BottleFeeding };
@@ -59,16 +61,16 @@ export const FinishBottleFeedingEvent = (
                 </Box>,
             ]}
             footer={
-                <>
-                    <Button
+                <ResponsiveStack>
+                    <ResponsiveButton
                         variant="filled"
                         color="pink"
                         fullWidth
                         onClick={handleFinishEventCounter}
                     >
                         Stop counter and save milk volume
-                    </Button>
-                </>
+                    </ResponsiveButton>
+                </ResponsiveStack>
             }
         />
     );

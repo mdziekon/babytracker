@@ -1,4 +1,4 @@
-import { Badge, Button } from '@mantine/core';
+import { Badge } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
 
 import classes from './FinishBreastFeedingEvent.module.css';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 
 const eventType = EntryType.BreastFeeding;
 
@@ -86,27 +88,26 @@ export const FinishBreastFeedingEvent = (
             }}
             middle={<EventDetails event={event} />}
             footer={
-                <>
+                <ResponsiveStack>
                     {event.params.type !== 'UNSPECIFIED' && (
-                        <Button
+                        <ResponsiveButton
                             variant="light"
                             color="primary"
                             fullWidth
-                            mb="xs"
                             onClick={handleSwitchBreast}
                         >
                             Breast switch
-                        </Button>
+                        </ResponsiveButton>
                     )}
-                    <Button
+                    <ResponsiveButton
                         variant="filled"
                         color="pink"
                         fullWidth
                         onClick={handleFinishEventCounter}
                     >
                         Stop counter
-                    </Button>
-                </>
+                    </ResponsiveButton>
+                </ResponsiveStack>
             }
         />
     );

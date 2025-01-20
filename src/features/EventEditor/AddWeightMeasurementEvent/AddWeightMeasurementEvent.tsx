@@ -1,4 +1,4 @@
-import { Box, Button, NumberInput } from '@mantine/core';
+import { Box, NumberInput } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import {
     EntryType,
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { useState } from 'react';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 export const AddWeightMeasurementEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
@@ -64,9 +65,13 @@ export const AddWeightMeasurementEvent = () => {
                 </>
             }
             footer={
-                <Button variant="primary" fullWidth onClick={handleAddEvent}>
+                <ResponsiveButton
+                    variant="primary"
+                    fullWidth
+                    onClick={handleAddEvent}
+                >
                     Add event
-                </Button>
+                </ResponsiveButton>
             }
         />
     );

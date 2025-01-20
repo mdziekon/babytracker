@@ -1,4 +1,4 @@
-import { Button, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
@@ -7,6 +7,8 @@ import { EntryDeleteModal } from '../../../common/features/EntryDeleteModal/Entr
 import { useNavigate } from 'react-router';
 import { IconTrash } from '@tabler/icons-react';
 import { EventNotes } from '../EventNotes/EventNotes';
+import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 interface CompleteEventProps {
     event: LogEntry;
@@ -30,8 +32,8 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                     <EventNotes event={event} />,
                 ]}
                 footer={
-                    <>
-                        <Button
+                    <ResponsiveStack>
+                        <ResponsiveButton
                             variant="light"
                             color="red"
                             fullWidth
@@ -41,8 +43,8 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                             <Text component="span" ml="0.25rem">
                                 Delete entry
                             </Text>
-                        </Button>
-                    </>
+                        </ResponsiveButton>
+                    </ResponsiveStack>
                 }
             />
 

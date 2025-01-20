@@ -1,4 +1,4 @@
-import { Box, Button, Group, rem, SegmentedControl } from '@mantine/core';
+import { Box, Group, rem, SegmentedControl } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import {
     EntryDiaperChangeVariant,
@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useState } from 'react';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 export const AddDiaperChangeEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
@@ -154,9 +155,13 @@ export const AddDiaperChangeEvent = () => {
                 </>
             }
             footer={
-                <Button variant="primary" fullWidth onClick={handleAddEvent}>
+                <ResponsiveButton
+                    variant="primary"
+                    fullWidth
+                    onClick={handleAddEvent}
+                >
                     Add event
-                </Button>
+                </ResponsiveButton>
             }
         />
     );

@@ -1,9 +1,9 @@
-import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { BareTimedLogEntryTypes } from '../../../common/store/store.helperTypes';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 interface AddBareTimedEventProps {
     eventType: BareTimedLogEntryTypes;
@@ -37,9 +37,13 @@ export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
 
     const actions = (
         <>
-            <Button variant="filled" fullWidth onClick={handleAddEvent}>
+            <ResponsiveButton
+                variant="filled"
+                fullWidth
+                onClick={handleAddEvent}
+            >
                 Start event
-            </Button>
+            </ResponsiveButton>
         </>
     );
 

@@ -1,9 +1,9 @@
-import { Button } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
+import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
 const eventType = EntryType.Bath;
 
@@ -30,9 +30,13 @@ export const AddBathEvent = () => {
 
     const actions = (
         <>
-            <Button variant="filled" fullWidth onClick={handleAddEvent}>
+            <ResponsiveButton
+                variant="filled"
+                fullWidth
+                onClick={handleAddEvent}
+            >
                 Add event
-            </Button>
+            </ResponsiveButton>
         </>
     );
 
