@@ -28,7 +28,7 @@ export const FooterNavigation = (
                     className={classes.footer}
                     style={styles}
                 >
-                    <Group grow className={classes.icons}>
+                    <Group grow className={classes.icons} gap={0}>
                         {children}
                     </Group>
                 </AppShell.Footer>

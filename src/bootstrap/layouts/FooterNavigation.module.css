@@ -13,6 +13,11 @@
 .link {
     text-decoration: none;
 
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     &:visited {
         color: unset;
     }
