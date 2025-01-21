@@ -1,4 +1,3 @@
-import { Stack } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { DetailsBreastFeedingEvent } from './DetailsBreastFeedingEvent/DetailsBreastFeedingEvent';
 import { DetailsTimedEvent } from './DetailsTimedEvent/DetailsTimedEvent';
@@ -7,7 +6,7 @@ import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/D
 import { DetailsBottleFeedingEvent } from './DetailsBottleFeedingEvent/DetailsBottleFeedingEvent';
 import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
 
-import classes from './EventDetails.module.css';
+import { DetailsList } from '../DetailsList/DetailsList';
 
 interface EventDetailsProps {
     event: LogEntry;
@@ -43,9 +42,5 @@ export const EventDetails = (props: EventDetailsProps) => {
         details.push(<DetailsWeightMeasurementEvent event={event} />);
     }
 
-    return (
-        <Stack gap="0.125rem" className={classes.detailsList}>
-            {...details}
-        </Stack>
-    );
+    return <DetailsList details={details} />;
 };
