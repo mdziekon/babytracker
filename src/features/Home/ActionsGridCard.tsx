@@ -63,6 +63,7 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
 
         return (
             <Indicator
+                key={title}
                 disabled={!isEntryTypeInProgress}
                 inline
                 processing
@@ -72,7 +73,6 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
                 className={classes.itemContainer}
             >
                 <UnstyledButton
-                    key={title}
                     className={classes.item}
                     style={{ padding: '0.5rem' }}
                     component={NavLink}
