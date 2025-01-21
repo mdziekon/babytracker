@@ -19,7 +19,7 @@ interface DetailsModifyTimedEventProps {
     registerEventModifier: RegisterEventModifier;
 }
 
-export interface DetailsModifyTimedEventFormSchema {
+interface DetailsModifyTimedEventFormSchema {
     startedAt: Date;
     endedAt?: Date;
 }
