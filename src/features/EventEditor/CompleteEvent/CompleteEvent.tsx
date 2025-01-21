@@ -4,8 +4,8 @@ import { EventCard } from '../EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { useDisclosure } from '@mantine/hooks';
 import { EntryDeleteModal } from '../../../common/features/EntryDeleteModal/EntryDeleteModal';
-import { useNavigate } from 'react-router';
-import { IconTrash } from '@tabler/icons-react';
+import { Link, useNavigate } from 'react-router';
+import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { EventNotes } from '../EventNotes/EventNotes';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
@@ -33,6 +33,18 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                 ]}
                 footer={
                     <ResponsiveStack>
+                        <ResponsiveButton
+                            component={Link}
+                            variant="light"
+                            color="indigo"
+                            fullWidth
+                            to={`/event/modify/${event.metadata.uid}`}
+                        >
+                            <IconPencil />
+                            <Text component="span" ml="0.25rem">
+                                Edit entry
+                            </Text>
+                        </ResponsiveButton>
                         <ResponsiveButton
                             variant="light"
                             color="red"
