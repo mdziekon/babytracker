@@ -29,7 +29,7 @@ export const DetailsModifyCreatedEvent = (
         });
 
     useEffect(() => {
-        const unregister = registerEventModifier('timedEvent', (modEvent) => {
+        const unregister = registerEventModifier('createdEvent', (modEvent) => {
             if (isTouched('createdAt')) {
                 modEvent.metadata.createdAt =
                     getValues().createdAt.toISOString();
