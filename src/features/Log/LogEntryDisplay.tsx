@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 import classes from './Log.module.css';
 import { MiniDetailsEntry } from './LogEntryEventMiniDetails/MiniDetailsEntry/MiniDetailsEntry';
-import { Duration } from '../EventEditor/EventDetails/DetailsTimedEvent/DurationFromNow';
 import { EntryTypeIcon } from './LogEntryDisplay/EntryTypeIcon';
 import { EntryActions } from './LogEntryDisplay/EntryActions';
 import { EntryDates } from './LogEntryDisplay/EntryDates';
+import { Duration } from '../../common/features/Duration/Duration';
 
 interface LogEntryProps {
     entry: LogEntry;

@@ -6,12 +6,13 @@ import {
     IconCalendarX,
     IconHourglassEmpty,
 } from '@tabler/icons-react';
-import { Duration, DurationFromNow } from './DurationFromNow';
 import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useEffect } from 'react';
 import { RegisterEventModifier } from '../../ModifyEvent/ModifyEvent.types';
+import { DurationFromNow } from '../../../../common/features/Duration/DurationFromNow';
+import { Duration } from '../../../../common/features/Duration/Duration';
 
 interface DetailsModifyTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };

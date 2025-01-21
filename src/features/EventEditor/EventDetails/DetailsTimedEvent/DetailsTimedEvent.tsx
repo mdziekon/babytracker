@@ -6,10 +6,11 @@ import {
     IconCalendarX,
     IconHourglassEmpty,
 } from '@tabler/icons-react';
-import { Duration, DurationFromNow } from './DurationFromNow';
 import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 
 import classes from './DetailsTimedEvent.module.css';
+import { DurationFromNow } from '../../../../common/features/Duration/DurationFromNow';
+import { Duration } from '../../../../common/features/Duration/Duration';
 
 interface DetailsTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
