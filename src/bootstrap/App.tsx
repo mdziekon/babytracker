@@ -3,6 +3,7 @@ import { AppRouting } from './AppRouting';
 import { MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import { theme } from './theme';
 
 import dayjs from 'dayjs';
@@ -10,6 +11,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import isToday from 'dayjs/plugin/isToday';
 import isYesterday from 'dayjs/plugin/isYesterday';
 import duration from 'dayjs/plugin/duration';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(relativeTime, {
     thresholds: [
@@ -29,6 +31,7 @@ dayjs.extend(relativeTime, {
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
 dayjs.extend(duration);
+dayjs.extend(customParseFormat);
 
 export const App = () => {
     return (
