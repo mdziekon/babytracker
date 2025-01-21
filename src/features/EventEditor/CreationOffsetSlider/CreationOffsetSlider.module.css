@@ -1,0 +1,3 @@
+.markLabel {
+    font-size: calc(var(--mantine-font-size-xs) * 0.75) !important;
+}

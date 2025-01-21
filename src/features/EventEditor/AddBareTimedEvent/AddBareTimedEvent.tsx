@@ -4,6 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { BareTimedLogEntryTypes } from '../../../common/store/store.helperTypes';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
+import { Box } from '@mantine/core';
+import { CreationOffsetSlider } from '../CreationOffsetSlider/CreationOffsetSlider';
 
 interface AddBareTimedEventProps {
     eventType: BareTimedLogEntryTypes;
@@ -36,7 +39,10 @@ export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
     };
 
     const actions = (
-        <>
+        <ResponsiveStack>
+            <Box mb="2rem">
+                <CreationOffsetSlider />
+            </Box>
             <ResponsiveButton
                 variant="filled"
                 fullWidth
@@ -44,7 +50,7 @@ export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
             >
                 Start event
             </ResponsiveButton>
-        </>
+        </ResponsiveStack>
     );
 
     return <EventCard eventType={eventType} footer={actions} />;
