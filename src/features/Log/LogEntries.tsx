@@ -7,6 +7,7 @@ import { isTimedEntry } from '../../common/utils/entryGuards';
 import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { useDisclosure } from '@mantine/hooks';
 import { LogEntry } from '../../common/store/store.types';
+import { formatDateToRelativeLabel } from '../../common/utils/formatting';
 
 interface LogEntriesProps {
     filterInProgress?: boolean;
@@ -32,13 +33,12 @@ export const LogEntries = (props: LogEntriesProps) => {
         return Object.groupBy(entries, (entry) => {
             const createdAtDate = dayjs(entry.metadata.createdAt);
 
-            // TODO: localize
-            if (createdAtDate.isToday()) {
-                return 'Today';
+            const relativeLabel = formatDateToRelativeLabel(createdAtDate);
+
+            if (relativeLabel) {
+                return relativeLabel;
             }
-            if (createdAtDate.isYesterday()) {
-                return 'Yesterday';
-            }
+
             return createdAtDate.fromNow();
         });
     }, [entries]);

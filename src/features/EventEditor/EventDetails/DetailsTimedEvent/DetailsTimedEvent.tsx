@@ -11,6 +11,7 @@ import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 import classes from './DetailsTimedEvent.module.css';
 import { DurationFromNow } from '../../../../common/features/Duration/DurationFromNow';
 import { Duration } from '../../../../common/features/Duration/Duration';
+import { formatDateToRelativeLabel } from '../../../../common/utils/formatting';
 
 interface DetailsTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
@@ -20,14 +21,7 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
     const { event } = props;
 
     const startedAtDate = dayjs(event.params.startedAt);
-    const startedAtBadgeLabel = (() => {
-        if (startedAtDate.isToday()) {
-            return 'Today';
-        }
-        if (startedAtDate.isYesterday()) {
-            return 'Yesterday';
-        }
-    })();
+    const startedAtBadgeLabel = formatDateToRelativeLabel(startedAtDate);
     const startedAtBadge = startedAtBadgeLabel && (
         <Badge color="gray.7">{startedAtBadgeLabel}</Badge>
     );
@@ -37,12 +31,8 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
         if (!endedAtDate.isValid()) {
             return;
         }
-        if (endedAtDate.isToday()) {
-            return 'Today';
-        }
-        if (endedAtDate.isYesterday()) {
-            return 'Yesterday';
-        }
+
+        return formatDateToRelativeLabel(endedAtDate);
     })();
     const endedAtBadge = endedAtBadgeLabel && (
         <Badge color="gray.7">{endedAtBadgeLabel}</Badge>

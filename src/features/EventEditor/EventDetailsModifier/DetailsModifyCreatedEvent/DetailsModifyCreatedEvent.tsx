@@ -2,6 +2,7 @@ import { Badge, Group, Text } from '@mantine/core';
 import { LogEntry } from '../../../../common/store/store.types';
 import dayjs from 'dayjs';
 import { IconCalendar } from '@tabler/icons-react';
+import { formatDateToRelativeLabel } from '../../../../common/utils/formatting';
 
 interface DetailsModifyCreatedEventProps {
     event: LogEntry;
@@ -13,14 +14,7 @@ export const DetailsModifyCreatedEvent = (
     const { event } = props;
 
     const createdAtDate = dayjs(event.metadata.createdAt);
-    const createdAtBadgeLabel = (() => {
-        if (createdAtDate.isToday()) {
-            return 'Today';
-        }
-        if (createdAtDate.isYesterday()) {
-            return 'Yesterday';
-        }
-    })();
+    const createdAtBadgeLabel = formatDateToRelativeLabel(createdAtDate);
     const createdAtBadge = createdAtBadgeLabel && (
         <Badge color="gray.7">{createdAtBadgeLabel}</Badge>
     );
