@@ -53,7 +53,12 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
         details.push(<DetailsModifyBottleFeedingEvent event={event} />);
     }
     if (event.entryType === EntryType.DiaperChange) {
-        details.push(<DetailsModifyDiaperChangeEvent event={event} />);
+        details.push(
+            <DetailsModifyDiaperChangeEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
     }
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(<DetailsModifyWeightMeasurementEvent event={event} />);
