@@ -1,4 +1,3 @@
-import { Stack } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { DetailsBreastFeedingEvent } from './DetailsBreastFeedingEvent/DetailsBreastFeedingEvent';
 import { DetailsTimedEvent } from './DetailsTimedEvent/DetailsTimedEvent';
@@ -7,7 +6,8 @@ import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/D
 import { DetailsBottleFeedingEvent } from './DetailsBottleFeedingEvent/DetailsBottleFeedingEvent';
 import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
 
-import classes from './EventDetails.module.css';
+import { DetailsList } from '../DetailsList/DetailsList';
+import { isTimedEntry } from '../../../common/utils/entryGuards';
 
 interface EventDetailsProps {
     event: LogEntry;
@@ -18,13 +18,7 @@ export const EventDetails = (props: EventDetailsProps) => {
 
     const details: React.ReactNode[] = [];
 
-    if (
-        event.entryType === EntryType.Sleep ||
-        event.entryType === EntryType.BellyPosition ||
-        event.entryType === EntryType.Walk ||
-        event.entryType === EntryType.BreastFeeding ||
-        event.entryType === EntryType.BottleFeeding
-    ) {
+    if (isTimedEntry(event)) {
         details.push(<DetailsTimedEvent event={event} />);
     } else {
         details.push(<DetailsCreatedEvent event={event} />);
@@ -43,9 +37,5 @@ export const EventDetails = (props: EventDetailsProps) => {
         details.push(<DetailsWeightMeasurementEvent event={event} />);
     }
 
-    return (
-        <Stack gap="0.125rem" className={classes.detailsList}>
-            {...details}
-        </Stack>
-    );
+    return <DetailsList details={details} />;
 };

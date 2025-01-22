@@ -8,6 +8,11 @@ interface AppState {
     data: StoreData;
     api: {
         addEntry: (entry: LogEntry) => void;
+        /**
+         * Insert entry, taking into account `metadata.createdAt`
+         * to properly calculate position on the list
+         */
+        insertEntry: (entry: LogEntry) => void;
         editEntry: (entryUid: string, entry: LogEntry) => void;
         deleteEntry: (entryUid: string) => void;
     };
@@ -52,6 +57,47 @@ export const useAppStore = create<AppState>()(
                                 data: {
                                     ...state.data,
                                     logs: [entry, ...state.data.logs],
+                                },
+                            };
+                        });
+                    },
+                    insertEntry: (entry) => {
+                        set((state) => {
+                            const newEntryCreatedAt = dayjs(
+                                entry.metadata.createdAt
+                            );
+
+                            // TODO: Does not handle second accuracy
+                            const firstPreviousEntryIdx =
+                                state.data.logs.findIndex((logEntry) =>
+                                    dayjs(logEntry.metadata.createdAt).isBefore(
+                                        newEntryCreatedAt
+                                    )
+                                );
+
+                            if (firstPreviousEntryIdx === -1) {
+                                return {
+                                    data: {
+                                        ...state.data,
+                                        logs: [...state.data.logs, entry],
+                                    },
+                                };
+                            }
+
+                            // TODO: Use immer or other more efficient data storage
+                            return {
+                                data: {
+                                    ...state.data,
+                                    logs: [
+                                        ...state.data.logs.slice(
+                                            0,
+                                            firstPreviousEntryIdx
+                                        ),
+                                        entry,
+                                        ...state.data.logs.slice(
+                                            firstPreviousEntryIdx
+                                        ),
+                                    ],
                                 },
                             };
                         });

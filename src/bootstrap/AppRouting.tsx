@@ -23,6 +23,10 @@ export const AppRouting = () => {
                     path="/event/edit/:eventUid"
                     element={<EventEditor mode="edit" />}
                 />
+                <Route
+                    path="/event/modify/:eventUid"
+                    element={<EventEditor mode="modify" />}
+                />
                 <Route path="/settings" element={<Settings />} />
             </Route>
         </Routes>

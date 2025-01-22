@@ -11,9 +11,10 @@ import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeight
 import { AddBottleFeedingEvent } from './AddBottleFeedingEvent/AddBottleFeedingEvent';
 import { FinishBottleFeedingEvent } from './FinishBottleFeedingEvent/FinishBottleFeedingEvent';
 import { FinishBreastFeedingEvent } from './FinishBreastFeedingEvent/FinishBreastFeedingEvent';
+import { ModifyEvent } from './ModifyEvent/ModifyEvent';
 
 interface EventEditorProps {
-    mode: 'add' | 'edit';
+    mode: 'add' | 'edit' | 'modify';
 }
 
 export const EventEditor = (props: EventEditorProps) => {
@@ -90,6 +91,13 @@ export const EventEditor = (props: EventEditorProps) => {
         }
 
         return <CompleteEvent event={event} />;
+    }
+    if (mode === 'modify') {
+        if (!event) {
+            throw new Error('Missing event uid');
+        }
+
+        return <ModifyEvent event={event} />;
     }
 
     throw new Error('Unknown event type');

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Duration } from './Duration';
 
 export const DurationFromNow = (props: { startedAt: dayjs.Dayjs }) => {
     const [duration, setDuration] = useState<plugin.Duration>(() =>
@@ -35,13 +36,4 @@ export const DurationFromNow = (props: { startedAt: dayjs.Dayjs }) => {
     }, [runTimer]);
 
     return <Duration duration={duration} />;
-};
-
-export const Duration = (props: { duration: plugin.Duration }) => {
-    return (
-        <>
-            {props.duration.hours() > 0 ? props.duration.format('HH[h] ') : ''}
-            {props.duration.format('mm[m] ss[s]')}
-        </>
-    );
 };
