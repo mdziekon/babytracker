@@ -1,7 +1,7 @@
 import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/store.types';
 import { EventCard } from '../EventCard/EventCard';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
@@ -9,6 +9,8 @@ import { EventDetailsModifier } from '../EventDetailsModifier/EventDetailsModifi
 import { useCallback, useState } from 'react';
 import { EventModifier, RegisterEventModifier } from './ModifyEvent.types';
 import { useAppStore } from '../../../common/store/store';
+import { useDisclosure } from '@mantine/hooks';
+import { ConfirmCancelModal } from './ConfirmCancelModal';
 
 interface ModifyEventProps {
     event: LogEntry;
@@ -21,6 +23,11 @@ export const ModifyEvent = (props: ModifyEventProps) => {
     const editEntry = useAppStore((state) => state.api.editEntry);
     const insertEntry = useAppStore((state) => state.api.insertEntry);
     const deleteEntry = useAppStore((state) => state.api.deleteEntry);
+
+    const [
+        isConfirmCancelOpen,
+        { open: openConfirmCancel, close: closeConfirmCancel },
+    ] = useDisclosure(false);
 
     const [eventModifiers, setEventModifiers] = useState<
         Record<string, EventModifier>
@@ -47,26 +54,39 @@ export const ModifyEvent = (props: ModifyEventProps) => {
         []
     );
 
-    // TODO: Confirm cancel if changes made
-    // TODO: Confirm changes before saving (?)
+    const applyModifiers = useCallback(
+        (oldEvent: LogEntry) => {
+            return Object.values(eventModifiers).reduce((result, modifier) => {
+                return modifier(result);
+            }, window.structuredClone(oldEvent));
+        },
+        [eventModifiers]
+    );
+
+    const handleCancelModifications = () => {
+        const oldEvent = event;
+        const newEvent = applyModifiers(oldEvent);
+
+        const hasModifications =
+            JSON.stringify(oldEvent) !== JSON.stringify(newEvent);
+
+        if (!hasModifications) {
+            void navigate(`/event/edit/${event.metadata.uid}`);
+
+            return;
+        }
+
+        openConfirmCancel();
+    };
+
     const saveModifications = () => {
         const oldEvent = event;
-
-        const newEvent = Object.values(eventModifiers).reduce(
-            (result, modifier) => {
-                return modifier(result);
-            },
-            window.structuredClone(oldEvent)
-        );
+        const newEvent = applyModifiers(oldEvent);
 
         if (oldEvent.metadata.createdAt !== newEvent.metadata.createdAt) {
-            console.log('inserting');
-
             deleteEntry(newEvent.metadata.uid);
             insertEntry(newEvent);
         } else {
-            console.log('editing');
-
             editEntry(newEvent.metadata.uid, newEvent);
         }
 
@@ -86,11 +106,10 @@ export const ModifyEvent = (props: ModifyEventProps) => {
                 footer={
                     <ResponsiveStack>
                         <ResponsiveButton
-                            component={Link}
                             variant="light"
                             color="orange"
                             fullWidth
-                            to={`/event/edit/${event.metadata.uid}`}
+                            onClick={handleCancelModifications}
                         >
                             <IconX />
                             <Text component="span" ml="0.25rem">
@@ -110,6 +129,14 @@ export const ModifyEvent = (props: ModifyEventProps) => {
                         </ResponsiveButton>
                     </ResponsiveStack>
                 }
+            />
+
+            <ConfirmCancelModal
+                isModalOpen={isConfirmCancelOpen}
+                onModalClose={closeConfirmCancel}
+                onModificationsCancelled={() => {
+                    void navigate(`/event/edit/${event.metadata.uid}`);
+                }}
             />
         </>
     );
