@@ -14,8 +14,6 @@ import isYesterday from 'dayjs/plugin/isYesterday';
 import duration from 'dayjs/plugin/duration';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import { AppUpdater } from '../features/AppUpdater/AppUpdater';
-
 dayjs.extend(relativeTime, {
     thresholds: [
         { l: 's', r: 1 },
@@ -40,8 +38,6 @@ export const App = () => {
     return (
         <>
             <MantineProvider theme={theme} defaultColorScheme="dark">
-                <AppUpdater />
-
                 <HashRouter>
                     <AppRouting />
                 </HashRouter>
