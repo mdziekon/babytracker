@@ -51,25 +51,23 @@ export const DetailsModifyBottleFeedingEvent = (
 
     return (
         <>
-            {event.params.fluidVolume !== undefined && (
-                <Group>
-                    <IconBabyBottle size={16} stroke={1.5} />
-                    <Group justify="space-between" style={{ flexGrow: 1 }}>
-                        <Text component="div">Volume:</Text>
-                        <NumberInput
-                            rightSection={'ml'}
-                            rightSectionPointerEvents="none"
-                            placeholder="50"
-                            decimalScale={0}
-                            max={9_999}
-                            clampBehavior="strict"
-                            thousandSeparator=" "
-                            allowNegative={false}
-                            {...getInputProps('fluidVolume')}
-                        />
-                    </Group>
+            <Group>
+                <IconBabyBottle size={16} stroke={1.5} />
+                <Group justify="space-between" style={{ flexGrow: 1 }}>
+                    <Text component="div">Volume:</Text>
+                    <NumberInput
+                        rightSection={'ml'}
+                        rightSectionPointerEvents="none"
+                        placeholder="50"
+                        decimalScale={0}
+                        max={9_999}
+                        clampBehavior="strict"
+                        thousandSeparator=" "
+                        allowNegative={false}
+                        {...getInputProps('fluidVolume')}
+                    />
                 </Group>
-            )}
+            </Group>
         </>
     );
 };
