@@ -8,6 +8,7 @@ import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsMo
 
 import { RegisterEventModifier } from '../ModifyEvent/ModifyEvent.types';
 import { DetailsList } from '../DetailsList/DetailsList';
+import { isTimedEntry } from '../../../common/utils/entryGuards';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -19,17 +20,11 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
 
     const details: React.ReactNode[] = [];
 
-    if (
-        event.entryType === EntryType.Sleep ||
-        event.entryType === EntryType.BellyPosition ||
-        event.entryType === EntryType.Walk ||
-        event.entryType === EntryType.BreastFeeding ||
-        event.entryType === EntryType.BottleFeeding
-    ) {
+    if (isTimedEntry(event)) {
         details.push(
             <DetailsModifyTimedEvent
-                registerEventModifier={registerEventModifier}
                 event={event}
+                registerEventModifier={registerEventModifier}
             />
         );
     } else {
