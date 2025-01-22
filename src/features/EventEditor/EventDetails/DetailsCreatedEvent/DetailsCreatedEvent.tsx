@@ -2,7 +2,10 @@ import { Badge, Group, Text } from '@mantine/core';
 import { LogEntry } from '../../../../common/store/store.types';
 import dayjs from 'dayjs';
 import { IconCalendar } from '@tabler/icons-react';
-import { formatDateToRelativeLabel } from '../../../../common/utils/formatting';
+import {
+    DEFAULT_DATETIME_FORMAT,
+    formatDateToRelativeLabel,
+} from '../../../../common/utils/formatting';
 
 interface DetailsCreatedEventProps {
     event: LogEntry;
@@ -21,7 +24,9 @@ export const DetailsCreatedEvent = (props: DetailsCreatedEventProps) => {
         <>
             <Group>
                 <IconCalendar size={16} stroke={1.5} />
-                <Text>Date: {createdAtDate.format('YYYY-MM-DD HH:mm')} </Text>
+                <Text>
+                    Date: {createdAtDate.format(DEFAULT_DATETIME_FORMAT)}{' '}
+                </Text>
                 {createdAtBadge}
             </Group>
         </>

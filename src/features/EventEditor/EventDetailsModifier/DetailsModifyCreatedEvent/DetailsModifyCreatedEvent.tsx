@@ -6,6 +6,7 @@ import { RegisterEventModifier } from '../../ModifyEvent/ModifyEvent.types';
 import { useForm } from '@mantine/form';
 import { useEffect } from 'react';
 import { DateTimePicker } from '@mantine/dates';
+import { DEFAULT_DATETIME_FORMAT } from '../../../../common/utils/formatting';
 
 interface DetailsModifyCreatedEventProps {
     event: LogEntry;
@@ -51,7 +52,7 @@ export const DetailsModifyCreatedEvent = (
                     <Text component="div">Date:</Text>
                     <DateTimePicker
                         dropdownType="modal"
-                        valueFormat="YYYY-MM-DD HH:mm"
+                        valueFormat={DEFAULT_DATETIME_FORMAT}
                         {...getInputProps('createdAt')}
                     />
                 </Group>

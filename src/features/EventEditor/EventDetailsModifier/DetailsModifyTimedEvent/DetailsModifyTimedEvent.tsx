@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { RegisterEventModifier } from '../../ModifyEvent/ModifyEvent.types';
 import { DurationFromNow } from '../../../../common/features/Duration/DurationFromNow';
 import { Duration } from '../../../../common/features/Duration/Duration';
+import { DEFAULT_DATETIME_FORMAT } from '../../../../common/utils/formatting';
 
 interface DetailsModifyTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
@@ -83,7 +84,7 @@ export const DetailsModifyTimedEvent = (
                     <Text component="div">Started:</Text>
                     <DateTimePicker
                         dropdownType="modal"
-                        valueFormat="YYYY-MM-DD HH:mm"
+                        valueFormat={DEFAULT_DATETIME_FORMAT}
                         {...getInputProps('startedAt')}
                     />
                 </Group>
@@ -95,7 +96,7 @@ export const DetailsModifyTimedEvent = (
                         <Text component="div">Finished:</Text>
                         <DateTimePicker
                             dropdownType="modal"
-                            valueFormat="YYYY-MM-DD HH:mm"
+                            valueFormat={DEFAULT_DATETIME_FORMAT}
                             {...getInputProps('endedAt')}
                         />
                     </Group>

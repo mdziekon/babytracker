@@ -11,7 +11,10 @@ import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 import classes from './DetailsTimedEvent.module.css';
 import { DurationFromNow } from '../../../../common/features/Duration/DurationFromNow';
 import { Duration } from '../../../../common/features/Duration/Duration';
-import { formatDateToRelativeLabel } from '../../../../common/utils/formatting';
+import {
+    DEFAULT_DATETIME_FORMAT,
+    formatDateToRelativeLabel,
+} from '../../../../common/utils/formatting';
 
 interface DetailsTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
@@ -47,7 +50,7 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
             <Group>
                 <IconCalendar size={16} stroke={1.5} />
                 <Text>
-                    Started: {startedAtDate.format('YYYY-MM-DD HH:mm')}{' '}
+                    Started: {startedAtDate.format(DEFAULT_DATETIME_FORMAT)}{' '}
                 </Text>
                 {startedAtBadge}
             </Group>
@@ -55,7 +58,7 @@ export const DetailsTimedEvent = (props: DetailsTimedEventProps) => {
                 <Group>
                     <IconCalendarX size={16} stroke={1.5} />
                     <Text>
-                        Finished: {endedAtDate.format('YYYY-MM-DD HH:mm')}{' '}
+                        Finished: {endedAtDate.format(DEFAULT_DATETIME_FORMAT)}{' '}
                     </Text>
                     {endedAtBadge}
                 </Group>

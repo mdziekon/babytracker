@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { DateISO8601, LogEntry } from '../../store/store.types';
 import { useAppStore } from '../../store/store';
 import { mapEntryTypeToName } from '../../utils/entryMappers';
+import { DEFAULT_DATETIME_FORMAT } from '../../utils/formatting';
 
 interface EntryDeleteModalProps {
     entry: LogEntry;
@@ -46,7 +47,7 @@ export const EntryDeleteModal = (props: EntryDeleteModalProps) => {
                 Are you sure you want to delete entry{' '}
                 <strong>{mapEntryTypeToName(entry.entryType)}</strong> created{' '}
                 <strong>
-                    {dayjs(entryStartTime).format('YYYY-MM-DD HH:mm')}
+                    {dayjs(entryStartTime).format(DEFAULT_DATETIME_FORMAT)}
                 </strong>
                 ? This action cannot be undone.
                 <Group mt="lg" justify="flex-end">

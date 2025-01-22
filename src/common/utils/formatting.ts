@@ -13,3 +13,7 @@ export const formatDateToRelativeLabel = (date: dayjs.Dayjs) => {
         return 'Yesterday';
     }
 };
+
+export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
+export const DEFAULT_TIME_FORMAT = 'HH:mm';
+export const DEFAULT_DATETIME_FORMAT = `${DEFAULT_DATE_FORMAT} ${DEFAULT_TIME_FORMAT}`;
