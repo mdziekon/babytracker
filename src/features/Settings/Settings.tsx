@@ -164,6 +164,20 @@ export const Settings = () => {
                         Reset
                     </Button>
                 </Group>
+                <Group
+                    justify="space-between"
+                    className={classes.item}
+                    wrap="nowrap"
+                    gap="xl"
+                >
+                    <div>
+                        <Text>App version commit</Text>
+                        <Text size="xs" c="dimmed">
+                            {import.meta.env.VITE_APP_COMMIT}
+                        </Text>
+                    </div>
+                    <div></div>
+                </Group>
             </Card>
         </>
     );

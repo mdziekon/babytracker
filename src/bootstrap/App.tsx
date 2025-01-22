@@ -4,6 +4,7 @@ import { MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
 import { theme } from './theme';
 
 import dayjs from 'dayjs';
@@ -12,6 +13,8 @@ import isToday from 'dayjs/plugin/isToday';
 import isYesterday from 'dayjs/plugin/isYesterday';
 import duration from 'dayjs/plugin/duration';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+import { AppUpdater } from '../features/AppUpdater/AppUpdater';
 
 dayjs.extend(relativeTime, {
     thresholds: [
@@ -37,6 +40,8 @@ export const App = () => {
     return (
         <>
             <MantineProvider theme={theme} defaultColorScheme="dark">
+                <AppUpdater />
+
                 <HashRouter>
                     <AppRouting />
                 </HashRouter>
