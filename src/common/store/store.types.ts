@@ -1,6 +1,7 @@
 export enum EntryType {
     BreastFeeding = 'EntryType.BreastFeeding',
     BottleFeeding = 'EntryType.BottleFeeding',
+    MilkPumping = 'EntryType.MilkPumping',
     DiaperChange = 'EntryType.DiaperChange',
     WeightMeasurement = 'EntryType.WeightMeasurement',
     Sleep = 'EntryType.Sleep',
@@ -19,6 +20,14 @@ export interface EntryBreastFeedingVariant {
 }
 export interface EntryBottleFeedingVariant {
     entryType: EntryType.BottleFeeding;
+    params: {
+        fluidVolume?: number;
+        startedAt: DateISO8601;
+        endedAt?: DateISO8601;
+    };
+}
+export interface EntryMilkPumpingVariant {
+    entryType: EntryType.MilkPumping;
     params: {
         fluidVolume?: number;
         startedAt: DateISO8601;
@@ -66,6 +75,7 @@ export interface EntryWalkVariant {
 export type EntryVariants =
     | EntryBreastFeedingVariant
     | EntryBottleFeedingVariant
+    | EntryMilkPumpingVariant
     | EntryDiaperChangeVariant
     | EntryWeightMeasurementVariant
     | EntrySleepVariant
