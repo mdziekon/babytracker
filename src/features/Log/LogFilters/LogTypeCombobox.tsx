@@ -6,6 +6,7 @@ import {
     CheckIcon,
     Group,
     useCombobox,
+    Text,
 } from '@mantine/core';
 import { EntryType } from '../../../common/store/store.types';
 import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
@@ -26,7 +27,6 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
         },
     });
 
-    const [search, setSearch] = useState('');
     const [value, setValue] = useState<string[]>([]);
 
     useEffect(() => {
@@ -63,33 +63,27 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
         );
     });
 
-    const options = availableOptions
-        .filter((item) =>
-            item.toLowerCase().includes(search.trim().toLowerCase())
-        )
-        .map((item) => {
-            const Icon = mapEntryTypeToIcon(`EntryType.${item}` as EntryType);
+    const options = availableOptions.map((item) => {
+        const Icon = mapEntryTypeToIcon(`EntryType.${item}` as EntryType);
 
-            return (
-                <Combobox.Option
-                    value={item}
-                    key={item}
-                    active={value.includes(item)}
-                >
-                    <Group gap="sm">
-                        <CheckIcon
-                            size={12}
-                            visibility={
-                                value.includes(item) ? undefined : 'hidden'
-                            }
-                        />
-                        <span>
-                            <Icon size={16} /> {item}
-                        </span>
-                    </Group>
-                </Combobox.Option>
-            );
-        });
+        return (
+            <Combobox.Option
+                value={item}
+                key={item}
+                active={value.includes(item)}
+            >
+                <Group gap="sm">
+                    <CheckIcon
+                        size={12}
+                        visibility={value.includes(item) ? undefined : 'hidden'}
+                    />
+                    <span>
+                        <Icon size={16} /> {item}
+                    </span>
+                </Group>
+            </Combobox.Option>
+        );
+    });
 
     return (
         <Combobox store={combobox} onOptionSubmit={handleValueSelect}>
@@ -111,23 +105,16 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
                                 onBlur={() => {
                                     combobox.closeDropdown();
                                 }}
-                                value={search}
-                                placeholder="Select type"
-                                onChange={(event) => {
-                                    combobox.updateSelectedOptionIndex();
-                                    setSearch(event.currentTarget.value);
-                                }}
-                                onKeyDown={(event) => {
-                                    if (
-                                        event.key === 'Backspace' &&
-                                        search.length === 0
-                                    ) {
-                                        event.preventDefault();
-                                        handleValueRemove(
-                                            value[value.length - 1]
-                                        );
-                                    }
-                                }}
+                                component="span"
+                                children={
+                                    values.length > 0 ? (
+                                        ''
+                                    ) : (
+                                        <Text c="dimmed">
+                                            Select type(s) to filter
+                                        </Text>
+                                    )
+                                }
                             />
                         </Combobox.EventsTarget>
                     </Pill.Group>
