@@ -1,0 +1,69 @@
+import { Affix, Box, Button, Drawer } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconFilter } from '@tabler/icons-react';
+import { LogTypeCombobox } from './LogTypeCombobox';
+import { useCallback, useEffect, useState } from 'react';
+
+interface LogFiltersProps {
+    onChange: (filters: LogFiltersState) => void;
+}
+
+export const defaultFilters = {
+    eventType: [] as string[],
+};
+
+export type LogFiltersState = typeof defaultFilters;
+
+export const LogFilters = (props: LogFiltersProps) => {
+    const { onChange } = props;
+
+    const [isDrawerOpen, { open: openDrawer, close: closeDrawer }] =
+        useDisclosure(false);
+
+    const [filters, setFilters] = useState(defaultFilters);
+
+    useEffect(() => {
+        onChange(filters);
+    }, [onChange, filters]);
+
+    const onLogTypeChange = useCallback((value: string[]) => {
+        setFilters((prev) => {
+            return {
+                ...prev,
+                eventType: value,
+            };
+        });
+    }, []);
+
+    const appliedFiltersCount = filters.eventType.length;
+    const hasAppliedFilters = appliedFiltersCount !== 0;
+
+    return (
+        <>
+            <Drawer
+                opened={isDrawerOpen}
+                onClose={closeDrawer}
+                keepMounted
+                title="Filters"
+                position="bottom"
+            >
+                <LogTypeCombobox onChange={onLogTypeChange} />
+            </Drawer>
+
+            {/* TODO: Figure out better placement for desktop */}
+            <Affix
+                hidden={isDrawerOpen}
+                position={{ right: 0 + 8, bottom: 60 + 8 }}
+            >
+                <Button
+                    leftSection={<IconFilter size={16} />}
+                    color={hasAppliedFilters ? 'blue' : 'gray'}
+                    onClick={openDrawer}
+                >
+                    Filters ({appliedFiltersCount})
+                </Button>
+            </Affix>
+            <Box mb={36}></Box>
+        </>
+    );
+};

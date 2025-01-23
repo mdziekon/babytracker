@@ -8,13 +8,15 @@ import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDe
 import { useDisclosure } from '@mantine/hooks';
 import { LogEntry } from '../../common/store/store.types';
 import { formatDateToRelativeLabel } from '../../common/utils/formatting';
+import { LogFiltersState } from './LogFilters/LogFilters';
 
 interface LogEntriesProps {
     filterInProgress?: boolean;
+    filters: LogFiltersState;
 }
 
 export const LogEntries = (props: LogEntriesProps) => {
-    const { filterInProgress } = props;
+    const { filterInProgress, filters } = props;
     const rawEntries = useAppStore((state) => state.data.logs);
 
     const entries = useMemo(() => {
@@ -25,9 +27,16 @@ export const LogEntries = (props: LogEntriesProps) => {
                 .filter(isTimedEntry)
                 .filter((entry) => !entry.params.endedAt);
         }
+        if (filters.eventType.length !== 0) {
+            newEntries = newEntries.filter((entry) => {
+                return filters.eventType.includes(
+                    entry.entryType.replace('EntryType.', '')
+                );
+            });
+        }
 
         return newEntries;
-    }, [filterInProgress, rawEntries]);
+    }, [filterInProgress, filters, rawEntries]);
 
     const entriesGroups = useMemo(() => {
         return Object.groupBy(entries, (entry) => {

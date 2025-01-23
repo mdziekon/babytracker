@@ -1,6 +1,8 @@
 import { Table, Text, Title } from '@mantine/core';
 import classes from './Log.module.css';
 import { LogEntries } from './LogEntries';
+import { defaultFilters, LogFilters } from './LogFilters/LogFilters';
+import { useState } from 'react';
 
 interface LogProps {
     filterInProgress?: boolean;
@@ -8,6 +10,8 @@ interface LogProps {
 
 export const Log = (props: LogProps) => {
     const { filterInProgress } = props;
+
+    const [filters, setFilters] = useState(defaultFilters);
 
     return (
         <>
@@ -23,9 +27,13 @@ export const Log = (props: LogProps) => {
             </Title>
             <Table striped highlightOnHover className={classes.logTable}>
                 <Table.Tbody>
-                    <LogEntries filterInProgress={filterInProgress} />
+                    <LogEntries
+                        filterInProgress={filterInProgress}
+                        filters={filters}
+                    />
                 </Table.Tbody>
             </Table>
+            <LogFilters onChange={setFilters} />
         </>
     );
 };
