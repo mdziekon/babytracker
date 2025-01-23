@@ -59,6 +59,11 @@ export const LogFilters = (props: LogFiltersProps) => {
                     leftSection={<IconFilter size={16} />}
                     color={hasAppliedFilters ? 'blue' : 'gray'}
                     onClick={openDrawer}
+                    styles={{
+                        root: {
+                            boxShadow: 'var(--mantine-shadow-md)',
+                        },
+                    }}
                 >
                     Filters ({appliedFiltersCount})
                 </Button>
