@@ -2,6 +2,7 @@ import {
     IconBabyBottle,
     IconBabyCarriage,
     IconBath,
+    IconBottleFilled,
     IconBrandMcdonalds,
     IconDiaper,
     IconMoonStars,
@@ -14,6 +15,7 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
     const mapping = {
         [EntryType.BellyPosition]: IconScubaDiving,
         [EntryType.BottleFeeding]: IconBabyBottle,
+        [EntryType.MilkPumping]: IconBottleFilled,
         [EntryType.BreastFeeding]: IconBrandMcdonalds,
         [EntryType.DiaperChange]: IconDiaper,
         [EntryType.Sleep]: IconMoonStars,
@@ -29,6 +31,7 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
     const mapping = {
         [EntryType.BellyPosition]: 'Belly Position',
         [EntryType.BottleFeeding]: 'Bottle Feeding',
+        [EntryType.MilkPumping]: 'Milk Pumping',
         [EntryType.BreastFeeding]: 'Breast Feeding',
         [EntryType.DiaperChange]: 'Diaper Change',
         [EntryType.Sleep]: 'Sleep',
@@ -44,6 +47,7 @@ export const mapEntryTypeToColor = (entryType: EntryType) => {
     const mapping = {
         [EntryType.BellyPosition]: 'pink',
         [EntryType.BottleFeeding]: 'cyan',
+        [EntryType.MilkPumping]: 'grape',
         [EntryType.BreastFeeding]: 'lime',
         [EntryType.DiaperChange]: 'violet',
         [EntryType.Sleep]: 'indigo',

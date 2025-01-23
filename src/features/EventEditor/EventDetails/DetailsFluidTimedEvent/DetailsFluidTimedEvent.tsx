@@ -1,21 +1,21 @@
 import { Group, NumberFormatter, Text } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
-import { IconBabyBottle } from '@tabler/icons-react';
+import { IconBottle } from '@tabler/icons-react';
 
-interface DetailsBottleFeedingEventProps {
-    event: LogEntry & { entryType: EntryType.BottleFeeding };
+interface DetailsFluidTimedEventProps {
+    event: LogEntry & {
+        entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
+    };
 }
 
-export const DetailsBottleFeedingEvent = (
-    props: DetailsBottleFeedingEventProps
-) => {
+export const DetailsFluidTimedEvent = (props: DetailsFluidTimedEventProps) => {
     const { event } = props;
 
     return (
         <>
             {event.params.fluidVolume !== undefined && (
                 <Group>
-                    <IconBabyBottle size={16} stroke={1.5} />
+                    <IconBottle size={16} stroke={1.5} />
                     <Text>
                         Volume:{' '}
                         <NumberFormatter

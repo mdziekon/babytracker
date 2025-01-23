@@ -5,11 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
-const eventType = EntryType.BottleFeeding;
+interface AddFluidTimedEventProps {
+    eventType: EntryType.BottleFeeding | EntryType.MilkPumping;
+}
 
-export const AddBottleFeedingEvent = () => {
+export const AddFluidTimedEvent = (props: AddFluidTimedEventProps) => {
+    const { eventType } = props;
+
     const navigate = useNavigate();
-
     const addEntry = useAppStore((store) => store.api.addEntry);
 
     const handleAddEvent = () => {

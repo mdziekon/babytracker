@@ -1,14 +1,16 @@
 import { NumberFormatter } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
-import { IconBabyBottle } from '@tabler/icons-react';
+import { IconBottle } from '@tabler/icons-react';
 import { MiniDetailsEntry } from '../MiniDetailsEntry/MiniDetailsEntry';
 
-interface MiniDetailsBottleFeedingEventProps {
-    event: LogEntry & { entryType: EntryType.BottleFeeding };
+interface MiniDetailsFluidTimedEventProps {
+    event: LogEntry & {
+        entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
+    };
 }
 
-export const MiniDetailsBottleFeedingEvent = (
-    props: MiniDetailsBottleFeedingEventProps
+export const MiniDetailsFluidTimedEvent = (
+    props: MiniDetailsFluidTimedEventProps
 ) => {
     const { event } = props;
 
@@ -16,7 +18,7 @@ export const MiniDetailsBottleFeedingEvent = (
         <>
             {event.params.fluidVolume !== undefined && (
                 <MiniDetailsEntry
-                    icon={<IconBabyBottle title="Milk volume" />}
+                    icon={<IconBottle title="Volume" />}
                     title={
                         <NumberFormatter
                             thousandSeparator=" "

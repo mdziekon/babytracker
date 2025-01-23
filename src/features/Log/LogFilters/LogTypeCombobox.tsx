@@ -9,7 +9,10 @@ import {
     Text,
 } from '@mantine/core';
 import { EntryType } from '../../../common/store/store.types';
-import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
+import {
+    mapEntryTypeToIcon,
+    mapEntryTypeToName,
+} from '../../../common/utils/entryMappers';
 
 interface LogTypeComboboxProps {
     onChange: (value: string[]) => void;
@@ -49,6 +52,7 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
 
     const values = value.map((item) => {
         const Icon = mapEntryTypeToIcon(`EntryType.${item}` as EntryType);
+        const name = mapEntryTypeToName(`EntryType.${item}` as EntryType);
 
         return (
             <Pill
@@ -58,13 +62,14 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
                     handleValueRemove(item);
                 }}
             >
-                <Icon size={12} /> {item}
+                <Icon size={12} /> {name}
             </Pill>
         );
     });
 
     const options = availableOptions.map((item) => {
         const Icon = mapEntryTypeToIcon(`EntryType.${item}` as EntryType);
+        const name = mapEntryTypeToName(`EntryType.${item}` as EntryType);
 
         return (
             <Combobox.Option
@@ -78,7 +83,7 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
                         visibility={value.includes(item) ? undefined : 'hidden'}
                     />
                     <span>
-                        <Icon size={16} /> {item}
+                        <Icon size={16} /> {name}
                     </span>
                 </Group>
             </Combobox.Option>

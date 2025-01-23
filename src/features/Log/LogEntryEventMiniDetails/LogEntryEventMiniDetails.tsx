@@ -3,7 +3,7 @@ import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { MiniDetailsBreastFeedingEvent } from './MiniDetailsBreastFeedingEvent/MiniDetailsBreastFeedingEvent';
 import { MiniDetailsDiaperChangeEvent } from './MiniDetailsDiaperChangeEvent/MiniDetailsDiaperChangeEvent';
 import { MiniDetailsWeightMeasurementEvent } from './MiniDetailsWeightMeasurementEvent/MiniDetailsWeightMeasurementEvent';
-import { MiniDetailsBottleFeedingEvent } from './MiniDetailsBottleFeedingEvent/MiniDetailsBottleFeedingEvent';
+import { MiniDetailsFluidTimedEvent } from './MiniDetailsFluidTimedEvent/MiniDetailsFluidTimedEvent';
 import { MiniDetailsEntry } from './MiniDetailsEntry/MiniDetailsEntry';
 import { IconNote } from '@tabler/icons-react';
 
@@ -21,8 +21,11 @@ export const LogEntryEventMiniDetails = (
     if (event.entryType === EntryType.BreastFeeding) {
         details.push(<MiniDetailsBreastFeedingEvent event={event} />);
     }
-    if (event.entryType === EntryType.BottleFeeding) {
-        details.push(<MiniDetailsBottleFeedingEvent event={event} />);
+    if (
+        event.entryType === EntryType.BottleFeeding ||
+        event.entryType === EntryType.MilkPumping
+    ) {
+        details.push(<MiniDetailsFluidTimedEvent event={event} />);
     }
     if (event.entryType === EntryType.DiaperChange) {
         details.push(<MiniDetailsDiaperChangeEvent event={event} />);

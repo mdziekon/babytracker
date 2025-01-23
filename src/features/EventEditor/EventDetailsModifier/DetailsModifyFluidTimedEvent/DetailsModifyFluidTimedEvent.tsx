@@ -1,28 +1,30 @@
 import { Group, NumberInput, Text } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
-import { IconBabyBottle } from '@tabler/icons-react';
+import { IconBottle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent/ModifyEvent.types';
 import { useEffect } from 'react';
 
-interface DetailsModifyBottleFeedingEventProps {
-    event: LogEntry & { entryType: EntryType.BottleFeeding };
+interface DetailsModifyFluidTimedEventProps {
+    event: LogEntry & {
+        entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
+    };
     registerEventModifier: RegisterEventModifier;
 }
 
-interface DetailsModifyBottleFeedingEventFormSchema {
+interface DetailsModifyFluidTimedEventFormSchema {
     fluidVolume: (LogEntry & {
-        entryType: EntryType.BottleFeeding;
+        entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
     })['params']['fluidVolume'];
 }
 
-export const DetailsModifyBottleFeedingEvent = (
-    props: DetailsModifyBottleFeedingEventProps
+export const DetailsModifyFluidTimedEvent = (
+    props: DetailsModifyFluidTimedEventProps
 ) => {
     const { event, registerEventModifier } = props;
 
     const { getValues, isTouched, getInputProps } =
-        useForm<DetailsModifyBottleFeedingEventFormSchema>({
+        useForm<DetailsModifyFluidTimedEventFormSchema>({
             initialValues: {
                 fluidVolume: event.params.fluidVolume,
             },
@@ -30,10 +32,10 @@ export const DetailsModifyBottleFeedingEvent = (
 
     useEffect(() => {
         const unregister = registerEventModifier(
-            'bottleFeedingEvent',
+            'fluidTimedEvent',
             (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
-                    entryType: EntryType.BottleFeeding;
+                    entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
                 };
 
                 if (isTouched('fluidVolume')) {
@@ -52,7 +54,7 @@ export const DetailsModifyBottleFeedingEvent = (
     return (
         <>
             <Group>
-                <IconBabyBottle size={16} stroke={1.5} />
+                <IconBottle size={16} stroke={1.5} />
                 <Group justify="space-between" style={{ flexGrow: 1 }}>
                     <Text component="div">Volume:</Text>
                     <NumberInput
