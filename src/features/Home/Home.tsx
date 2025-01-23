@@ -38,28 +38,31 @@ export const Home = () => {
 
 const actions = [
     {
+        entryType: EntryType.BreastFeeding,
+    },
+    {
         entryType: EntryType.BottleFeeding,
     },
     {
-        entryType: EntryType.BreastFeeding,
+        entryType: EntryType.MilkPumping,
     },
-    undefined,
     {
         entryType: EntryType.DiaperChange,
     },
     {
         entryType: EntryType.Sleep,
     },
-    {
-        entryType: EntryType.BellyPosition,
-    },
+    undefined,
     {
         entryType: EntryType.Walk,
     },
     {
-        entryType: EntryType.Bath,
+        entryType: EntryType.BellyPosition,
     },
     undefined,
+    {
+        entryType: EntryType.Bath,
+    },
     {
         entryType: EntryType.WeightMeasurement,
     },
