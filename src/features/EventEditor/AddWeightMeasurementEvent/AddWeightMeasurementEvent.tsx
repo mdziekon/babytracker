@@ -10,6 +10,8 @@ import { EventCard } from '../EventCard/EventCard';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
+const eventType = EntryType.WeightMeasurement;
+
 export const AddWeightMeasurementEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
     const navigate = useNavigate();
@@ -21,7 +23,7 @@ export const AddWeightMeasurementEvent = () => {
         const newEventUid = uuidv4();
 
         addEntry({
-            entryType: EntryType.WeightMeasurement,
+            entryType: eventType,
             metadata: {
                 uid: newEventUid,
                 createdAt: new Date().toISOString(),
@@ -37,7 +39,7 @@ export const AddWeightMeasurementEvent = () => {
 
     return (
         <EventCard
-            eventType={EntryType.DiaperChange}
+            eventType={eventType}
             middle={
                 <>
                     <Box>

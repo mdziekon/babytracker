@@ -11,6 +11,8 @@ import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 
+const eventType = EntryType.DiaperChange;
+
 export const AddDiaperChangeEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ export const AddDiaperChangeEvent = () => {
         const newEventUid = uuidv4();
 
         addEntry({
-            entryType: EntryType.DiaperChange,
+            entryType: eventType,
             metadata: {
                 uid: newEventUid,
                 createdAt: new Date().toISOString(),
@@ -40,7 +42,7 @@ export const AddDiaperChangeEvent = () => {
 
     return (
         <EventCard
-            eventType={EntryType.DiaperChange}
+            eventType={eventType}
             middle={
                 <>
                     <Box>
