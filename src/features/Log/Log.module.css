@@ -17,7 +17,7 @@ table.logTable {
     tr:has(th) {
         position: sticky;
         top: 0;
-        z-index: 6;
+        z-index: var(--mantine-z-index-overlay);
 
         @media (min-width: $mantine-breakpoint-md) {
             top: calc(3.75rem);
