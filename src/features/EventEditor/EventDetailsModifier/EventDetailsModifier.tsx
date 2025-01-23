@@ -3,7 +3,7 @@ import { DetailsModifyBreastFeedingEvent } from './DetailsModifyBreastFeedingEve
 import { DetailsModifyTimedEvent } from './DetailsModifyTimedEvent/DetailsModifyTimedEvent';
 import { DetailsModifyDiaperChangeEvent } from './DetailsModifyDiaperChangeEvent/DetailsModifyDiaperChangeEvent';
 import { DetailsModifyWeightMeasurementEvent } from './DetailsModifyWeightMeasurementEvent/DetailsModifyWeightMeasurementEvent';
-import { DetailsModifyBottleFeedingEvent } from './DetailsModifyBottleFeedingEvent/DetailsModifyBottleFeedingEvent';
+import { DetailsModifyFluidTimedEvent } from './DetailsModifyFluidTimedEvent/DetailsModifyFluidTimedEvent';
 import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsModifyCreatedEvent';
 
 import { RegisterEventModifier } from '../ModifyEvent/ModifyEvent.types';
@@ -44,9 +44,12 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
             />
         );
     }
-    if (event.entryType === EntryType.BottleFeeding) {
+    if (
+        event.entryType === EntryType.BottleFeeding ||
+        event.entryType === EntryType.MilkPumping
+    ) {
         details.push(
-            <DetailsModifyBottleFeedingEvent
+            <DetailsModifyFluidTimedEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />

@@ -2,6 +2,7 @@ import { Box, NumberInput } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import {
     EntryBottleFeedingVariant,
+    EntryMilkPumpingVariant,
     EntryType,
     LogEntry,
 } from '../../../common/store/store.types';
@@ -11,18 +12,23 @@ import { EventDetails } from '../EventDetails/EventDetails';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 
-interface FinishBottleFeedingEventProps {
-    event: LogEntry & { entryType: EntryType.BottleFeeding };
+interface FinishFluidTimedEventProps {
+    event: LogEntry & {
+        entryType: EntryType.BottleFeeding | EntryType.MilkPumping;
+    };
 }
 
-export const FinishBottleFeedingEvent = (
-    props: FinishBottleFeedingEventProps
-) => {
+export const FinishFluidTimedEvent = (props: FinishFluidTimedEventProps) => {
     const { event } = props;
     const editEntry = useAppStore((store) => store.api.editEntry);
 
     const [fluidVolumeInput, setFluidVolumeInput] =
-        useState<EntryBottleFeedingVariant['params']['fluidVolume']>(0);
+        useState<
+            (
+                | EntryBottleFeedingVariant
+                | EntryMilkPumpingVariant
+            )['params']['fluidVolume']
+        >(0);
 
     const handleFinishEventCounter = () => {
         const newEvent = structuredClone(event);
@@ -42,7 +48,7 @@ export const FinishBottleFeedingEvent = (
                     <NumberInput
                         rightSection={'ml'}
                         rightSectionPointerEvents="none"
-                        label="Milk volume"
+                        label="Volume"
                         placeholder="50"
                         decimalScale={0}
                         max={9_999}
@@ -68,7 +74,7 @@ export const FinishBottleFeedingEvent = (
                         fullWidth
                         onClick={handleFinishEventCounter}
                     >
-                        Stop counter and save milk volume
+                        Stop counter and save volume
                     </ResponsiveButton>
                 </ResponsiveStack>
             }

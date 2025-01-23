@@ -8,8 +8,8 @@ import { FinishTimedEvent } from './FinishTimedEvent/FinishTimedEvent';
 import { CompleteEvent } from './CompleteEvent/CompleteEvent';
 import { AddBathEvent } from './AddBathEvent/AddBathEvent';
 import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
-import { AddBottleFeedingEvent } from './AddBottleFeedingEvent/AddBottleFeedingEvent';
-import { FinishBottleFeedingEvent } from './FinishBottleFeedingEvent/FinishBottleFeedingEvent';
+import { AddFluidTimedEvent } from './AddFluidTimedEvent/AddFluidTimedEvent';
+import { FinishFluidTimedEvent } from './FinishFluidTimedEvent/FinishFluidTimedEvent';
 import { FinishBreastFeedingEvent } from './FinishBreastFeedingEvent/FinishBreastFeedingEvent';
 import { ModifyEvent } from './ModifyEvent/ModifyEvent';
 
@@ -59,7 +59,10 @@ export const EventEditor = (props: EventEditorProps) => {
             return <AddWeightMeasurementEvent />;
         }
         if (eventType === 'BottleFeeding') {
-            return <AddBottleFeedingEvent />;
+            return <AddFluidTimedEvent eventType={EntryType.BottleFeeding} />;
+        }
+        if (eventType === 'MilkPumping') {
+            return <AddFluidTimedEvent eventType={EntryType.MilkPumping} />;
         }
     }
     if (mode === 'edit') {
@@ -84,10 +87,11 @@ export const EventEditor = (props: EventEditorProps) => {
         }
 
         if (
-            event.entryType === EntryType.BottleFeeding &&
+            (event.entryType === EntryType.BottleFeeding ||
+                event.entryType === EntryType.MilkPumping) &&
             !event.params.endedAt
         ) {
-            return <FinishBottleFeedingEvent event={event} />;
+            return <FinishFluidTimedEvent event={event} />;
         }
 
         return <CompleteEvent event={event} />;
