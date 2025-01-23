@@ -10,6 +10,7 @@ import { EntryTypeIcon } from './LogEntryDisplay/EntryTypeIcon';
 import { EntryActions } from './LogEntryDisplay/EntryActions';
 import { EntryDates } from './LogEntryDisplay/EntryDates';
 import { Duration } from '../../common/features/Duration/Duration';
+import { isTimedEntry } from '../../common/utils/entryGuards';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -19,6 +20,8 @@ interface LogEntryProps {
 export const LogEntryDisplay = (props: LogEntryProps) => {
     const { entry, onOpenConfirmDelete } = props;
     const navigate = useNavigate();
+
+    const isInProgress = isTimedEntry(entry) && !entry.params.endedAt;
 
     const entryTime = (() => {
         if (hasStartedAt(entry)) {
@@ -56,7 +59,10 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
             }}
         >
             <Table.Td w={rem(64)} h={rem(64)}>
-                <EntryTypeIcon entryType={entry.entryType} />
+                <EntryTypeIcon
+                    entryType={entry.entryType}
+                    isInProgress={isInProgress}
+                />
             </Table.Td>
             <Table.Td>
                 <EntryDates

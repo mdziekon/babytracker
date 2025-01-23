@@ -5,24 +5,35 @@ import {
     mapEntryTypeToIcon,
     mapEntryTypeToName,
 } from '../../../common/utils/entryMappers';
-import { Avatar } from '@mantine/core';
+import { Avatar, Indicator } from '@mantine/core';
 
 import classes from './EntryTypeIcon.module.css';
 
 interface EntryTypeIconProps {
     entryType: EntryType;
+    isInProgress: boolean;
 }
 
 const EntryTypeIconBase = (props: EntryTypeIconProps) => {
     const IconComponent = mapEntryTypeToIcon(props.entryType);
 
     return (
-        <Avatar
-            title={mapEntryTypeToName(props.entryType)}
-            color={mapEntryTypeToColor(props.entryType)}
+        <Indicator
+            disabled={!props.isInProgress}
+            inline
+            processing
+            color="indigo"
+            size={12}
+            offset={6}
+            className={classes.itemContainer}
         >
-            <IconComponent className={classes.icon} />
-        </Avatar>
+            <Avatar
+                title={mapEntryTypeToName(props.entryType)}
+                color={mapEntryTypeToColor(props.entryType)}
+            >
+                <IconComponent className={classes.icon} />
+            </Avatar>
+        </Indicator>
     );
 };
 
