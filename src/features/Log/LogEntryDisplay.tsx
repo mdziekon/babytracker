@@ -11,6 +11,7 @@ import { EntryActions } from './LogEntryDisplay/EntryActions';
 import { EntryDates } from './LogEntryDisplay/EntryDates';
 import { Duration } from '../../common/features/Duration/Duration';
 import { isTimedEntry } from '../../common/utils/entryGuards';
+import { routes } from '../../common/routes';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -55,7 +56,7 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
         <Table.Tr
             key={entry.metadata.createdAt}
             onClick={() => {
-                void navigate(`/event/edit/${entry.metadata.uid}`);
+                void navigate(routes.eventView(entry.metadata.uid));
             }}
         >
             <Table.Td w={rem(64)} h={rem(64)}>

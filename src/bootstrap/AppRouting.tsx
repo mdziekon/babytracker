@@ -4,6 +4,7 @@ import { MainLayout } from './layouts/MainLayout';
 import { Log } from '../features/Log/Log';
 import { EventEditor } from '../features/EventEditor/EventEditor';
 import { Settings } from '../features/Settings/Settings';
+import { routes } from '../common/routes';
 
 export const AppRouting = () => {
     return (
@@ -12,20 +13,20 @@ export const AppRouting = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/log" element={<Log />} />
                 <Route
-                    path="/log/in-progress"
+                    path={routes.logsInProgress}
                     element={<Log filterInProgress />}
                 />
                 <Route
-                    path="/event/add/:eventType"
+                    path={routes.eventAdd(':eventType')}
                     element={<EventEditor mode="add" />}
                 />
                 <Route
-                    path="/event/edit/:eventUid"
-                    element={<EventEditor mode="edit" />}
+                    path={routes.eventView(':eventUid')}
+                    element={<EventEditor mode="view" />}
                 />
                 <Route
-                    path="/event/modify/:eventUid"
-                    element={<EventEditor mode="modify" />}
+                    path={routes.eventEdit(':eventUid')}
+                    element={<EventEditor mode="edit" />}
                 />
                 <Route path="/settings" element={<Settings />} />
             </Route>

@@ -9,6 +9,7 @@ import { EventCard } from '../../common/EventCard/EventCard';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
+import { routes } from '../../../../common/routes';
 
 const eventType = EntryType.WeightMeasurement;
 
@@ -31,7 +32,7 @@ export const AddWeightMeasurementEvent = () => {
             })
         );
 
-        void navigate(`/event/edit/${newEntry.metadata.uid}`);
+        void navigate(routes.eventView(newEntry.metadata.uid));
     };
 
     return (

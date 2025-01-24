@@ -18,6 +18,7 @@ import {
     mapEntryTypeToName,
 } from '../../common/utils/entryMappers';
 import { TimedLogEntries } from '../../common/store/store.helperTypes';
+import { routes } from '../../common/routes';
 
 interface ActionsGridCardProps {
     actions: (
@@ -58,8 +59,8 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
         const isEntryTypeInProgress = Boolean(inProgressAction);
 
         const linkTarget = isEntryTypeInProgress
-            ? `/event/edit/${inProgressAction.metadata.uid}`
-            : `/event/add/${action.entryType.replace('EntryType.', '')}`;
+            ? routes.eventView(inProgressAction.metadata.uid)
+            : routes.eventAdd(action.entryType.replace('EntryType.', ''));
 
         return (
             <Indicator
@@ -97,7 +98,7 @@ export function ActionsGridCard(props: ActionsGridCardProps) {
                     {/* TODO: Localize */}
                     What would you like to log?
                 </Text>
-                <NavLink to="/log/in-progress">
+                <NavLink to={routes.logsInProgress}>
                     {() => (
                         <Badge
                             color={hasActionsInProgress ? 'indigo' : 'grey'}

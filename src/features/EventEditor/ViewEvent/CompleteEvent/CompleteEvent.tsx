@@ -9,6 +9,7 @@ import { LogEntry } from '../../../../common/store/store.types';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { EventNotes } from './EventNotes/EventNotes';
+import { routes } from '../../../../common/routes';
 
 interface CompleteEventProps {
     event: LogEntry;
@@ -38,7 +39,7 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                             variant="light"
                             color="indigo"
                             fullWidth
-                            to={`/event/modify/${event.metadata.uid}`}
+                            to={routes.eventEdit(event.metadata.uid)}
                         >
                             <IconPencil />
                             <Text component="span" ml="0.25rem">

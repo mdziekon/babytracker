@@ -9,6 +9,7 @@ import { EventDetails } from '../EventDetails/EventDetails';
 import { v4 as uuidv4 } from 'uuid';
 
 import classes from './FinishBreastFeedingEvent.module.css';
+import { routes } from '../../../../common/routes';
 
 const eventType = EntryType.BreastFeeding;
 
@@ -54,7 +55,7 @@ export const FinishBreastFeedingEvent = (
             },
         });
 
-        void navigate(`/event/edit/${newEventUid}`);
+        void navigate(routes.eventView(newEventUid));
     };
 
     return (

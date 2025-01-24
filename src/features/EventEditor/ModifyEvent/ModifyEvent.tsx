@@ -11,6 +11,7 @@ import { EventModifier, RegisterEventModifier } from './ModifyEvent.types';
 import { useAppStore } from '../../../common/store/store';
 import { useDisclosure } from '@mantine/hooks';
 import { ConfirmCancelModal } from './ConfirmCancelModal';
+import { routes } from '../../../common/routes';
 
 interface ModifyEventProps {
     event: LogEntry;
@@ -71,7 +72,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
             JSON.stringify(oldEvent) !== JSON.stringify(newEvent);
 
         if (!hasModifications) {
-            void navigate(`/event/edit/${event.metadata.uid}`);
+            void navigate(routes.eventView(event.metadata.uid));
 
             return;
         }
@@ -90,7 +91,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
             editEntry(newEvent.metadata.uid, newEvent);
         }
 
-        void navigate(`/event/edit/${event.metadata.uid}`);
+        void navigate(routes.eventView(event.metadata.uid));
     };
 
     return (
@@ -135,7 +136,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
                 isModalOpen={isConfirmCancelOpen}
                 onModalClose={closeConfirmCancel}
                 onModificationsCancelled={() => {
-                    void navigate(`/event/edit/${event.metadata.uid}`);
+                    void navigate(routes.eventView(event.metadata.uid));
                 }}
             />
         </>

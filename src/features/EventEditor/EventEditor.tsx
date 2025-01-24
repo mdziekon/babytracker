@@ -6,7 +6,7 @@ import { AddEvent } from './AddEvent/AddEvent';
 import { ViewEvent } from './ViewEvent/ViewEvent';
 
 interface EventEditorProps {
-    mode: 'add' | 'edit' | 'modify';
+    mode: 'add' | 'view' | 'edit';
 }
 
 export const EventEditor = (props: EventEditorProps) => {
@@ -39,7 +39,7 @@ export const EventEditor = (props: EventEditorProps) => {
             />
         );
     }
-    if (mode === 'edit') {
+    if (mode === 'view') {
         if (!event) {
             throw new Error('Missing event uid');
         }
@@ -48,7 +48,7 @@ export const EventEditor = (props: EventEditorProps) => {
     }
     // TODO: refactor & remove ignore
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (mode === 'modify') {
+    if (mode === 'edit') {
         if (!event) {
             throw new Error('Missing event uid');
         }
