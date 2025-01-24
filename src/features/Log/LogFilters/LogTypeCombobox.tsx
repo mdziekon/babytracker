@@ -14,6 +14,8 @@ import {
     mapEntryTypeToName,
 } from '../../../common/utils/entryMappers';
 
+import classes from './LogTypeCombobox.module.css';
+
 interface LogTypeComboboxProps {
     onChange: (value: string[]) => void;
 }
@@ -127,7 +129,7 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
             </Combobox.DropdownTarget>
 
             <Combobox.Dropdown>
-                <Combobox.Options mah={150} style={{ overflowY: 'auto' }}>
+                <Combobox.Options mah={150} className={classes.comboOptions}>
                     {options.length > 0 ? (
                         options
                     ) : (

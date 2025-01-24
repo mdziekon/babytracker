@@ -1,20 +1,12 @@
 import { useParams } from 'react-router';
-import { AddDiaperChangeEvent } from './AddDiaperChangeEvent/AddDiaperChangeEvent';
 import { useAppStore } from '../../common/store/store';
 import { EntryType } from '../../common/store/store.types';
-import { AddBareTimedEvent } from './AddBareTimedEvent/AddBareTimedEvent';
-import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingEvent';
-import { FinishTimedEvent } from './FinishTimedEvent/FinishTimedEvent';
-import { CompleteEvent } from './CompleteEvent/CompleteEvent';
-import { AddBathEvent } from './AddBathEvent/AddBathEvent';
-import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
-import { AddFluidTimedEvent } from './AddFluidTimedEvent/AddFluidTimedEvent';
-import { FinishFluidTimedEvent } from './FinishFluidTimedEvent/FinishFluidTimedEvent';
-import { FinishBreastFeedingEvent } from './FinishBreastFeedingEvent/FinishBreastFeedingEvent';
 import { ModifyEvent } from './ModifyEvent/ModifyEvent';
+import { AddEvent } from './AddEvent/AddEvent';
+import { ViewEvent } from './ViewEvent/ViewEvent';
 
 interface EventEditorProps {
-    mode: 'add' | 'edit' | 'modify';
+    mode: 'add' | 'view' | 'edit';
 }
 
 export const EventEditor = (props: EventEditorProps) => {
@@ -37,66 +29,26 @@ export const EventEditor = (props: EventEditorProps) => {
             throw new Error('Missing event type');
         }
 
-        if (eventType === 'Bath') {
-            return <AddBathEvent />;
-        }
-        if (eventType === 'DiaperChange') {
-            return <AddDiaperChangeEvent />;
-        }
-        if (eventType === 'Sleep') {
-            return <AddBareTimedEvent eventType={EntryType.Sleep} />;
-        }
-        if (eventType === 'BellyPosition') {
-            return <AddBareTimedEvent eventType={EntryType.BellyPosition} />;
-        }
-        if (eventType === 'Walk') {
-            return <AddBareTimedEvent eventType={EntryType.Walk} />;
-        }
-        if (eventType === 'BreastFeeding') {
-            return <AddBreastFeedingEvent />;
-        }
-        if (eventType === 'WeightMeasurement') {
-            return <AddWeightMeasurementEvent />;
-        }
-        if (eventType === 'BottleFeeding') {
-            return <AddFluidTimedEvent eventType={EntryType.BottleFeeding} />;
-        }
-        if (eventType === 'MilkPumping') {
-            return <AddFluidTimedEvent eventType={EntryType.MilkPumping} />;
-        }
+        return (
+            <AddEvent
+                eventType={
+                    Object.values(EntryType).find((type) =>
+                        type.includes(eventType)
+                    ) ?? 'unknown'
+                }
+            />
+        );
     }
-    if (mode === 'edit') {
+    if (mode === 'view') {
         if (!event) {
             throw new Error('Missing event uid');
         }
 
-        if (
-            (event.entryType === EntryType.Sleep ||
-                event.entryType === EntryType.BellyPosition ||
-                event.entryType === EntryType.Walk) &&
-            !event.params.endedAt
-        ) {
-            return <FinishTimedEvent event={event} />;
-        }
-
-        if (
-            event.entryType === EntryType.BreastFeeding &&
-            !event.params.endedAt
-        ) {
-            return <FinishBreastFeedingEvent event={event} />;
-        }
-
-        if (
-            (event.entryType === EntryType.BottleFeeding ||
-                event.entryType === EntryType.MilkPumping) &&
-            !event.params.endedAt
-        ) {
-            return <FinishFluidTimedEvent event={event} />;
-        }
-
-        return <CompleteEvent event={event} />;
+        return <ViewEvent event={event} />;
     }
-    if (mode === 'modify') {
+    // TODO: refactor & remove ignore
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (mode === 'edit') {
         if (!event) {
             throw new Error('Missing event uid');
         }

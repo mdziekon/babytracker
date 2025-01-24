@@ -1,3 +1,7 @@
+:root {
+    --app-stickyheader-z-index: 10;
+}
+
 .title {
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     font-size: rem(100px);
@@ -17,7 +21,7 @@ table.logTable {
     tr:has(th) {
         position: sticky;
         top: 0;
-        z-index: var(--mantine-z-index-overlay);
+        z-index: var(--app-stickyheader-z-index);
 
         @media (min-width: $mantine-breakpoint-md) {
             top: calc(3.75rem);

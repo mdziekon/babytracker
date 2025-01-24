@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 interface AppState {
     data: StoreData;
     api: {
-        addEntry: (entry: LogEntry) => void;
+        addEntry: (entry: LogEntry) => LogEntry;
         /**
          * Insert entry, taking into account `metadata.createdAt`
          * to properly calculate position on the list
@@ -60,6 +60,8 @@ export const useAppStore = create<AppState>()(
                                 },
                             };
                         });
+
+                        return entry;
                     },
                     insertEntry: (entry) => {
                         set((state) => {

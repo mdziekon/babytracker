@@ -1,16 +1,17 @@
 import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/store.types';
-import { EventCard } from '../EventCard/EventCard';
+import { EventCard } from '../common/EventCard/EventCard';
 import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { EventDetailsModifier } from '../EventDetailsModifier/EventDetailsModifier';
+import { EventDetailsModifier } from './EventDetailsModifier/EventDetailsModifier';
 import { useCallback, useState } from 'react';
 import { EventModifier, RegisterEventModifier } from './ModifyEvent.types';
 import { useAppStore } from '../../../common/store/store';
 import { useDisclosure } from '@mantine/hooks';
 import { ConfirmCancelModal } from './ConfirmCancelModal';
+import { routes } from '../../../common/routes';
 
 interface ModifyEventProps {
     event: LogEntry;
@@ -71,7 +72,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
             JSON.stringify(oldEvent) !== JSON.stringify(newEvent);
 
         if (!hasModifications) {
-            void navigate(`/event/edit/${event.metadata.uid}`);
+            void navigate(routes.eventView(event.metadata.uid));
 
             return;
         }
@@ -90,7 +91,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
             editEntry(newEvent.metadata.uid, newEvent);
         }
 
-        void navigate(`/event/edit/${event.metadata.uid}`);
+        void navigate(routes.eventView(event.metadata.uid));
     };
 
     return (
@@ -135,7 +136,7 @@ export const ModifyEvent = (props: ModifyEventProps) => {
                 isModalOpen={isConfirmCancelOpen}
                 onModalClose={closeConfirmCancel}
                 onModificationsCancelled={() => {
-                    void navigate(`/event/edit/${event.metadata.uid}`);
+                    void navigate(routes.eventView(event.metadata.uid));
                 }}
             />
         </>

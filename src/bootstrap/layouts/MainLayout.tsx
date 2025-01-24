@@ -6,6 +6,7 @@ import { useAppStore } from '../../common/store/store';
 import classes from './MainLayout.module.css';
 import { FooterNavigation } from './FooterNavigation';
 import { HeaderNavigation } from './HeaderNavigation';
+import { routes } from '../../common/routes';
 
 export const MainLayout = () => {
     const isLoading = useAppStore((state) => !state.meta.hasHydrated);
@@ -50,17 +51,17 @@ export const MainLayout = () => {
 const navigationItems = [
     {
         icon: <IconHome />,
-        to: '/',
+        to: routes.home,
         title: 'Home',
     },
     {
         icon: <IconNotebook />,
-        to: '/log',
+        to: routes.logs,
         title: 'Log',
     },
     {
         icon: <IconSettings />,
-        to: '/settings',
+        to: routes.settings,
         title: 'Settings',
     },
 ];

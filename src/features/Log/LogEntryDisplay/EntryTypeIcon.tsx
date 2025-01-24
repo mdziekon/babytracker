@@ -26,6 +26,7 @@ const EntryTypeIconBase = (props: EntryTypeIconProps) => {
             size={12}
             offset={6}
             className={classes.itemContainer}
+            zIndex="calc(var(--app-stickyheader-z-index) - 1)"
         >
             <Avatar
                 title={mapEntryTypeToName(props.entryType)}
