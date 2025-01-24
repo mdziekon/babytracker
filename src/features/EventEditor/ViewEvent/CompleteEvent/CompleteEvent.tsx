@@ -1,14 +1,14 @@
 import { Text } from '@mantine/core';
-import { LogEntry } from '../../../common/store/store.types';
-import { EventCard } from '../EventCard/EventCard';
-import { EventDetails } from '../EventDetails/EventDetails';
 import { useDisclosure } from '@mantine/hooks';
-import { EntryDeleteModal } from '../../../common/features/EntryDeleteModal/EntryDeleteModal';
-import { Link, useNavigate } from 'react-router';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
-import { EventNotes } from '../EventNotes/EventNotes';
-import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { useNavigate, Link } from 'react-router';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
+import { EntryDeleteModal } from '../../../../common/features/EntryDeleteModal/EntryDeleteModal';
+import { LogEntry } from '../../../../common/store/store.types';
+import { EventCard } from '../../EventCard/EventCard';
+import { EventDetails } from '../../EventDetails/EventDetails';
+import { EventNotes } from '../../EventNotes/EventNotes';
 
 interface CompleteEventProps {
     event: LogEntry;

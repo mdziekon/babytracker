@@ -1,16 +1,16 @@
 import { Box, NumberInput } from '@mantine/core';
-import { useAppStore } from '../../../common/store/store';
+import { useState } from 'react';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
+import { useAppStore } from '../../../../common/store/store';
 import {
+    LogEntry,
+    EntryType,
     EntryBottleFeedingVariant,
     EntryMilkPumpingVariant,
-    EntryType,
-    LogEntry,
-} from '../../../common/store/store.types';
-import { EventCard } from '../EventCard/EventCard';
-import { useState } from 'react';
-import { EventDetails } from '../EventDetails/EventDetails';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
+} from '../../../../common/store/store.types';
+import { EventCard } from '../../EventCard/EventCard';
+import { EventDetails } from '../../EventDetails/EventDetails';
 
 interface FinishFluidTimedEventProps {
     event: LogEntry & {

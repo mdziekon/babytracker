@@ -1,14 +1,14 @@
 import { Badge } from '@mantine/core';
-import { useAppStore } from '../../../common/store/store';
-import { EntryType, LogEntry } from '../../../common/store/store.types';
-import { EventCard } from '../EventCard/EventCard';
-import { EventDetails } from '../EventDetails/EventDetails';
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
+import { useAppStore } from '../../../../common/store/store';
+import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import { EventCard } from '../../EventCard/EventCard';
+import { EventDetails } from '../../EventDetails/EventDetails';
+import { v4 as uuidv4 } from 'uuid';
 
 import classes from './FinishBreastFeedingEvent.module.css';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 
 const eventType = EntryType.BreastFeeding;
 
