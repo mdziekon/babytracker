@@ -10,8 +10,8 @@ export const AppRouting = () => {
     return (
         <Routes>
             <Route path="" element={<MainLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/log" element={<Log />} />
+                <Route path={routes.home} element={<Home />} />
+                <Route path={routes.logs} element={<Log />} />
                 <Route
                     path={routes.logsInProgress}
                     element={<Log filterInProgress />}
@@ -28,7 +28,7 @@ export const AppRouting = () => {
                     path={routes.eventEdit(':eventUid')}
                     element={<EventEditor mode="edit" />}
                 />
-                <Route path="/settings" element={<Settings />} />
+                <Route path={routes.settings} element={<Settings />} />
             </Route>
         </Routes>
     );

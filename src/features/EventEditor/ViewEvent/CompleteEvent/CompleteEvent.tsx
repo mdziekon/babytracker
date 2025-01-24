@@ -67,7 +67,7 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                 onModalClose={closeConfirmDelete}
                 onEntryDeleted={() => {
                     // TODO: This interaction causes error due to EventEditor missing id
-                    void navigate('/log');
+                    void navigate(routes.logs);
                 }}
             />
         </>
