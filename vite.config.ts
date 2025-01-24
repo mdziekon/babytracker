@@ -3,6 +3,12 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const commitDate = child
+    .execSync(
+        'git log -1 --format="%at" | xargs -I{} date -d @{} +%Y/%m/%d\\ %H:%M:%S'
+    )
+    .toString()
+    .trim();
 const commitHash = child
     .execSync('git rev-parse --short HEAD')
     .toString()
@@ -55,6 +61,7 @@ export default defineConfig({
         },
     },
     define: {
-        'import.meta.env.VITE_APP_COMMIT': JSON.stringify(commitHash),
+        'import.meta.env.VITE_APP_COMMIT_DATE': JSON.stringify(commitDate),
+        'import.meta.env.VITE_APP_COMMIT_HASH': JSON.stringify(commitHash),
     },
 });

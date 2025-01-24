@@ -171,9 +171,10 @@ export const Settings = () => {
                     gap="xl"
                 >
                     <div>
-                        <Text>App version commit</Text>
+                        <Text>App build</Text>
                         <Text size="xs" c="dimmed">
-                            {import.meta.env.VITE_APP_COMMIT}
+                            {import.meta.env.VITE_APP_COMMIT_DATE} (
+                            {import.meta.env.VITE_APP_COMMIT_HASH})
                         </Text>
                     </div>
                     <div></div>
