@@ -9,8 +9,8 @@ import {
     EntryBottleFeedingVariant,
     EntryMilkPumpingVariant,
 } from '../../../../common/store/store.types';
-import { EventCard } from '../../EventCard/EventCard';
-import { EventDetails } from '../../EventDetails/EventDetails';
+import { EventCard } from '../../common/EventCard/EventCard';
+import { EventDetails } from '../EventDetails/EventDetails';
 
 interface FinishFluidTimedEventProps {
     event: LogEntry & {

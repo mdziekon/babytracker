@@ -1,6 +1,6 @@
 import { useAppStore } from '../../../../common/store/store';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../EventCard/EventCard';
+import { EventCard } from '../../common/EventCard/EventCard';
 import { BareTimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';

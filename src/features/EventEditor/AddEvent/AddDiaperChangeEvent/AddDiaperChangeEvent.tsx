@@ -5,7 +5,7 @@ import {
     EntryType,
 } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../EventCard/EventCard';
+import { EventCard } from '../../common/EventCard/EventCard';
 import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';

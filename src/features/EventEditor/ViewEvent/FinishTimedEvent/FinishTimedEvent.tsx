@@ -3,8 +3,8 @@ import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
 import { useAppStore } from '../../../../common/store/store';
 import { TimedLogEntryTypes } from '../../../../common/store/store.helperTypes';
 import { LogEntry } from '../../../../common/store/store.types';
-import { EventCard } from '../../EventCard/EventCard';
-import { EventDetails } from '../../EventDetails/EventDetails';
+import { EventCard } from '../../common/EventCard/EventCard';
+import { EventDetails } from '../EventDetails/EventDetails';
 
 interface FinishTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };

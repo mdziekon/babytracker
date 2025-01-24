@@ -5,7 +5,7 @@ import {
     EntryWeightMeasurementVariant,
 } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../EventCard/EventCard';
+import { EventCard } from '../../common/EventCard/EventCard';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';

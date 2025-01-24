@@ -6,9 +6,9 @@ import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
 import { EntryDeleteModal } from '../../../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { LogEntry } from '../../../../common/store/store.types';
-import { EventCard } from '../../EventCard/EventCard';
-import { EventDetails } from '../../EventDetails/EventDetails';
-import { EventNotes } from '../../EventNotes/EventNotes';
+import { EventCard } from '../../common/EventCard/EventCard';
+import { EventDetails } from '../EventDetails/EventDetails';
+import { EventNotes } from './EventNotes/EventNotes';
 
 interface CompleteEventProps {
     event: LogEntry;

@@ -2,7 +2,7 @@ import { Badge, Box, Group, rem, SegmentedControl } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import { EntryType, LogEntry } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../EventCard/EventCard';
+import { EventCard } from '../../common/EventCard/EventCard';
 import { useMemo, useState } from 'react';
 import {
     IconLetterL,

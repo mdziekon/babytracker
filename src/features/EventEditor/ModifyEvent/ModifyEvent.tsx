@@ -1,11 +1,11 @@
 import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/store.types';
-import { EventCard } from '../EventCard/EventCard';
+import { EventCard } from '../common/EventCard/EventCard';
 import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { EventDetailsModifier } from '../EventDetailsModifier/EventDetailsModifier';
+import { EventDetailsModifier } from './EventDetailsModifier/EventDetailsModifier';
 import { useCallback, useState } from 'react';
 import { EventModifier, RegisterEventModifier } from './ModifyEvent.types';
 import { useAppStore } from '../../../common/store/store';
