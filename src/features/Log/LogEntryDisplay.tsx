@@ -76,16 +76,20 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                 />
             </Table.Td>
             <Table.Td>
-                <EntryDates
-                    started={entryTime.started}
-                    ended={entryTime.ended}
-                />
-                <Box>
-                    <LogEntryEventMiniDetails event={entry} />
-                </Box>
+                {inViewport && (
+                    <>
+                        <EntryDates
+                            started={entryTime.started}
+                            ended={entryTime.ended}
+                        />
+                        <Box>
+                            <LogEntryEventMiniDetails event={entry} />
+                        </Box>
+                    </>
+                )}
             </Table.Td>
             <Table.Td className={classes.durationColumn}>
-                {entryDuration && (
+                {inViewport && entryDuration && (
                     <MiniDetailsEntry
                         icon={<IconClock title="Duration" />}
                         title={<Duration duration={entryDuration} />}
@@ -98,10 +102,12 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                 w={rem(48)}
                 align="right"
             >
-                <EntryActions
-                    entryUid={entry.metadata.uid}
-                    onOpenConfirmDelete={handleOpenConfirmDelete}
-                />
+                {inViewport && (
+                    <EntryActions
+                        entryUid={entry.metadata.uid}
+                        onOpenConfirmDelete={handleOpenConfirmDelete}
+                    />
+                )}
             </Table.Td>
         </Table.Tr>
     );
