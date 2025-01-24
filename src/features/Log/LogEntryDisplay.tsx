@@ -12,17 +12,28 @@ import { EntryDates } from './LogEntryDisplay/EntryDates';
 import { Duration } from '../../common/features/Duration/Duration';
 import { isTimedEntry } from '../../common/utils/entryGuards';
 import { routes } from '../../common/routes';
+import { useInViewport } from '@mantine/hooks';
+import React, { useCallback } from 'react';
 
 interface LogEntryProps {
     entry: LogEntry;
     onOpenConfirmDelete: (entry: LogEntry) => void;
 }
 
-export const LogEntryDisplay = (props: LogEntryProps) => {
+const LogEntryDisplayBase = (props: LogEntryProps) => {
     const { entry, onOpenConfirmDelete } = props;
     const navigate = useNavigate();
 
+    const { ref, inViewport } = useInViewport();
+
     const isInProgress = isTimedEntry(entry) && !entry.params.endedAt;
+
+    const handleGotoEvent = useCallback(() => {
+        void navigate(routes.eventView(entry.metadata.uid));
+    }, [entry.metadata.uid, navigate]);
+    const handleOpenConfirmDelete = useCallback(() => {
+        onOpenConfirmDelete(entry);
+    }, [entry, onOpenConfirmDelete]);
 
     const entryTime = (() => {
         if (hasStartedAt(entry)) {
@@ -55,9 +66,8 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
     return (
         <Table.Tr
             key={entry.metadata.createdAt}
-            onClick={() => {
-                void navigate(routes.eventView(entry.metadata.uid));
-            }}
+            ref={ref}
+            onClick={handleGotoEvent}
         >
             <Table.Td w={rem(64)} h={rem(64)}>
                 <EntryTypeIcon
@@ -90,14 +100,14 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
             >
                 <EntryActions
                     entryUid={entry.metadata.uid}
-                    onOpenConfirmDelete={() => {
-                        onOpenConfirmDelete(entry);
-                    }}
+                    onOpenConfirmDelete={handleOpenConfirmDelete}
                 />
             </Table.Td>
         </Table.Tr>
     );
 };
+
+export const LogEntryDisplay = React.memo(LogEntryDisplayBase);
 
 const hasStartedAt = (
     entry: LogEntry

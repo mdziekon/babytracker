@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { Table } from '@mantine/core';
 import { LogEntryDisplay } from './LogEntryDisplay';
@@ -60,6 +60,14 @@ export const LogEntries = (props: LogEntriesProps) => {
         { open: openConfirmDelete, close: closeConfirmDelete },
     ] = useDisclosure(false);
 
+    const handleOpenConfirmDelete = useCallback(
+        (entry: LogEntry) => {
+            setConfirmDeleteEntry(entry);
+            openConfirmDelete();
+        },
+        [openConfirmDelete]
+    );
+
     return (
         <>
             {Object.entries(entriesGroups).map(
@@ -76,12 +84,11 @@ export const LogEntries = (props: LogEntriesProps) => {
                             {groupedEntries.map((groupedEntry) => {
                                 return (
                                     <LogEntryDisplay
-                                        key={groupedEntry.metadata.createdAt}
+                                        key={groupedEntry.metadata.uid}
                                         entry={groupedEntry}
-                                        onOpenConfirmDelete={(entry) => {
-                                            setConfirmDeleteEntry(entry);
-                                            openConfirmDelete();
-                                        }}
+                                        onOpenConfirmDelete={
+                                            handleOpenConfirmDelete
+                                        }
                                     />
                                 );
                             })}
