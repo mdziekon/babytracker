@@ -1,19 +1,18 @@
-import { useAppStore } from '../../../common/store/store';
+import { useAppStore } from '../../../../common/store/store';
+import { EntryType } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../EventCard/EventCard';
-import { BareTimedLogEntryTypes } from '../../../common/store/store.helperTypes';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { createNewEvent } from '../../../common/store/store.utils';
+import { EventCard } from '../../EventCard/EventCard';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../../common/store/store.utils';
 
-interface AddBareTimedEventProps {
-    eventType: BareTimedLogEntryTypes;
+interface AddFluidTimedEventProps {
+    eventType: EntryType.BottleFeeding | EntryType.MilkPumping;
 }
 
-export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
+export const AddFluidTimedEvent = (props: AddFluidTimedEventProps) => {
     const { eventType } = props;
 
     const navigate = useNavigate();
-
     const addEntry = useAppStore((store) => store.api.addEntry);
 
     const handleAddEvent = () => {

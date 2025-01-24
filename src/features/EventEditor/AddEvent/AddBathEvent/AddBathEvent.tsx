@@ -1,9 +1,9 @@
-import { useAppStore } from '../../../common/store/store';
-import { EntryType } from '../../../common/store/store.types';
+import { useAppStore } from '../../../../common/store/store';
+import { EntryType } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../EventCard/EventCard';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { createNewEvent } from '../../../common/store/store.utils';
+import { EventCard } from '../../EventCard/EventCard';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../../common/store/store.utils';
 
 const eventType = EntryType.Bath;
 

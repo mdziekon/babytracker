@@ -1,14 +1,14 @@
 import { Box, NumberInput } from '@mantine/core';
-import { useAppStore } from '../../../common/store/store';
+import { useAppStore } from '../../../../common/store/store';
 import {
     EntryType,
     EntryWeightMeasurementVariant,
-} from '../../../common/store/store.types';
+} from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../EventCard/EventCard';
+import { EventCard } from '../../EventCard/EventCard';
 import { useState } from 'react';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { createNewEvent } from '../../../common/store/store.utils';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../../common/store/store.utils';
 
 const eventType = EntryType.WeightMeasurement;
 

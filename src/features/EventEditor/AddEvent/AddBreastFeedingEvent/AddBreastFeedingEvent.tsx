@@ -1,16 +1,16 @@
 import { Badge, Box, Group, rem, SegmentedControl } from '@mantine/core';
-import { useAppStore } from '../../../common/store/store';
-import { EntryType, LogEntry } from '../../../common/store/store.types';
+import { useAppStore } from '../../../../common/store/store';
+import { EntryType, LogEntry } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../EventCard/EventCard';
+import { EventCard } from '../../EventCard/EventCard';
 import { useMemo, useState } from 'react';
 import {
     IconLetterL,
     IconLetterR,
     IconQuestionMark,
 } from '@tabler/icons-react';
-import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
-import { createNewEvent } from '../../../common/store/store.utils';
+import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../../common/store/store.utils';
 
 const eventType = EntryType.BreastFeeding;
 type FeedingType = (LogEntry & {
