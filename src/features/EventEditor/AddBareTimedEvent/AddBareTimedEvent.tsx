@@ -1,9 +1,9 @@
 import { useAppStore } from '../../../common/store/store';
 import { useNavigate } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { BareTimedLogEntryTypes } from '../../../common/store/store.helperTypes';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../common/store/store.utils';
 
 interface AddBareTimedEventProps {
     eventType: BareTimedLogEntryTypes;
@@ -17,22 +17,18 @@ export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
     const addEntry = useAppStore((store) => store.api.addEntry);
 
     const handleAddEvent = () => {
-        const newEventUid = uuidv4();
-        const startedAt = new Date().toISOString();
+        const newEntry = addEntry(
+            createNewEvent(({ metadata }) => {
+                return {
+                    entryType: eventType,
+                    params: {
+                        startedAt: metadata.createdAt,
+                    },
+                };
+            })
+        );
 
-        addEntry({
-            entryType: eventType,
-            metadata: {
-                uid: newEventUid,
-                createdAt: startedAt,
-                modifications: [],
-            },
-            params: {
-                startedAt: startedAt,
-            },
-        });
-
-        void navigate(`/event/edit/${newEventUid}`);
+        void navigate(`/event/edit/${newEntry.metadata.uid}`);
     };
 
     const actions = (

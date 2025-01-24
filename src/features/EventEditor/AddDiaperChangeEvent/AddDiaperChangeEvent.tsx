@@ -5,11 +5,11 @@ import {
     EntryType,
 } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../common/store/store.utils';
 
 const eventType = EntryType.DiaperChange;
 
@@ -23,21 +23,18 @@ export const AddDiaperChangeEvent = () => {
         );
 
     const handleAddEvent = () => {
-        const newEventUid = uuidv4();
+        const newEntry = addEntry(
+            createNewEvent(() => {
+                return {
+                    entryType: eventType,
+                    params: {
+                        reason,
+                    },
+                };
+            })
+        );
 
-        addEntry({
-            entryType: eventType,
-            metadata: {
-                uid: newEventUid,
-                createdAt: new Date().toISOString(),
-                modifications: [],
-            },
-            params: {
-                reason,
-            },
-        });
-
-        void navigate(`/event/edit/${newEventUid}`);
+        void navigate(`/event/edit/${newEntry.metadata.uid}`);
     };
 
     return (

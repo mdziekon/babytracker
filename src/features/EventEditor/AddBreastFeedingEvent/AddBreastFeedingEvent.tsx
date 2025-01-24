@@ -2,7 +2,6 @@ import { Badge, Box, Group, rem, SegmentedControl } from '@mantine/core';
 import { useAppStore } from '../../../common/store/store';
 import { EntryType, LogEntry } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { useMemo, useState } from 'react';
 import {
@@ -11,6 +10,7 @@ import {
     IconQuestionMark,
 } from '@tabler/icons-react';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../common/store/store.utils';
 
 const eventType = EntryType.BreastFeeding;
 type FeedingType = (LogEntry & {
@@ -48,23 +48,19 @@ export const AddBreastFeedingEvent = () => {
     );
 
     const handleAddEvent = () => {
-        const newEventUid = uuidv4();
-        const startedAt = new Date().toISOString();
+        const newEntry = addEntry(
+            createNewEvent(({ metadata }) => {
+                return {
+                    entryType: eventType,
+                    params: {
+                        startedAt: metadata.createdAt,
+                        type: feedingType,
+                    },
+                };
+            })
+        );
 
-        addEntry({
-            entryType: eventType,
-            metadata: {
-                uid: newEventUid,
-                createdAt: startedAt,
-                modifications: [],
-            },
-            params: {
-                startedAt: startedAt,
-                type: feedingType,
-            },
-        });
-
-        void navigate(`/event/edit/${newEventUid}`);
+        void navigate(`/event/edit/${newEntry.metadata.uid}`);
     };
 
     const actions = (

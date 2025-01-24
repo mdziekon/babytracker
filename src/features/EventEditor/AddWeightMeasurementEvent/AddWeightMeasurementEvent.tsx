@@ -5,10 +5,10 @@ import {
     EntryWeightMeasurementVariant,
 } from '../../../common/store/store.types';
 import { useNavigate } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
 import { EventCard } from '../EventCard/EventCard';
 import { useState } from 'react';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
+import { createNewEvent } from '../../../common/store/store.utils';
 
 const eventType = EntryType.WeightMeasurement;
 
@@ -20,21 +20,18 @@ export const AddWeightMeasurementEvent = () => {
         useState<EntryWeightMeasurementVariant['params']['weightValue']>(0);
 
     const handleAddEvent = () => {
-        const newEventUid = uuidv4();
+        const newEntry = addEntry(
+            createNewEvent(() => {
+                return {
+                    entryType: eventType,
+                    params: {
+                        weightValue: weightInput,
+                    },
+                };
+            })
+        );
 
-        addEntry({
-            entryType: eventType,
-            metadata: {
-                uid: newEventUid,
-                createdAt: new Date().toISOString(),
-                modifications: [],
-            },
-            params: {
-                weightValue: weightInput,
-            },
-        });
-
-        void navigate(`/event/edit/${newEventUid}`);
+        void navigate(`/event/edit/${newEntry.metadata.uid}`);
     };
 
     return (
