@@ -89,6 +89,7 @@ export const LogEntryDisplay = (props: LogEntryProps) => {
                 align="right"
             >
                 <EntryActions
+                    entryUid={entry.metadata.uid}
                     onOpenConfirmDelete={() => {
                         onOpenConfirmDelete(entry);
                     }}

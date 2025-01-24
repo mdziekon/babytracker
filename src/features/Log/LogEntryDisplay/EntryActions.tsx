@@ -2,9 +2,12 @@ import React from 'react';
 import { ActionIcon, Menu } from '@mantine/core';
 
 import classes from './EntryActions.module.css';
-import { IconDots, IconTrash } from '@tabler/icons-react';
+import { IconDots, IconPencil, IconTrash } from '@tabler/icons-react';
+import { Link } from 'react-router';
+import { routes } from '../../../common/routes';
 
 interface EntryActionsProps {
+    entryUid: string;
     onOpenConfirmDelete: () => void;
 }
 
@@ -18,10 +21,17 @@ const EntryActionsBase = (props: EntryActionsProps) => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item
-                    color="red"
+                    component={Link}
                     leftSection={
-                        <IconTrash className={classes.iconDeleteEntry} />
+                        <IconPencil className={classes.menuItemIcon} />
                     }
+                    to={routes.eventEdit(props.entryUid)}
+                >
+                    Edit entry
+                </Menu.Item>
+                <Menu.Item
+                    color="red"
+                    leftSection={<IconTrash className={classes.menuItemIcon} />}
                     onClick={props.onOpenConfirmDelete}
                 >
                     Delete entry
