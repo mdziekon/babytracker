@@ -33,28 +33,29 @@ export const AddDiaperChangeEvent = () => {
         void navigate(routes.eventView(newEntry.metadata.uid));
     };
 
+    const middle = (
+        <>
+            <DiaperChangeSelector
+                defaultOption={reason}
+                onOptionChange={setReason}
+            />
+        </>
+    );
+    const actions = (
+        <>
+            <ResponsiveButton
+                variant="primary"
+                fullWidth
+                onClick={handleAddEvent}
+            >
+                Add event
+            </ResponsiveButton>
+        </>
+    );
+
     return (
         <>
-            <EventCard
-                eventType={eventType}
-                middle={
-                    <>
-                        <DiaperChangeSelector
-                            defaultOption={reason}
-                            onOptionChange={setReason}
-                        />
-                    </>
-                }
-                footer={
-                    <ResponsiveButton
-                        variant="primary"
-                        fullWidth
-                        onClick={handleAddEvent}
-                    >
-                        Add event
-                    </ResponsiveButton>
-                }
-            />
+            <EventCard eventType={eventType} middle={middle} footer={actions} />
             <Box mt={64}>
                 <RecentEvents eventType={eventType} />
             </Box>
