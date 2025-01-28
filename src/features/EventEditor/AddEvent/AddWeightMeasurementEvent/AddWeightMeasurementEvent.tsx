@@ -1,4 +1,4 @@
-import { Box, NumberInput } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import {
     EntryType,
@@ -11,6 +11,7 @@ import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
 import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
+import { WeightInput } from '../../common/WeightInput/WeightInput';
 
 const eventType = EntryType.WeightMeasurement;
 
@@ -42,28 +43,17 @@ export const AddWeightMeasurementEvent = () => {
                 eventType={eventType}
                 middle={
                     <>
-                        <Box>
-                            <NumberInput
-                                rightSection={'g'}
-                                rightSectionPointerEvents="none"
-                                label="Measured weight"
-                                placeholder="5000"
-                                mt="md"
-                                decimalScale={0}
-                                max={99_999}
-                                clampBehavior="strict"
-                                thousandSeparator=" "
-                                allowNegative={false}
-                                value={weightInput}
-                                onChange={(value) => {
-                                    setWeightInput(
-                                        typeof value === 'number'
-                                            ? value
-                                            : parseFloat(value)
-                                    );
-                                }}
-                            />
-                        </Box>
+                        <WeightInput
+                            label="Measured weight"
+                            value={weightInput}
+                            onChange={(value) => {
+                                setWeightInput(
+                                    typeof value === 'number'
+                                        ? value
+                                        : parseFloat(value)
+                                );
+                            }}
+                        />
                     </>
                 }
                 footer={

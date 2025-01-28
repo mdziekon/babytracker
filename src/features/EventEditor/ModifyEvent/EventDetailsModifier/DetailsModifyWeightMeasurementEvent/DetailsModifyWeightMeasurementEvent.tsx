@@ -1,9 +1,10 @@
-import { Group, NumberInput, Text } from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 import { EntryType, LogEntry } from '../../../../../common/store/store.types';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect } from 'react';
 import { IconWeight } from '@tabler/icons-react';
+import { WeightInput } from '../../../common/WeightInput/WeightInput';
 
 interface DetailsModifyWeightMeasurementEventProps {
     event: LogEntry & { entryType: EntryType.WeightMeasurement };
@@ -55,18 +56,7 @@ export const DetailsModifyWeightMeasurementEvent = (
                 <IconWeight size={16} stroke={1.5} />
                 <Group justify="space-between" style={{ flexGrow: 1 }}>
                     <Text component="div">Weight:</Text>
-                    <NumberInput
-                        rightSection={'g'}
-                        rightSectionPointerEvents="none"
-                        placeholder="5000"
-                        mt="md"
-                        decimalScale={0}
-                        max={99_999}
-                        clampBehavior="strict"
-                        thousandSeparator=" "
-                        allowNegative={false}
-                        {...getInputProps('weightValue')}
-                    />
+                    <WeightInput {...getInputProps('weightValue')} />
                 </Group>
             </Group>
         </>
