@@ -5,6 +5,8 @@ import { EventCard } from '../../common/EventCard/EventCard';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
+import { Box } from '@mantine/core';
+import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
 
 const eventType = EntryType.Bath;
 
@@ -37,5 +39,13 @@ export const AddBathEvent = () => {
         </>
     );
 
-    return <EventCard eventType={eventType} footer={actions} />;
+    return (
+        <>
+            <EventCard eventType={eventType} footer={actions} />
+
+            <Box mt={64}>
+                <RecentEvents eventType={eventType} />
+            </Box>
+        </>
+    );
 };

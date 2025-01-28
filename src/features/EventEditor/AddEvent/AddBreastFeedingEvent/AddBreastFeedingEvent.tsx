@@ -12,6 +12,7 @@ import {
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
+import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
 
 const eventType = EntryType.BreastFeeding;
 type FeedingType = (LogEntry & {
@@ -77,111 +78,116 @@ export const AddBreastFeedingEvent = () => {
     );
 
     return (
-        <EventCard
-            eventType={eventType}
-            middle={
-                <>
-                    <Box>
-                        <SegmentedControl
-                            fullWidth
-                            orientation="vertical"
-                            defaultValue={feedingType}
-                            onChange={(value) => {
-                                setFeedingType(
-                                    value as unknown as typeof feedingType
-                                );
-                            }}
-                            data={
-                                [
-                                    {
-                                        value: 'LEFT_BREAST',
-                                        label: (
-                                            <Group gap="xs">
-                                                <Group
-                                                    style={{
-                                                        width: rem(24 * 2),
-                                                    }}
-                                                    justify="flex-end"
-                                                >
-                                                    <IconLetterL
+        <>
+            <EventCard
+                eventType={eventType}
+                middle={
+                    <>
+                        <Box>
+                            <SegmentedControl
+                                fullWidth
+                                orientation="vertical"
+                                defaultValue={feedingType}
+                                onChange={(value) => {
+                                    setFeedingType(
+                                        value as unknown as typeof feedingType
+                                    );
+                                }}
+                                data={
+                                    [
+                                        {
+                                            value: 'LEFT_BREAST',
+                                            label: (
+                                                <Group gap="xs">
+                                                    <Group
                                                         style={{
-                                                            width: rem(24),
-                                                            height: rem(24),
+                                                            width: rem(24 * 2),
                                                         }}
-                                                    />
+                                                        justify="flex-end"
+                                                    >
+                                                        <IconLetterL
+                                                            style={{
+                                                                width: rem(24),
+                                                                height: rem(24),
+                                                            }}
+                                                        />
+                                                    </Group>
+                                                    <div>
+                                                        Left breast{' '}
+                                                        {recommendedSideSelection ===
+                                                        'LEFT_BREAST' ? (
+                                                            <Badge color="indigo">
+                                                                Suggested
+                                                            </Badge>
+                                                        ) : null}
+                                                    </div>
                                                 </Group>
-                                                <div>
-                                                    Left breast{' '}
-                                                    {recommendedSideSelection ===
-                                                    'LEFT_BREAST' ? (
-                                                        <Badge color="indigo">
-                                                            Suggested
-                                                        </Badge>
-                                                    ) : null}
-                                                </div>
-                                            </Group>
-                                        ),
-                                    },
-                                    {
-                                        value: 'RIGHT_BREAST',
-                                        label: (
-                                            <Group gap="xs">
-                                                <Group
-                                                    style={{
-                                                        width: rem(24 * 2),
-                                                    }}
-                                                    justify="flex-end"
-                                                >
-                                                    <IconLetterR
+                                            ),
+                                        },
+                                        {
+                                            value: 'RIGHT_BREAST',
+                                            label: (
+                                                <Group gap="xs">
+                                                    <Group
                                                         style={{
-                                                            width: rem(24),
-                                                            height: rem(24),
+                                                            width: rem(24 * 2),
                                                         }}
-                                                    />
+                                                        justify="flex-end"
+                                                    >
+                                                        <IconLetterR
+                                                            style={{
+                                                                width: rem(24),
+                                                                height: rem(24),
+                                                            }}
+                                                        />
+                                                    </Group>
+                                                    <div>
+                                                        Right breast{' '}
+                                                        {recommendedSideSelection ===
+                                                        'RIGHT_BREAST' ? (
+                                                            <Badge color="indigo">
+                                                                Suggested
+                                                            </Badge>
+                                                        ) : null}
+                                                    </div>
                                                 </Group>
-                                                <div>
-                                                    Right breast{' '}
-                                                    {recommendedSideSelection ===
-                                                    'RIGHT_BREAST' ? (
-                                                        <Badge color="indigo">
-                                                            Suggested
-                                                        </Badge>
-                                                    ) : null}
-                                                </div>
-                                            </Group>
-                                        ),
-                                    },
-                                    {
-                                        value: 'UNSPECIFIED',
-                                        label: (
-                                            <Group gap="xs">
-                                                <Group
-                                                    style={{
-                                                        width: rem(24 * 2),
-                                                    }}
-                                                    justify="flex-end"
-                                                >
-                                                    <IconQuestionMark
+                                            ),
+                                        },
+                                        {
+                                            value: 'UNSPECIFIED',
+                                            label: (
+                                                <Group gap="xs">
+                                                    <Group
                                                         style={{
-                                                            width: rem(24),
-                                                            height: rem(24),
+                                                            width: rem(24 * 2),
                                                         }}
-                                                    />
+                                                        justify="flex-end"
+                                                    >
+                                                        <IconQuestionMark
+                                                            style={{
+                                                                width: rem(24),
+                                                                height: rem(24),
+                                                            }}
+                                                        />
+                                                    </Group>
+                                                    <div>Unspecified</div>
                                                 </Group>
-                                                <div>Unspecified</div>
-                                            </Group>
-                                        ),
-                                    },
-                                ] satisfies {
-                                    value: typeof feedingType;
-                                    label: React.ReactNode;
-                                }[]
-                            }
-                        />
-                    </Box>
-                </>
-            }
-            footer={actions}
-        />
+                                            ),
+                                        },
+                                    ] satisfies {
+                                        value: typeof feedingType;
+                                        label: React.ReactNode;
+                                    }[]
+                                }
+                            />
+                        </Box>
+                    </>
+                }
+                footer={actions}
+            />
+            <Box mt={64}>
+                <RecentEvents eventType={eventType} />
+            </Box>
+        </>
     );
 };
