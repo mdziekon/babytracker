@@ -8,11 +8,15 @@ interface LogFiltersProps {
     onChange: (filters: LogFiltersState) => void;
 }
 
-export const defaultFilters = {
-    eventType: [] as string[],
-};
+export interface LogFiltersState {
+    eventType: string[];
+    limit?: number;
+}
 
-export type LogFiltersState = typeof defaultFilters;
+export const defaultFilters: LogFiltersState = {
+    eventType: [] as string[],
+    limit: 0,
+};
 
 export const LogFilters = (props: LogFiltersProps) => {
     const { onChange } = props;

@@ -34,6 +34,9 @@ export const LogEntries = (props: LogEntriesProps) => {
                 );
             });
         }
+        if (filters.limit && filters.limit > 0) {
+            newEntries = newEntries.slice(0, filters.limit);
+        }
 
         return newEntries;
     }, [filterInProgress, filters, rawEntries]);
