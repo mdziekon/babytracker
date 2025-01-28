@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
-import { EntryType } from '../../../../common/store/store.types';
+import { EntryType, LogEntry } from '../../../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { useMemo, useState } from 'react';
@@ -22,21 +22,11 @@ export const AddBreastFeedingEvent = () => {
             (logEntry) => logEntry.entryType === EntryType.BreastFeeding
         );
     });
+
     const defaultSideSelection: FeedingType = useMemo(() => {
-        if (!latestBreastFeedingEvent) {
-            return 'UNSPECIFIED';
-        }
-
-        const latestSideSelection = latestBreastFeedingEvent.params.type;
-
-        if (latestSideSelection === 'UNSPECIFIED') {
-            return 'UNSPECIFIED';
-        }
-
-        return latestSideSelection === 'LEFT_BREAST'
-            ? 'RIGHT_BREAST'
-            : 'LEFT_BREAST';
+        return selectNextFeedingSide(latestBreastFeedingEvent);
     }, [latestBreastFeedingEvent]);
+
     const recommendedSideSelection =
         defaultSideSelection !== 'UNSPECIFIED'
             ? defaultSideSelection
@@ -61,6 +51,15 @@ export const AddBreastFeedingEvent = () => {
         void navigate(routes.eventView(newEntry.metadata.uid));
     };
 
+    const middle = (
+        <>
+            <BreastSelector
+                defaultOption={defaultSideSelection}
+                recommendedOption={recommendedSideSelection}
+                onOptionChange={setFeedingType}
+            />
+        </>
+    );
     const actions = (
         <>
             <ResponsiveButton
@@ -75,24 +74,28 @@ export const AddBreastFeedingEvent = () => {
 
     return (
         <>
-            <EventCard
-                eventType={eventType}
-                middle={
-                    <>
-                        <Box>
-                            <BreastSelector
-                                defaultOption={defaultSideSelection}
-                                recommendedOption={recommendedSideSelection}
-                                onOptionChange={setFeedingType}
-                            />
-                        </Box>
-                    </>
-                }
-                footer={actions}
-            />
+            <EventCard eventType={eventType} middle={middle} footer={actions} />
             <Box mt={64}>
                 <RecentEvents eventType={eventType} />
             </Box>
         </>
     );
+};
+
+const selectNextFeedingSide = (
+    event?: LogEntry & { entryType: EntryType.BreastFeeding }
+) => {
+    if (!event) {
+        return 'UNSPECIFIED';
+    }
+
+    const latestSideSelection = event.params.type;
+
+    if (latestSideSelection === 'UNSPECIFIED') {
+        return 'UNSPECIFIED';
+    }
+
+    return latestSideSelection === 'LEFT_BREAST'
+        ? 'RIGHT_BREAST'
+        : 'LEFT_BREAST';
 };
