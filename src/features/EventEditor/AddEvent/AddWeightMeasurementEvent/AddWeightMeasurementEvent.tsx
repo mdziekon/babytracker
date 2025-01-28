@@ -37,35 +37,34 @@ export const AddWeightMeasurementEvent = () => {
         void navigate(routes.eventView(newEntry.metadata.uid));
     };
 
+    const middle = (
+        <>
+            <WeightInput
+                label="Measured weight"
+                value={weightInput}
+                onChange={(value) => {
+                    setWeightInput(
+                        typeof value === 'number' ? value : parseFloat(value)
+                    );
+                }}
+            />
+        </>
+    );
+    const actions = (
+        <>
+            <ResponsiveButton
+                variant="primary"
+                fullWidth
+                onClick={handleAddEvent}
+            >
+                Add event
+            </ResponsiveButton>
+        </>
+    );
+
     return (
         <>
-            <EventCard
-                eventType={eventType}
-                middle={
-                    <>
-                        <WeightInput
-                            label="Measured weight"
-                            value={weightInput}
-                            onChange={(value) => {
-                                setWeightInput(
-                                    typeof value === 'number'
-                                        ? value
-                                        : parseFloat(value)
-                                );
-                            }}
-                        />
-                    </>
-                }
-                footer={
-                    <ResponsiveButton
-                        variant="primary"
-                        fullWidth
-                        onClick={handleAddEvent}
-                    >
-                        Add event
-                    </ResponsiveButton>
-                }
-            />
+            <EventCard eventType={eventType} middle={middle} footer={actions} />
             <Box mt={64}>
                 <RecentEvents eventType={eventType} />
             </Box>
