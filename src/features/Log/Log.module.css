@@ -34,7 +34,7 @@ table.logTable {
     td.ctaColumn {
         cursor: initial;
     }
-    td.durationColumn {
+    .durationColumn {
         display: flex;
         justify-content: flex-end;
     }
