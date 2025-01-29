@@ -30,7 +30,9 @@ export const AddFluidTimedEvent = (props: AddFluidTimedEventProps) => {
             })
         );
 
-        void navigate(routes.eventView(newEntry.metadata.uid));
+        void navigate(routes.eventView(newEntry.metadata.uid), {
+            replace: true,
+        });
     };
 
     const actions = (

@@ -55,7 +55,9 @@ export const FinishBreastFeedingEvent = (
             },
         });
 
-        void navigate(routes.eventView(newEventUid));
+        void navigate(routes.eventView(newEventUid), {
+            replace: true,
+        });
     };
 
     return (
