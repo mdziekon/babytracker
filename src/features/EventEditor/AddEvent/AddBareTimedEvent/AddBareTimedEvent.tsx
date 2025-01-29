@@ -5,6 +5,8 @@ import { BareTimedLogEntryTypes } from '../../../../common/store/store.helperTyp
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
+import { Box } from '@mantine/core';
+import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
 
 interface AddBareTimedEventProps {
     eventType: BareTimedLogEntryTypes;
@@ -44,5 +46,12 @@ export const AddBareTimedEvent = (props: AddBareTimedEventProps) => {
         </>
     );
 
-    return <EventCard eventType={eventType} footer={actions} />;
+    return (
+        <>
+            <EventCard eventType={eventType} footer={actions} />
+            <Box mt={64}>
+                <RecentEvents eventType={eventType} />
+            </Box>
+        </>
+    );
 };

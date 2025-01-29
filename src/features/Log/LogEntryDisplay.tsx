@@ -1,6 +1,6 @@
 import { Box, rem, Table } from '@mantine/core';
 import dayjs from 'dayjs';
-import { IconClock } from '@tabler/icons-react';
+import { IconCalendar, IconClock } from '@tabler/icons-react';
 import { DateISO8601, LogEntry } from '../../common/store/store.types';
 import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
@@ -14,6 +14,7 @@ import { isTimedEntry } from '../../common/utils/entryGuards';
 import { routes } from '../../common/routes';
 import { useInViewport } from '@mantine/hooks';
 import React, { useCallback } from 'react';
+import { TimeAgo } from '../../common/features/TimeAgo/TimeAgo';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -62,6 +63,15 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
 
         return dayjs.duration(entryTime.ended.diff(entryTime.started));
     })();
+    const entryStartedTimeAgo = (() => {
+        const startedTimeAgo = dayjs.duration(dayjs().diff(entryTime.started));
+
+        if (startedTimeAgo.asHours() > 24) {
+            return;
+        }
+
+        return startedTimeAgo;
+    })();
 
     return (
         <Table.Tr
@@ -89,11 +99,35 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                 )}
             </Table.Td>
             <Table.Td className={classes.durationColumn}>
-                {inViewport && entryDuration && (
-                    <MiniDetailsEntry
-                        icon={<IconClock title="Duration" />}
-                        title={<Duration duration={entryDuration} />}
-                    />
+                {inViewport && (
+                    <Box>
+                        {entryDuration ? (
+                            <Box className={classes.durationColumn}>
+                                <MiniDetailsEntry
+                                    size="sm"
+                                    icon={<IconClock title="Duration" />}
+                                    title={
+                                        <Duration duration={entryDuration} />
+                                    }
+                                />
+                            </Box>
+                        ) : (
+                            <Box style={{ visibility: 'hidden' }}>.</Box>
+                        )}
+                        {entryStartedTimeAgo && (
+                            <Box className={classes.durationColumn}>
+                                <MiniDetailsEntry
+                                    size="sm"
+                                    icon={<IconCalendar title="Created" />}
+                                    title={
+                                        <TimeAgo
+                                            duration={entryStartedTimeAgo}
+                                        />
+                                    }
+                                />
+                            </Box>
+                        )}
+                    </Box>
                 )}
             </Table.Td>
             <Table.Td
