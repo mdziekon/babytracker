@@ -25,7 +25,11 @@ export const Log = (props: LogProps) => {
                     Events log
                 </Text>
             </Title>
-            <LogsTable filterInProgress={filterInProgress} filters={filters} />
+            <LogsTable
+                filterInProgress={filterInProgress}
+                filters={filters}
+                hasStickyHeaders
+            />
             <LogFilters onChange={setFilters} />
         </>
     );
