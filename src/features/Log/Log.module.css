@@ -30,8 +30,12 @@ table.logTable {
         }
     }
 
-    tr {
+    tr:not(.infoRow) {
         cursor: pointer;
+    }
+    tr.infoRow,
+    tr.infoRow:hover {
+        background-color: unset;
     }
     td.ctaColumn {
         cursor: initial;

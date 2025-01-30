@@ -9,6 +9,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { LogEntry } from '../../common/store/store.types';
 import { formatDateToRelativeLabel } from '../../common/utils/formatting';
 import { LogFiltersState } from './LogFilters/LogFilters';
+import classes from './Log.module.css';
 
 interface LogEntriesProps {
     filterInProgress?: boolean;
@@ -71,34 +72,42 @@ export const LogEntries = (props: LogEntriesProps) => {
         [openConfirmDelete]
     );
 
+    const entriesGroupsIterable = Object.entries(entriesGroups);
+
+    if (!entriesGroupsIterable.length) {
+        return (
+            <Table.Tr className={classes.infoRow}>
+                <Table.Td colSpan={4}>No entries...</Table.Td>
+            </Table.Tr>
+        );
+    }
+
     return (
         <>
-            {Object.entries(entriesGroups).map(
-                ([groupTitle, groupedEntries]) => {
-                    if (!groupedEntries) {
-                        return;
-                    }
-
-                    return (
-                        <Fragment key={groupTitle}>
-                            <Table.Tr bg="gray.8">
-                                <Table.Th colSpan={4}>{groupTitle}</Table.Th>
-                            </Table.Tr>
-                            {groupedEntries.map((groupedEntry) => {
-                                return (
-                                    <LogEntryDisplay
-                                        key={groupedEntry.metadata.uid}
-                                        entry={groupedEntry}
-                                        onOpenConfirmDelete={
-                                            handleOpenConfirmDelete
-                                        }
-                                    />
-                                );
-                            })}
-                        </Fragment>
-                    );
+            {entriesGroupsIterable.map(([groupTitle, groupedEntries]) => {
+                if (!groupedEntries) {
+                    return;
                 }
-            )}
+
+                return (
+                    <Fragment key={groupTitle}>
+                        <Table.Tr bg="gray.8">
+                            <Table.Th colSpan={4}>{groupTitle}</Table.Th>
+                        </Table.Tr>
+                        {groupedEntries.map((groupedEntry) => {
+                            return (
+                                <LogEntryDisplay
+                                    key={groupedEntry.metadata.uid}
+                                    entry={groupedEntry}
+                                    onOpenConfirmDelete={
+                                        handleOpenConfirmDelete
+                                    }
+                                />
+                            );
+                        })}
+                    </Fragment>
+                );
+            })}
 
             {confirmDeleteEntry && (
                 <EntryDeleteModal
