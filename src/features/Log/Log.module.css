@@ -18,13 +18,15 @@ table.logTable {
         vertical-align: top;
     }
 
-    tr:has(th) {
-        position: sticky;
-        top: 0;
-        z-index: var(--app-stickyheader-z-index);
+    &.withStickyHeaders {
+        tr:has(th) {
+            position: sticky;
+            top: 0;
+            z-index: var(--app-stickyheader-z-index);
 
-        @media (min-width: $mantine-breakpoint-md) {
-            top: calc(3.75rem);
+            @media (min-width: $mantine-breakpoint-md) {
+                top: calc(3.75rem);
+            }
         }
     }
 
