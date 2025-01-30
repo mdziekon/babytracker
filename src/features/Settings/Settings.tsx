@@ -3,6 +3,8 @@ import classes from './Settings.module.css';
 import { ImportDataButton } from './ImportDataButton/ImportDataButton';
 import { ExportDataButton } from './ExportDataButton/ExportDataButton';
 import { ResetDataButton } from './ResetDataButton/ResetDataButton';
+import { Suspense } from 'react';
+import { PersistenceIndicator } from './PersistenceIndicator/PersistenceIndicator';
 
 export const Settings = () => {
     return (
@@ -88,6 +90,22 @@ export const Settings = () => {
                         <Text size="xs" c="dimmed">
                             {import.meta.env.VITE_APP_COMMIT_DATE} (
                             {import.meta.env.VITE_APP_COMMIT_HASH})
+                        </Text>
+                    </div>
+                    <div></div>
+                </Group>
+                <Group
+                    justify="space-between"
+                    className={classes.item}
+                    wrap="nowrap"
+                    gap="xl"
+                >
+                    <div>
+                        <Text>Persistence</Text>
+                        <Text size="xs" c="dimmed">
+                            <Suspense fallback="Checking...">
+                                <PersistenceIndicator />
+                            </Suspense>
                         </Text>
                     </div>
                     <div></div>
