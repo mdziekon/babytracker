@@ -9,6 +9,7 @@ import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsMo
 import { RegisterEventModifier } from '../ModifyEvent.types';
 import { DetailsList } from '../../common/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
+import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/DetailsModifyMedicineEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -66,6 +67,14 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(
             <DetailsModifyWeightMeasurementEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.Medicine) {
+        details.push(
+            <DetailsModifyMedicineEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />

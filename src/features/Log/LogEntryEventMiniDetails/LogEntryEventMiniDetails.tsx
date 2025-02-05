@@ -6,6 +6,7 @@ import { MiniDetailsWeightMeasurementEvent } from './MiniDetailsWeightMeasuremen
 import { MiniDetailsFluidTimedEvent } from './MiniDetailsFluidTimedEvent/MiniDetailsFluidTimedEvent';
 import { MiniDetailsEntry } from './MiniDetailsEntry/MiniDetailsEntry';
 import { IconNote } from '@tabler/icons-react';
+import { MiniMedicineEvent } from './MiniMedicineEvent/MiniMedicineEvent';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -32,6 +33,9 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(<MiniDetailsWeightMeasurementEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Medicine) {
+        details.push(<MiniMedicineEvent event={event} />);
     }
 
     if ((event.metadata.notes ?? '').length > 0) {

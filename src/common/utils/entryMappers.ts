@@ -6,10 +6,11 @@ import {
     IconBrandMcdonalds,
     IconDiaper,
     IconMoonStars,
+    IconPillFilled,
     IconScubaDiving,
     IconWeight,
 } from '@tabler/icons-react';
-import { EntryType } from '../store/store.types';
+import { EntryType, MedicineDoseType } from '../store/store.types';
 
 export const mapEntryTypeToIcon = (entryType: EntryType) => {
     const mapping = {
@@ -22,6 +23,7 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
         [EntryType.WeightMeasurement]: IconWeight,
         [EntryType.Bath]: IconBath,
         [EntryType.Walk]: IconBabyCarriage,
+        [EntryType.Medicine]: IconPillFilled,
     };
 
     return mapping[entryType];
@@ -38,6 +40,7 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
         [EntryType.WeightMeasurement]: 'Weight Measurement',
         [EntryType.Bath]: 'Bath',
         [EntryType.Walk]: 'Walk',
+        [EntryType.Medicine]: 'Medicine',
     };
 
     return mapping[entryType];
@@ -54,7 +57,19 @@ export const mapEntryTypeToColor = (entryType: EntryType) => {
         [EntryType.WeightMeasurement]: 'green',
         [EntryType.Bath]: 'orange',
         [EntryType.Walk]: 'blue',
+        [EntryType.Medicine]: 'teal',
     };
 
     return mapping[entryType];
+};
+
+export const mapMedicineDoseTypeToSuffix = (doseType: MedicineDoseType) => {
+    const mapping = {
+        [MedicineDoseType.Piece]: 'piece(s)',
+        [MedicineDoseType.Milligram]: 'mg.',
+        [MedicineDoseType.Milliliter]: 'ml.',
+        [MedicineDoseType.Drop]: 'drop(s)',
+    };
+
+    return mapping[doseType];
 };

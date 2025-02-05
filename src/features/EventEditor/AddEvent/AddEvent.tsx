@@ -4,6 +4,7 @@ import { AddBathEvent } from './AddBathEvent/AddBathEvent';
 import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingEvent';
 import { AddDiaperChangeEvent } from './AddDiaperChangeEvent/AddDiaperChangeEvent';
 import { AddFluidTimedEvent } from './AddFluidTimedEvent/AddFluidTimedEvent';
+import { AddMedicineEvent } from './AddMedicineEvent/AddMedicineEvent';
 import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
 
 interface AddEventProps {
@@ -37,6 +38,9 @@ export const AddEvent = (props: AddEventProps) => {
         eventType === EntryType.MilkPumping
     ) {
         return <AddFluidTimedEvent eventType={eventType} />;
+    }
+    if (eventType === EntryType.Medicine) {
+        return <AddMedicineEvent />;
     }
 
     throw new Error(`Unknown entry type "${eventType}"`);

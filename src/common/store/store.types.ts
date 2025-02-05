@@ -8,6 +8,7 @@ export enum EntryType {
     BellyPosition = 'EntryType.BellyPosition',
     Bath = 'EntryType.Bath',
     Walk = 'EntryType.Walk',
+    Medicine = 'EntryType.Medicine',
 }
 
 export interface EntryBreastFeedingVariant {
@@ -71,6 +72,34 @@ export interface EntryWalkVariant {
         endedAt?: DateISO8601;
     };
 }
+export interface EntryMedicineVariant {
+    entryType: EntryType.Medicine;
+    params: {
+        medicineName?: string;
+        medicineActiveSubstance?: string;
+        doseValue: number;
+        doseType: MedicineDoseType;
+    };
+}
+
+export enum MedicineDoseType {
+    /**
+     * Drugs administered as pills, suppository
+     */
+    Piece = 'MedicineDoseType.Piece',
+    /**
+     * Drugs where the active substance is measured in milligrams
+     */
+    Milligram = 'MedicineDoseType.Milligram',
+    /**
+     * Drugs where dose is measured in milliliters, eg. using measuring caps
+     */
+    Milliliter = 'MedicineDoseType.Milliliter',
+    /**
+     * Drugs administered as drops, eg. eye drops
+     */
+    Drop = 'MedicineDoseType.Drop',
+}
 
 export type EntryVariants =
     | EntryBreastFeedingVariant
@@ -81,7 +110,8 @@ export type EntryVariants =
     | EntrySleepVariant
     | EntryBellyPositionVariant
     | EntryBathVariant
-    | EntryWalkVariant;
+    | EntryWalkVariant
+    | EntryMedicineVariant;
 
 export type UUIDv4 = string;
 export type DateISO8601 = string;

@@ -66,4 +66,8 @@ const actions = [
     {
         entryType: EntryType.WeightMeasurement,
     },
+    undefined,
+    {
+        entryType: EntryType.Medicine,
+    },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
