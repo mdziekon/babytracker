@@ -11,11 +11,13 @@ import { MiniDetailsEntry } from '../MiniDetailsEntry/MiniDetailsEntry';
 import { NumberFormatter } from '@mantine/core';
 import { mapMedicineDoseTypeToSuffix } from '../../../../common/utils/entryMappers';
 
-interface MiniMedicineEventProps {
+interface MiniDetailsMedicineEventProps {
     event: LogEntry & { entryType: EntryType.Medicine };
 }
 
-export const MiniMedicineEvent = (props: MiniMedicineEventProps) => {
+export const MiniDetailsMedicineEvent = (
+    props: MiniDetailsMedicineEventProps
+) => {
     const { event } = props;
 
     return (
