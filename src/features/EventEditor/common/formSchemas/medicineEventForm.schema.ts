@@ -1,4 +1,8 @@
-import { FormValidateInput, UseFormReturnType } from '@mantine/form';
+import {
+    FormValidateInput,
+    isNotEmpty,
+    UseFormReturnType,
+} from '@mantine/form';
 import {
     EntryMedicineVariant,
     MedicineDoseType,
@@ -27,6 +31,7 @@ export const medicineEventFormValidation = {
             return 'Either medicine active substance or medicine name is required';
         }
     },
+    doseType: isNotEmpty('Dose type cannot be empty'),
     doseValue(value) {
         if (value <= 0) {
             return 'Dose should be greater than zero';

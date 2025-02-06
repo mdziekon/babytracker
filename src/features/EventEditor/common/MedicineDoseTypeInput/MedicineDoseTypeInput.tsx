@@ -5,7 +5,14 @@ import { MedicineDoseType } from '../../../../common/store/types/storeData.types
 type MedicineDoseTypeInputProps = ComponentProps<typeof Select>;
 
 export const MedicineDoseTypeInput = (props: MedicineDoseTypeInputProps) => {
-    return <Select placeholder="Pick dose type" data={options} {...props} />;
+    return (
+        <Select
+            placeholder="Pick dose type"
+            allowDeselect={false}
+            data={options}
+            {...props}
+        />
+    );
 };
 
 const options = Object.entries(MedicineDoseType).map(([key, value]) => {
