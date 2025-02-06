@@ -95,16 +95,16 @@ export const AddMedicineEvent = () => {
             />
             <MedicineDoseTypeInput
                 label="Dose type"
-                mt="md"
                 required
+                mt="md"
                 key={formKey('doseType')}
                 {...getInputProps('doseType')}
             />
             <MedicineDoseInput
                 label="Medicine dose"
                 selectedDoseType={selectedDoseType}
-                mt="md"
                 required
+                mt="md"
                 key={formKey('doseValue')}
                 {...getInputProps('doseValue')}
             />

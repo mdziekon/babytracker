@@ -1,4 +1,4 @@
-import { Group, InputLabel, TextInput } from '@mantine/core';
+import { Box, TextInput } from '@mantine/core';
 import {
     EntryType,
     LogEntry,
@@ -7,12 +7,6 @@ import {
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect, useState } from 'react';
-import {
-    IconAbacus,
-    IconMedicalCrossCircle,
-    IconPillFilled,
-    IconScale,
-} from '@tabler/icons-react';
 import { MedicineDoseInput } from '../../../common/MedicineDoseInput/MedicineDoseInput';
 import { MedicineDoseTypeInput } from '../../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
 import {
@@ -112,61 +106,36 @@ export const DetailsModifyMedicineEvent = (
 
     return (
         <>
-            <Group>
-                <IconPillFilled size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <InputLabel htmlFor="input_medicineName">
-                        Medicine name:
-                    </InputLabel>
-                    <TextInput
-                        placeholder="Eg. Nurofen"
-                        id="input_medicineName"
-                        key={formKey('medicineName')}
-                        {...getInputProps('medicineName')}
-                    />
-                </Group>
-            </Group>
-            <Group>
-                <IconMedicalCrossCircle size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <InputLabel htmlFor="input_medicineActiveSubstance">
-                        Medicine active substance:
-                    </InputLabel>
-                    <TextInput
-                        placeholder="Eg. Ibuprofen"
-                        id="input_medicineActiveSubstance"
-                        key={formKey('medicineActiveSubstance')}
-                        {...getInputProps('medicineActiveSubstance')}
-                    />
-                </Group>
-            </Group>
-            <Group>
-                <IconScale size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <InputLabel htmlFor="input_doseType">Dose type:</InputLabel>
-                    <MedicineDoseTypeInput
-                        id="input_doseType"
-                        required
-                        key={formKey('doseType')}
-                        {...getInputProps('doseType')}
-                    />
-                </Group>
-            </Group>
-            <Group>
-                <IconAbacus size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <InputLabel htmlFor="input_doseValue">
-                        Medicine dose:
-                    </InputLabel>
-                    <MedicineDoseInput
-                        id="input_doseValue"
-                        selectedDoseType={selectedDoseType}
-                        required
-                        key={formKey('doseValue')}
-                        {...getInputProps('doseValue')}
-                    />
-                </Group>
-            </Group>
+            <Box>
+                <TextInput
+                    label="Medicine name"
+                    placeholder="Eg. Nurofen"
+                    key={formKey('medicineName')}
+                    {...getInputProps('medicineName')}
+                />
+                <TextInput
+                    label="Medicine active substance"
+                    placeholder="Eg. Ibuprofen"
+                    mt="md"
+                    key={formKey('medicineActiveSubstance')}
+                    {...getInputProps('medicineActiveSubstance')}
+                />
+                <MedicineDoseTypeInput
+                    label="Dose type"
+                    required
+                    mt="md"
+                    key={formKey('doseType')}
+                    {...getInputProps('doseType')}
+                />
+                <MedicineDoseInput
+                    label="Medicine dose"
+                    selectedDoseType={selectedDoseType}
+                    required
+                    mt="md"
+                    key={formKey('doseValue')}
+                    {...getInputProps('doseValue')}
+                />
+            </Box>
         </>
     );
 };
