@@ -21,13 +21,28 @@ export const DetailsMedicineEvent = (props: DetailsMedicineEventProps) => {
         <>
             <Group>
                 <IconPillFilled size={16} stroke={1.5} />
-                <Text>Medicine name: {event.params.medicineName}</Text>
+                <Text>
+                    Medicine name:{' '}
+                    {event.params.medicineName ? (
+                        event.params.medicineName
+                    ) : (
+                        <Text component="span" c="dimmed">
+                            Unspecified
+                        </Text>
+                    )}
+                </Text>
             </Group>
             <Group>
                 <IconMedicalCrossCircle size={16} stroke={1.5} />
                 <Text>
                     Medicine active substance:{' '}
-                    {event.params.medicineActiveSubstance}
+                    {event.params.medicineActiveSubstance ? (
+                        event.params.medicineActiveSubstance
+                    ) : (
+                        <Text component="span" c="dimmed">
+                            Unspecified
+                        </Text>
+                    )}
                 </Text>
             </Group>
             <Group>
