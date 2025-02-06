@@ -6,7 +6,7 @@ import { useAppStore } from '../../common/store/store';
 import { isTimedEntry } from '../../common/utils/entryGuards';
 import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { useDisclosure } from '@mantine/hooks';
-import { LogEntry } from '../../common/store/store.types';
+import { LogEntry } from '../../common/store/types/storeData.types';
 import { formatDateToRelativeLabel } from '../../common/utils/formatting';
 import { LogFiltersState } from './LogFilters/LogFilters';
 import classes from './Log.module.css';

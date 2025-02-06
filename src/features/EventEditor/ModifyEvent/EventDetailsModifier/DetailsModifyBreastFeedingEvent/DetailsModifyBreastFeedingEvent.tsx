@@ -1,5 +1,8 @@
 import { Group, Select, Text } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../../common/store/types/storeData.types';
 import { IconBrandMcdonalds } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
@@ -38,7 +41,10 @@ export const DetailsModifyBreastFeedingEvent = (
                     modEvent2.params.type = getValues().type;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

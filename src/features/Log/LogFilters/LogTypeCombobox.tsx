@@ -8,7 +8,7 @@ import {
     useCombobox,
     Text,
 } from '@mantine/core';
-import { EntryType } from '../../../common/store/store.types';
+import { EntryType } from '../../../common/store/types/storeData.types';
 import {
     mapEntryTypeToIcon,
     mapEntryTypeToName,

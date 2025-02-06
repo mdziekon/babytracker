@@ -1,11 +1,15 @@
 import { Group } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../common/store/types/storeData.types';
 import { MiniDetailsBreastFeedingEvent } from './MiniDetailsBreastFeedingEvent/MiniDetailsBreastFeedingEvent';
 import { MiniDetailsDiaperChangeEvent } from './MiniDetailsDiaperChangeEvent/MiniDetailsDiaperChangeEvent';
 import { MiniDetailsWeightMeasurementEvent } from './MiniDetailsWeightMeasurementEvent/MiniDetailsWeightMeasurementEvent';
 import { MiniDetailsFluidTimedEvent } from './MiniDetailsFluidTimedEvent/MiniDetailsFluidTimedEvent';
 import { MiniDetailsEntry } from './MiniDetailsEntry/MiniDetailsEntry';
 import { IconNote } from '@tabler/icons-react';
+import { MiniDetailsMedicineEvent } from './MiniDetailsMedicineEvent/MiniDetailsMedicineEvent';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -32,6 +36,9 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(<MiniDetailsWeightMeasurementEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Medicine) {
+        details.push(<MiniDetailsMedicineEvent event={event} />);
     }
 
     if ((event.metadata.notes ?? '').length > 0) {

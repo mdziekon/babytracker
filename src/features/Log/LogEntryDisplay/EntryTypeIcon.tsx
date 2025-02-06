@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntryType } from '../../../common/store/store.types';
+import { EntryType } from '../../../common/store/types/storeData.types';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,

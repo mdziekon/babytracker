@@ -3,7 +3,7 @@ import { useAppStore } from '../../../../common/store/store';
 import {
     EntryType,
     EntryWeightMeasurementVariant,
-} from '../../../../common/store/store.types';
+} from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { useState } from 'react';

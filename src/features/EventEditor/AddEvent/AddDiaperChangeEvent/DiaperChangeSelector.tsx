@@ -1,5 +1,8 @@
 import { Group, rem, SegmentedControl } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { IconDroplets, IconPoo, IconQuestionMark } from '@tabler/icons-react';
 import { useMemo } from 'react';
 

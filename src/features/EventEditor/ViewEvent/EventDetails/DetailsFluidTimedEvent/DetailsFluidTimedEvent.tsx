@@ -1,5 +1,8 @@
 import { Group, NumberFormatter, Text } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../../common/store/types/storeData.types';
 import { IconBottle } from '@tabler/icons-react';
 
 interface DetailsFluidTimedEventProps {

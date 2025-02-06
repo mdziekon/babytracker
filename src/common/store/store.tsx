@@ -1,33 +1,8 @@
 import { create } from 'zustand';
-import { LogEntry, StoreData } from './store.types';
 import { persist, devtools } from 'zustand/middleware';
-import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
-
-interface AppState {
-    data: StoreData;
-    api: {
-        addEntry: (entry: LogEntry) => LogEntry;
-        /**
-         * Insert entry, taking into account `metadata.createdAt`
-         * to properly calculate position on the list
-         */
-        insertEntry: (entry: LogEntry) => void;
-        editEntry: (entryUid: string, entry: LogEntry) => void;
-        deleteEntry: (entryUid: string) => void;
-    };
-    meta: {
-        hasHydrated: boolean;
-        setHasHydrated: (hasHydrated: boolean) => void;
-        mergeData: (data: StoreData) => void;
-        resetData: () => void;
-    };
-}
-
-/**
- * Latest version identifier
- */
-const APP_STORE_VERSION = 2;
+import { APP_STORE_VERSION, AppState } from './types/appState.types';
+import { performStoreMigration } from './storeMigration.utils';
 
 // TODO: Perform this inside React, in main component maybe with a modal informing the user about this?
 void navigator.storage.persist().then((persistent) => {
@@ -164,12 +139,27 @@ export const useAppStore = create<AppState>()(
                     },
                     mergeData: (importedData) => {
                         set((state) => {
-                            if (
-                                importedData.schema.version !==
-                                state.data.schema.version
-                            ) {
-                                return state;
-                            }
+                            const dataToMerge = (() => {
+                                if (
+                                    importedData.schema.version ===
+                                    state.data.schema.version
+                                ) {
+                                    console.log(
+                                        'Imported data matches version number, merging unconditionally'
+                                    );
+
+                                    return importedData;
+                                }
+
+                                console.log(
+                                    `Imported data version mismatch (state: ${String(state.data.schema.version)} / imported: ${String(importedData.schema.version)}), need to perform migration first`
+                                );
+
+                                return performStoreMigration(
+                                    { data: importedData },
+                                    importedData.schema.version
+                                ).data;
+                            })();
 
                             /**
                              * Assume existing entries are newer,
@@ -183,7 +173,7 @@ export const useAppStore = create<AppState>()(
                             );
 
                             const mergedLogs = [
-                                ...importedData.logs.filter(
+                                ...dataToMerge.logs.filter(
                                     (entry) =>
                                         !existingUids.has(entry.metadata.uid)
                                 ),
@@ -241,45 +231,11 @@ export const useAppStore = create<AppState>()(
                         prevState.meta.setHasHydrated(true);
                     };
                 },
-                // TODO: Move to separate file?
                 migrate: (persistedState, persistedVersion) => {
-                    let migratedState = persistedState;
-                    let migratedVersion = persistedVersion;
-
-                    if (migratedVersion === 1) {
-                        /**
-                         * Changelog:
-                         * - Added `data.logs[].metadata.uid`
-                         */
-                        console.log(
-                            `Migrating persistedState to version ${String(migratedVersion + 1)}`
-                        );
-
-                        const oldState = migratedState as AppState;
-
-                        migratedState = {
-                            ...oldState,
-                            data: {
-                                ...oldState.data,
-                                logs: oldState.data.logs.map((entry) => {
-                                    return {
-                                        ...entry,
-                                        metadata: {
-                                            ...entry.metadata,
-                                            uid: uuidv4(),
-                                        },
-                                    };
-                                }),
-                            },
-                        };
-                        migratedVersion = 1;
-
-                        console.log(
-                            `Migrated persistedState to version ${String(migratedVersion)}`
-                        );
-                    }
-
-                    return migratedState;
+                    return performStoreMigration(
+                        persistedState,
+                        persistedVersion
+                    );
                 },
                 partialize: (state) => {
                     return {

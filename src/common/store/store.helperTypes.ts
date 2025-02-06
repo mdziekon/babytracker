@@ -1,5 +1,5 @@
 import { ObjectWithExactlyProps, ObjectWithProps } from '../utils/genericTypes';
-import { LogEntry } from './store.types';
+import { LogEntry } from './types/storeData.types';
 
 type WithTimedLogParams<T> = T extends {
     params: ObjectWithProps<

@@ -1,5 +1,8 @@
 import { Group, NumberInput, Text } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../../common/store/types/storeData.types';
 import { IconBottle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
@@ -42,7 +45,10 @@ export const DetailsModifyFluidTimedEvent = (
                     modEvent2.params.fluidVolume = getValues().fluidVolume;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

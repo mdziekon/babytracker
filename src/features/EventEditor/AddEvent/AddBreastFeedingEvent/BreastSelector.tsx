@@ -1,5 +1,8 @@
 import { Badge, Group, rem, SegmentedControl } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { useMemo } from 'react';
 import {
     IconLetterL,

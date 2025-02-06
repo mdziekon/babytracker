@@ -1,5 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import { EntryMetadata, EntryVariants, LogEntry } from './store.types';
+import {
+    EntryMetadata,
+    EntryVariants,
+    LogEntry,
+} from './types/storeData.types';
 
 export const createNewEventMetadata = (): LogEntry['metadata'] => {
     return {

@@ -1,5 +1,5 @@
 import { Group, Text } from '@mantine/core';
-import { LogEntry } from '../../../../../common/store/store.types';
+import { LogEntry } from '../../../../../common/store/types/storeData.types';
 import dayjs from 'dayjs';
 import { IconCalendar } from '@tabler/icons-react';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
@@ -36,7 +36,10 @@ export const DetailsModifyCreatedEvent = (
                     getValues().createdAt.toISOString();
             }
 
-            return modEvent;
+            return {
+                event: modEvent,
+                isValid: true,
+            };
         });
 
         return () => {

@@ -1,4 +1,7 @@
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { DetailsModifyBreastFeedingEvent } from './DetailsModifyBreastFeedingEvent/DetailsModifyBreastFeedingEvent';
 import { DetailsModifyTimedEvent } from './DetailsModifyTimedEvent/DetailsModifyTimedEvent';
 import { DetailsModifyDiaperChangeEvent } from './DetailsModifyDiaperChangeEvent/DetailsModifyDiaperChangeEvent';
@@ -9,6 +12,7 @@ import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsMo
 import { RegisterEventModifier } from '../ModifyEvent.types';
 import { DetailsList } from '../../common/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
+import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/DetailsModifyMedicineEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -66,6 +70,14 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(
             <DetailsModifyWeightMeasurementEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.Medicine) {
+        details.push(
+            <DetailsModifyMedicineEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />

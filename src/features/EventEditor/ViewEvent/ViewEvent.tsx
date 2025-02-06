@@ -1,4 +1,7 @@
-import { EntryType, LogEntry } from '../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../common/store/types/storeData.types';
 import { CompleteEvent } from './CompleteEvent/CompleteEvent';
 import { FinishBreastFeedingEvent } from './FinishBreastFeedingEvent/FinishBreastFeedingEvent';
 import { FinishFluidTimedEvent } from './FinishFluidTimedEvent/FinishFluidTimedEvent';

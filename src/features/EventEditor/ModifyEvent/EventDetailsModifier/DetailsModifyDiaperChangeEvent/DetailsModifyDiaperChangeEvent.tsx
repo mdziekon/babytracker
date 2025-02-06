@@ -1,5 +1,8 @@
 import { Group, Select, Text } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../../common/store/types/storeData.types';
 import { IconPoo } from '@tabler/icons-react';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useForm } from '@mantine/form';
@@ -40,7 +43,10 @@ export const DetailsModifyDiaperChangeEvent = (
                     modEvent2.params.reason = getValues().reason;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 
