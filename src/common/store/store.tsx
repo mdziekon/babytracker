@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 import dayjs from 'dayjs';
-import { APP_STORE_VERSION, AppState } from './storeGlobalTypes';
+import { APP_STORE_VERSION, AppState } from './types/appState.types';
 import { performStoreMigration } from './storeMigration.utils';
 
 // TODO: Perform this inside React, in main component maybe with a modal informing the user about this?

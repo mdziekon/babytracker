@@ -1,4 +1,4 @@
-import { LogEntry, StoreData } from './store.types';
+import { LogEntry, StoreData } from './storeData.types';
 
 export interface AppState {
     data: StoreData;

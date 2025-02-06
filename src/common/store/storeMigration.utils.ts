@@ -1,5 +1,5 @@
-import { EntryType, LogEntry, MedicineDoseType } from './store.types';
-import { AppState } from './storeGlobalTypes';
+import { EntryType, LogEntry, MedicineDoseType } from './types/storeData.types';
+import { AppState } from './types/appState.types';
 import { v4 as uuidv4 } from 'uuid';
 
 export const performStoreMigration = (

@@ -1,4 +1,7 @@
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { IconBrandMcdonalds } from '@tabler/icons-react';
 import { MiniDetailsEntry } from '../MiniDetailsEntry/MiniDetailsEntry';
 

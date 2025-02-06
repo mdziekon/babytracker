@@ -11,7 +11,7 @@ import {
     EntryType,
     LogEntry,
     MedicineDoseType,
-} from '../../../../../common/store/store.types';
+} from '../../../../../common/store/types/storeData.types';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect, useState } from 'react';

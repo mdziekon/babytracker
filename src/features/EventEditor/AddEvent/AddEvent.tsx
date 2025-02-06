@@ -1,4 +1,4 @@
-import { EntryType } from '../../../common/store/store.types';
+import { EntryType } from '../../../common/store/types/storeData.types';
 import { AddBareTimedEvent } from './AddBareTimedEvent/AddBareTimedEvent';
 import { AddBathEvent } from './AddBathEvent/AddBathEvent';
 import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingEvent';

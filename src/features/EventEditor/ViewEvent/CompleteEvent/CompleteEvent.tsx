@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
 import { EntryDeleteModal } from '../../../../common/features/EntryDeleteModal/EntryDeleteModal';
-import { LogEntry } from '../../../../common/store/store.types';
+import { LogEntry } from '../../../../common/store/types/storeData.types';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { EventNotes } from './EventNotes/EventNotes';

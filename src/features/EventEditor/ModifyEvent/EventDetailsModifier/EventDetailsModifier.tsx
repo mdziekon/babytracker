@@ -1,4 +1,7 @@
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { DetailsModifyBreastFeedingEvent } from './DetailsModifyBreastFeedingEvent/DetailsModifyBreastFeedingEvent';
 import { DetailsModifyTimedEvent } from './DetailsModifyTimedEvent/DetailsModifyTimedEvent';
 import { DetailsModifyDiaperChangeEvent } from './DetailsModifyDiaperChangeEvent/DetailsModifyDiaperChangeEvent';

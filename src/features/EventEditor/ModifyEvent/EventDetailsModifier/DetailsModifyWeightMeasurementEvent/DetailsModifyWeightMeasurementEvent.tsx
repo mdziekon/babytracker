@@ -1,5 +1,8 @@
 import { Group, Text } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../../common/store/types/storeData.types';
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect } from 'react';

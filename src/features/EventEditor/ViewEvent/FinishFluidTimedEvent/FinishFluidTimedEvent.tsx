@@ -8,7 +8,7 @@ import {
     EntryType,
     EntryBottleFeedingVariant,
     EntryMilkPumpingVariant,
-} from '../../../../common/store/store.types';
+} from '../../../../common/store/types/storeData.types';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 

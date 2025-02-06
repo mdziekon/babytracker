@@ -1,4 +1,4 @@
-import { EntryType } from '../../../../common/store/store.types';
+import { EntryType } from '../../../../common/store/types/storeData.types';
 import { LogsTable } from '../../../Log/LogsTable';
 import { Card, Text } from '@mantine/core';
 

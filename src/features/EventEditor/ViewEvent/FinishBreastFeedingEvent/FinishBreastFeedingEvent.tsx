@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
 import { useAppStore } from '../../../../common/store/store';
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { v4 as uuidv4 } from 'uuid';

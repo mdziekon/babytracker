@@ -1,5 +1,5 @@
 import { useAppStore } from '../../../../common/store/store';
-import { EntryType } from '../../../../common/store/store.types';
+import { EntryType } from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';

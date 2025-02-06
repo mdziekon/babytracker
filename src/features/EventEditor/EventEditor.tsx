@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { useAppStore } from '../../common/store/store';
-import { EntryType } from '../../common/store/store.types';
+import { EntryType } from '../../common/store/types/storeData.types';
 import { ModifyEvent } from './ModifyEvent/ModifyEvent';
 import { AddEvent } from './AddEvent/AddEvent';
 import { ViewEvent } from './ViewEvent/ViewEvent';

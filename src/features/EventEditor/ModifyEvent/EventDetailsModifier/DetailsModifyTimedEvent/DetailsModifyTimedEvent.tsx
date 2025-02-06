@@ -1,5 +1,5 @@
 import { Group, Text } from '@mantine/core';
-import { LogEntry } from '../../../../../common/store/store.types';
+import { LogEntry } from '../../../../../common/store/types/storeData.types';
 import dayjs from 'dayjs';
 import {
     IconCalendar,

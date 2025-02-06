@@ -1,6 +1,9 @@
 import { Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
-import { EntryType, LogEntry } from '../../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { useMemo, useState } from 'react';

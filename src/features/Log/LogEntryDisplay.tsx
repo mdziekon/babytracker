@@ -1,7 +1,10 @@
 import { Box, rem, Table } from '@mantine/core';
 import dayjs from 'dayjs';
 import { IconCalendar, IconClock } from '@tabler/icons-react';
-import { DateISO8601, LogEntry } from '../../common/store/store.types';
+import {
+    DateISO8601,
+    LogEntry,
+} from '../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 import classes from './Log.module.css';

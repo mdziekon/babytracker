@@ -1,5 +1,5 @@
 import { Text } from '@mantine/core';
-import { LogEntry } from '../../../common/store/store.types';
+import { LogEntry } from '../../../common/store/types/storeData.types';
 import { EventCard } from '../common/EventCard/EventCard';
 import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';

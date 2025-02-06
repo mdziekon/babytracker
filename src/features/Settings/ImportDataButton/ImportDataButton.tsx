@@ -1,5 +1,5 @@
 import { Button, FileButton } from '@mantine/core';
-import { StoreData } from '../../../common/store/store.types';
+import { StoreData } from '../../../common/store/types/storeData.types';
 import { useAppStore } from '../../../common/store/store';
 
 export const ImportDataButton = () => {

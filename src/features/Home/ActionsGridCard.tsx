@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import classes from './ActionsGridCard.module.css';
 import { NavLink } from 'react-router';
-import { EntryType } from '../../common/store/store.types';
+import { EntryType } from '../../common/store/types/storeData.types';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,

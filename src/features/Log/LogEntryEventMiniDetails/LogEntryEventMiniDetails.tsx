@@ -1,5 +1,8 @@
 import { Group } from '@mantine/core';
-import { EntryType, LogEntry } from '../../../common/store/store.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../common/store/types/storeData.types';
 import { MiniDetailsBreastFeedingEvent } from './MiniDetailsBreastFeedingEvent/MiniDetailsBreastFeedingEvent';
 import { MiniDetailsDiaperChangeEvent } from './MiniDetailsDiaperChangeEvent/MiniDetailsDiaperChangeEvent';
 import { MiniDetailsWeightMeasurementEvent } from './MiniDetailsWeightMeasurementEvent/MiniDetailsWeightMeasurementEvent';

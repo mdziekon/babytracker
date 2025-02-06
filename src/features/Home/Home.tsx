@@ -2,7 +2,7 @@ import { Text, Title } from '@mantine/core';
 import classes from './Home.module.css';
 import { ActionsGridCard } from './ActionsGridCard';
 import { ComponentProps } from 'react';
-import { EntryType } from '../../common/store/store.types';
+import { EntryType } from '../../common/store/types/storeData.types';
 import { useAppStore } from '../../common/store/store';
 import { isTimedEntry } from '../../common/utils/entryGuards';
 

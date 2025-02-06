@@ -10,7 +10,7 @@ import {
     IconScubaDiving,
     IconWeight,
 } from '@tabler/icons-react';
-import { EntryType, MedicineDoseType } from '../store/store.types';
+import { EntryType, MedicineDoseType } from '../store/types/storeData.types';
 
 export const mapEntryTypeToIcon = (entryType: EntryType) => {
     const mapping = {

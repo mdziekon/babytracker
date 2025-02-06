@@ -1,4 +1,4 @@
-import { LogEntry } from '../../../common/store/store.types';
+import { LogEntry } from '../../../common/store/types/storeData.types';
 
 export type EventModifier = (event: LogEntry) => LogEntry;
 

@@ -1,6 +1,6 @@
 import { Button, Group, Modal } from '@mantine/core';
 import dayjs from 'dayjs';
-import { DateISO8601, LogEntry } from '../../store/store.types';
+import { DateISO8601, LogEntry } from '../../store/types/storeData.types';
 import { useAppStore } from '../../store/store';
 import { mapEntryTypeToName } from '../../utils/entryMappers';
 import { DEFAULT_DATETIME_FORMAT } from '../../utils/formatting';
