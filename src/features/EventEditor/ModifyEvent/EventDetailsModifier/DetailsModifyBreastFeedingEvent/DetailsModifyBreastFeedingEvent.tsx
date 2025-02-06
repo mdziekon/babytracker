@@ -41,7 +41,10 @@ export const DetailsModifyBreastFeedingEvent = (
                     modEvent2.params.type = getValues().type;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

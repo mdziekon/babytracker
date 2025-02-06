@@ -44,7 +44,10 @@ export const DetailsModifyWeightMeasurementEvent = (
                     modEvent2.params.weightValue = getValues().weightValue;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

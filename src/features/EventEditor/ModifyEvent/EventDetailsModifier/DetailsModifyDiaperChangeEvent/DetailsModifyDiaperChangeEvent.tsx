@@ -43,7 +43,10 @@ export const DetailsModifyDiaperChangeEvent = (
                     modEvent2.params.reason = getValues().reason;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

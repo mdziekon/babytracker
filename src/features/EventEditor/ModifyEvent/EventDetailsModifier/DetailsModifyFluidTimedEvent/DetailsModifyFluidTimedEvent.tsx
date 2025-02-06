@@ -45,7 +45,10 @@ export const DetailsModifyFluidTimedEvent = (
                     modEvent2.params.fluidVolume = getValues().fluidVolume;
                 }
 
-                return modEvent;
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
             }
         );
 

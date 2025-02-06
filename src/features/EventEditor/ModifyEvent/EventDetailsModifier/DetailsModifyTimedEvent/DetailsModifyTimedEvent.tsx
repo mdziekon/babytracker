@@ -59,7 +59,10 @@ export const DetailsModifyTimedEvent = (
                     : undefined;
             }
 
-            return modEvent;
+            return {
+                event: modEvent,
+                isValid: true,
+            };
         });
 
         return () => {

@@ -1,6 +1,5 @@
 import { Group, InputLabel, TextInput } from '@mantine/core';
 import {
-    EntryMedicineVariant,
     EntryType,
     LogEntry,
     MedicineDoseType,
@@ -16,15 +15,17 @@ import {
 } from '@tabler/icons-react';
 import { MedicineDoseInput } from '../../../common/MedicineDoseInput/MedicineDoseInput';
 import { MedicineDoseTypeInput } from '../../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
+import {
+    enableMedicineEventFormValidationEffects,
+    MedicineEventFormSchema,
+    medicineEventFormValidation,
+} from '../../../common/formSchemas/medicineEventForm.schema';
 
 interface DetailsModifyMedicineEventProps {
     event: LogEntry & { entryType: EntryType.Medicine };
     registerEventModifier: RegisterEventModifier;
 }
 
-/**
- * TODO: Missing validation, should be shared with AddMedicineEvent
- */
 export const DetailsModifyMedicineEvent = (
     props: DetailsModifyMedicineEventProps
 ) => {
@@ -35,9 +36,10 @@ export const DetailsModifyMedicineEvent = (
         getInputProps,
         getValues,
         watch,
-        // validateField,
+        validateField,
         isTouched,
-    } = useForm<DetailsModifyMedicineEventFormSchema>({
+        validate,
+    } = useForm<MedicineEventFormSchema>({
         mode: 'uncontrolled',
         initialValues: {
             medicineName: event.params.medicineName,
@@ -45,6 +47,8 @@ export const DetailsModifyMedicineEvent = (
             doseType: event.params.doseType,
             doseValue: event.params.doseValue,
         },
+        validate: medicineEventFormValidation,
+        validateInputOnChange: true,
     });
 
     const [selectedDoseType, setSelectedDoseType] = useState<MedicineDoseType>(
@@ -54,11 +58,28 @@ export const DetailsModifyMedicineEvent = (
     watch('doseType', (input) => {
         setSelectedDoseType(input.value);
     });
+    enableMedicineEventFormValidationEffects({
+        watch,
+        validateField,
+    });
 
     useEffect(() => {
         const unregister = registerEventModifier(
             'medicineEvent',
-            (modEvent) => {
+            (modEvent, options) => {
+                let isValid = true;
+
+                if (!options?.preventValidationTrigger) {
+                    isValid = !validate().hasErrors;
+
+                    if (!isValid) {
+                        return {
+                            isValid,
+                            event: modEvent,
+                        };
+                    }
+                }
+
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.Medicine;
                 };
@@ -77,14 +98,17 @@ export const DetailsModifyMedicineEvent = (
                     modEvent2.params.doseValue = getValues().doseValue;
                 }
 
-                return modEvent;
+                return {
+                    isValid,
+                    event: modEvent,
+                };
             }
         );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>
@@ -146,8 +170,3 @@ export const DetailsModifyMedicineEvent = (
         </>
     );
 };
-
-type DetailsModifyMedicineEventFormSchema = Pick<
-    EntryMedicineVariant['params'],
-    'medicineName' | 'medicineActiveSubstance' | 'doseValue' | 'doseType'
->;

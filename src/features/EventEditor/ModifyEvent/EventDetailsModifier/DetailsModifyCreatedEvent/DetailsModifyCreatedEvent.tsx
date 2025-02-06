@@ -36,7 +36,10 @@ export const DetailsModifyCreatedEvent = (
                     getValues().createdAt.toISOString();
             }
 
-            return modEvent;
+            return {
+                event: modEvent,
+                isValid: true,
+            };
         });
 
         return () => {

@@ -1,7 +1,6 @@
 import { Box, TextInput } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import {
-    EntryMedicineVariant,
     EntryType,
     MedicineDoseType,
 } from '../../../../common/store/types/storeData.types';
@@ -12,9 +11,15 @@ import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
 import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
-import { FormValidateInput, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { MedicineDoseInput } from '../../common/MedicineDoseInput/MedicineDoseInput';
 import { MedicineDoseTypeInput } from '../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
+import {
+    enableMedicineEventFormValidationEffects,
+    medicineEventFormDefaultValues,
+    MedicineEventFormSchema,
+    medicineEventFormValidation,
+} from '../../common/formSchemas/medicineEventForm.schema';
 
 const eventType = EntryType.Medicine;
 
@@ -29,25 +34,23 @@ export const AddMedicineEvent = () => {
         getInputNode,
         watch,
         validateField,
-    } = useForm<FormSchema>({
+    } = useForm<MedicineEventFormSchema>({
         mode: 'uncontrolled',
-        initialValues: formDefaultValues,
-        validate: validation,
+        initialValues: medicineEventFormDefaultValues,
+        validate: medicineEventFormValidation,
         validateInputOnChange: true,
     });
 
     const [selectedDoseType, setSelectedDoseType] = useState<MedicineDoseType>(
-        formDefaultValues.doseType
+        medicineEventFormDefaultValues.doseType
     );
 
     watch('doseType', (input) => {
         setSelectedDoseType(input.value);
     });
-    watch('medicineName', () => {
-        validateField('medicineActiveSubstance');
-    });
-    watch('medicineActiveSubstance', () => {
-        validateField('medicineName');
+    enableMedicineEventFormValidationEffects({
+        watch,
+        validateField,
     });
 
     const handleSubmit = useMemo(() => {
@@ -124,33 +127,3 @@ export const AddMedicineEvent = () => {
         </form>
     );
 };
-
-type FormSchema = Pick<
-    EntryMedicineVariant['params'],
-    'medicineName' | 'medicineActiveSubstance' | 'doseValue' | 'doseType'
->;
-
-const formDefaultValues = {
-    doseType: MedicineDoseType.Piece,
-    doseValue: 0,
-    medicineName: '',
-    medicineActiveSubstance: '',
-} satisfies FormSchema;
-
-const validation = {
-    medicineName(value, values) {
-        if (!value && !values.medicineActiveSubstance) {
-            return 'Either medicine name or medicine active substance is required';
-        }
-    },
-    medicineActiveSubstance(value, values) {
-        if (!value && !values.medicineName) {
-            return 'Either medicine active substance or medicine name is required';
-        }
-    },
-    doseValue(value) {
-        if (value <= 0) {
-            return 'Dose should be greater than zero';
-        }
-    },
-} satisfies FormValidateInput<FormSchema>;

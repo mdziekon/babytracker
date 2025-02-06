@@ -7,7 +7,11 @@ import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
 import { ResponsiveButton } from '../../../common/design/ResponsiveButton';
 import { EventDetailsModifier } from './EventDetailsModifier/EventDetailsModifier';
 import { useCallback, useState } from 'react';
-import { EventModifier, RegisterEventModifier } from './ModifyEvent.types';
+import {
+    EventModifier,
+    EventModifierOptions,
+    RegisterEventModifier,
+} from './ModifyEvent.types';
 import { useAppStore } from '../../../common/store/store';
 import { useDisclosure } from '@mantine/hooks';
 import { ConfirmCancelModal } from './ConfirmCancelModal';
@@ -56,17 +60,32 @@ export const ModifyEvent = (props: ModifyEventProps) => {
     );
 
     const applyModifiers = useCallback(
-        (oldEvent: LogEntry) => {
-            return Object.values(eventModifiers).reduce((result, modifier) => {
-                return modifier(result);
-            }, window.structuredClone(oldEvent));
+        (oldEvent: LogEntry, options?: EventModifierOptions) => {
+            return Object.values(eventModifiers).reduce(
+                (result, modifier) => {
+                    const modificationResult = modifier(result.event, options);
+
+                    return {
+                        event: modificationResult.event,
+                        isValid: !result.isValid
+                            ? result.isValid
+                            : modificationResult.isValid,
+                    };
+                },
+                {
+                    event: window.structuredClone(oldEvent),
+                    isValid: true,
+                }
+            );
         },
         [eventModifiers]
     );
 
     const handleCancelModifications = () => {
         const oldEvent = event;
-        const newEvent = applyModifiers(oldEvent);
+        const newEvent = applyModifiers(oldEvent, {
+            preventValidationTrigger: true,
+        }).event;
 
         const hasModifications =
             JSON.stringify(oldEvent) !== JSON.stringify(newEvent);
@@ -82,7 +101,13 @@ export const ModifyEvent = (props: ModifyEventProps) => {
 
     const saveModifications = () => {
         const oldEvent = event;
-        const newEvent = applyModifiers(oldEvent);
+        const modificationResult = applyModifiers(oldEvent);
+
+        if (!modificationResult.isValid) {
+            return;
+        }
+
+        const newEvent = modificationResult.event;
 
         if (oldEvent.metadata.createdAt !== newEvent.metadata.createdAt) {
             deleteEntry(newEvent.metadata.uid);
