@@ -1,4 +1,4 @@
-import { Box, NumberInput, rem, Select, TextInput } from '@mantine/core';
+import { Box, TextInput } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import {
     EntryMedicineVariant,
@@ -13,7 +13,8 @@ import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
 import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
 import { FormValidateInput, useForm } from '@mantine/form';
-import { mapMedicineDoseTypeToSuffix } from '../../../../common/utils/entryMappers';
+import { MedicineDoseInput } from '../../common/MedicineDoseInput/MedicineDoseInput';
+import { MedicineDoseTypeInput } from '../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
 
 const eventType = EntryType.Medicine;
 
@@ -89,35 +90,17 @@ export const AddMedicineEvent = () => {
                 key={formKey('medicineActiveSubstance')}
                 {...getInputProps('medicineActiveSubstance')}
             />
-            <Select
+            <MedicineDoseTypeInput
                 label="Dose type"
-                placeholder="Pick dose type"
-                data={Object.entries(MedicineDoseType).map(([key, value]) => {
-                    return {
-                        value,
-                        label: key,
-                    };
-                })}
                 mt="md"
                 required
                 key={formKey('doseType')}
                 {...getInputProps('doseType')}
             />
-            <NumberInput
+            <MedicineDoseInput
                 label="Medicine dose"
-                rightSection={mapMedicineDoseTypeToSuffix(selectedDoseType)}
-                rightSectionPointerEvents="none"
-                rightSectionWidth={70}
-                rightSectionProps={{
-                    style: { justifyContent: 'right', paddingRight: rem(8) },
-                }}
-                placeholder="0"
+                selectedDoseType={selectedDoseType}
                 mt="md"
-                decimalScale={0}
-                max={99_999}
-                clampBehavior="strict"
-                thousandSeparator=" "
-                allowNegative={false}
                 required
                 key={formKey('doseValue')}
                 {...getInputProps('doseValue')}

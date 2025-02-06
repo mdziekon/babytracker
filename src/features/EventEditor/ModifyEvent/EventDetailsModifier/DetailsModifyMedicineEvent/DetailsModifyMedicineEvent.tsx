@@ -1,11 +1,4 @@
-import {
-    Group,
-    InputLabel,
-    NumberInput,
-    rem,
-    Select,
-    TextInput,
-} from '@mantine/core';
+import { Group, InputLabel, TextInput } from '@mantine/core';
 import {
     EntryMedicineVariant,
     EntryType,
@@ -21,7 +14,8 @@ import {
     IconPillFilled,
     IconScale,
 } from '@tabler/icons-react';
-import { mapMedicineDoseTypeToSuffix } from '../../../../../common/utils/entryMappers';
+import { MedicineDoseInput } from '../../../common/MedicineDoseInput/MedicineDoseInput';
+import { MedicineDoseTypeInput } from '../../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
 
 interface DetailsModifyMedicineEventProps {
     event: LogEntry & { entryType: EntryType.Medicine };
@@ -30,7 +24,6 @@ interface DetailsModifyMedicineEventProps {
 
 /**
  * TODO: Missing validation, should be shared with AddMedicineEvent
- * TODO: Share inputs props with AddMedicineEvent
  */
 export const DetailsModifyMedicineEvent = (
     props: DetailsModifyMedicineEventProps
@@ -127,17 +120,8 @@ export const DetailsModifyMedicineEvent = (
                 <IconScale size={16} stroke={1.5} />
                 <Group justify="space-between" style={{ flexGrow: 1 }}>
                     <InputLabel htmlFor="input_doseType">Dose type:</InputLabel>
-                    <Select
+                    <MedicineDoseTypeInput
                         id="input_doseType"
-                        placeholder="Pick dose type"
-                        data={Object.entries(MedicineDoseType).map(
-                            ([key, value]) => {
-                                return {
-                                    value,
-                                    label: key,
-                                };
-                            }
-                        )}
                         required
                         key={formKey('doseType')}
                         {...getInputProps('doseType')}
@@ -150,25 +134,9 @@ export const DetailsModifyMedicineEvent = (
                     <InputLabel htmlFor="input_doseValue">
                         Medicine dose:
                     </InputLabel>
-                    <NumberInput
+                    <MedicineDoseInput
                         id="input_doseValue"
-                        rightSection={mapMedicineDoseTypeToSuffix(
-                            selectedDoseType
-                        )}
-                        rightSectionPointerEvents="none"
-                        rightSectionWidth={70}
-                        rightSectionProps={{
-                            style: {
-                                justifyContent: 'right',
-                                paddingRight: rem(8),
-                            },
-                        }}
-                        placeholder="0"
-                        decimalScale={0}
-                        max={99_999}
-                        clampBehavior="strict"
-                        thousandSeparator=" "
-                        allowNegative={false}
+                        selectedDoseType={selectedDoseType}
                         required
                         key={formKey('doseValue')}
                         {...getInputProps('doseValue')}
