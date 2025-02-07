@@ -5,6 +5,8 @@ import { Log } from '../features/Log/Log';
 import { EventEditor } from '../features/EventEditor/EventEditor';
 import { Settings } from '../features/Settings/Settings';
 import { routes } from '../common/routes';
+import { StatisticsHome } from '../features/Statistics/StatisticsHome';
+import { WeightStatistics } from '../features/Statistics/WeightStatistics';
 
 export const AppRouting = () => {
     return (
@@ -29,6 +31,11 @@ export const AppRouting = () => {
                     element={<EventEditor mode="edit" />}
                 />
                 <Route path={routes.settings} element={<Settings />} />
+                <Route path={routes.statistics} element={<StatisticsHome />} />
+                <Route
+                    path={routes.statisticsWeight}
+                    element={<WeightStatistics />}
+                />
             </Route>
         </Routes>
     );

@@ -9,4 +9,6 @@ export const routes = {
     logsInProgress: '/log/in-progress',
 
     settings: '/settings',
+    statistics: '/statistics',
+    statisticsWeight: '/statistics/weight',
 } as const;

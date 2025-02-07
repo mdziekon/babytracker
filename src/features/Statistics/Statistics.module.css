@@ -1,0 +1,24 @@
+.title {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-size: rem(100px);
+    font-weight: 900;
+    letter-spacing: rem(-2px);
+
+    @media (max-width: $mantine-breakpoint-md) {
+        font-size: rem(50px);
+    }
+}
+
+.card {
+    background-color: light-dark(
+        var(--mantine-color-gray-0),
+        var(--mantine-color-dark-6)
+    );
+}
+
+.cardTitle {
+    font-family:
+        Greycliff CF,
+        var(--mantine-font-family);
+    font-weight: 700;
+}
