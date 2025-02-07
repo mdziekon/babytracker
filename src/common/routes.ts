@@ -9,4 +9,5 @@ export const routes = {
     logsInProgress: '/log/in-progress',
 
     settings: '/settings',
+    statistics: '/statistics',
 } as const;
