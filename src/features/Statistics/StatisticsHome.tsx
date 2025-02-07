@@ -1,20 +1,23 @@
-import { Text, Title } from '@mantine/core';
+import { Card, Group, Text, Title } from '@mantine/core';
 import classes from './Statistics.module.css';
-import { WeightCentileChart } from './WeightCentileChart';
-import { useAppStore } from '../../common/store/store';
+import {
+    ActionProps,
+    ActionsGrid,
+} from '../../common/features/ActionsGrid/ActionsGrid';
+import { IconWeight } from '@tabler/icons-react';
 import { EntryType } from '../../common/store/types/storeData.types';
-import dayjs from 'dayjs';
+import { mapEntryTypeToColor } from '../../common/utils/entryMappers';
+import { routes } from '../../common/routes';
 
 export const StatisticsHome = () => {
-    const entries = useAppStore((state) => state.data.logs);
-
-    const weightEntries = entries.filter(
-        (entry) => entry.entryType === EntryType.WeightMeasurement
-    );
-
-    // TODO: Example data, make this configurable
-    const gender = 'MALE';
-    const dateOfBirth = dayjs('2020-01-01T12:00:00Z');
+    const actions = [
+        {
+            title: 'Weight',
+            icon: IconWeight,
+            color: mapEntryTypeToColor(EntryType.WeightMeasurement),
+            linkTarget: routes.statisticsWeight,
+        },
+    ] satisfies ActionProps[];
 
     return (
         <>
@@ -28,11 +31,15 @@ export const StatisticsHome = () => {
                     Statistics
                 </Text>
             </Title>
-            <WeightCentileChart
-                entries={weightEntries}
-                gender={gender}
-                dateOfBirth={dateOfBirth}
-            />
+            <Card withBorder radius="md" className={classes.card} mt={'2rem'}>
+                <Group justify="space-between">
+                    <Text fs="italic" className={classes.cardTitle}>
+                        {/* TODO: Localize */}
+                        Select statistics to display
+                    </Text>
+                </Group>
+                <ActionsGrid actions={actions} />
+            </Card>
         </>
     );
 };

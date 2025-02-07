@@ -10,4 +10,5 @@ export const routes = {
 
     settings: '/settings',
     statistics: '/statistics',
+    statisticsWeight: '/statistics/weight',
 } as const;
