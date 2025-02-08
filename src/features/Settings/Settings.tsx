@@ -1,10 +1,12 @@
-import { Card, Group, Text, Title } from '@mantine/core';
+import { Button, Card, Group, Text, Title } from '@mantine/core';
 import classes from './Settings.module.css';
 import { ImportDataButton } from './ImportDataButton/ImportDataButton';
 import { ExportDataButton } from './ExportDataButton/ExportDataButton';
 import { ResetDataButton } from './ResetDataButton/ResetDataButton';
 import { Suspense } from 'react';
 import { PersistenceIndicator } from './PersistenceIndicator/PersistenceIndicator';
+import { Link } from 'react-router';
+import { routes } from '../../common/routes';
 
 export const Settings = () => {
     return (
@@ -20,6 +22,29 @@ export const Settings = () => {
                 </Text>
             </Title>
             <Card withBorder radius="md" p="xl" className={classes.card}>
+                <Group
+                    justify="space-between"
+                    className={classes.item}
+                    wrap="nowrap"
+                    gap="xl"
+                >
+                    <div>
+                        <Text>Baby info</Text>
+                        <Text size="xs" c="dimmed">
+                            Display or modify info about your child
+                        </Text>
+                    </div>
+                    <div>
+                        <Button
+                            component={Link}
+                            to={routes.settingsBabyInfo}
+                            variant="outline"
+                            color="primary"
+                        >
+                            Edit info
+                        </Button>
+                    </div>
+                </Group>
                 <Group
                     justify="space-between"
                     className={classes.item}

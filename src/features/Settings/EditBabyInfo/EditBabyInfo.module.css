@@ -1,0 +1,21 @@
+.card {
+    background-color: var(--mantine-color-body);
+}
+
+.title {
+    font-family:
+        Greycliff CF,
+        var(--mantine-font-family);
+}
+
+.sectionWithDivider,
+.footer {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+    margin-inline: -1.25rem;
+    border-top: 1px solid
+        light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+}
+
+.footer {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+}

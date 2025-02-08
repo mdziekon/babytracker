@@ -124,6 +124,16 @@ export const useAppStore = create<AppState>()(
                             };
                         });
                     },
+                    setBabyInfo: (babyInfo) => {
+                        set((state) => {
+                            return {
+                                data: {
+                                    ...state.data,
+                                    babyInfo,
+                                },
+                            };
+                        });
+                    },
                 },
                 meta: {
                     hasHydrated: false,
