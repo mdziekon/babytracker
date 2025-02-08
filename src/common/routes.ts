@@ -12,4 +12,5 @@ export const routes = {
     settingsBabyInfo: '/settings/baby-info',
     statistics: '/statistics',
     statisticsWeight: '/statistics/weight',
+    statisticsRoutine: '/statistics/routine',
 } as const;
