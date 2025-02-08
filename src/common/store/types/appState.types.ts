@@ -11,6 +11,9 @@ export interface AppState {
         insertEntry: (entry: LogEntry) => void;
         editEntry: (entryUid: string, entry: LogEntry) => void;
         deleteEntry: (entryUid: string) => void;
+        setBabyInfo: (
+            babyInfo: NonNullable<AppState['data']['babyInfo']>
+        ) => void;
     };
     meta: {
         hasHydrated: boolean;

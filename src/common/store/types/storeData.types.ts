@@ -133,4 +133,9 @@ export interface StoreData {
         version: number;
     };
     logs: LogEntry[];
+    babyInfo?: {
+        name: string;
+        dateOfBirth: DateISO8601;
+        gender: 'MALE' | 'FEMALE';
+    };
 }

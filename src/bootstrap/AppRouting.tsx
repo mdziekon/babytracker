@@ -7,6 +7,7 @@ import { Settings } from '../features/Settings/Settings';
 import { routes } from '../common/routes';
 import { StatisticsHome } from '../features/Statistics/StatisticsHome';
 import { WeightStatistics } from '../features/Statistics/WeightStatistics';
+import { EditBabyInfo } from '../features/Settings/EditBabyInfo/EditBabyInfo';
 
 export const AppRouting = () => {
     return (
@@ -31,6 +32,10 @@ export const AppRouting = () => {
                     element={<EventEditor mode="edit" />}
                 />
                 <Route path={routes.settings} element={<Settings />} />
+                <Route
+                    path={routes.settingsBabyInfo}
+                    element={<EditBabyInfo />}
+                />
                 <Route path={routes.statistics} element={<StatisticsHome />} />
                 <Route
                     path={routes.statisticsWeight}
