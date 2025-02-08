@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { EntryType, LogEntry } from '../../common/store/types/storeData.types';
 import { weightCentilesPerDayMaleCSV } from './data/weightCentilesPerDayMale.raw';
-import { LineChart } from '@mantine/charts';
+import { ChartTooltip, LineChart } from '@mantine/charts';
 import { weightCentilesPerDayFemaleCSV } from './data/weightCentilesPerDayFemale.raw';
 
 interface WeightCentileChartProps {
@@ -31,6 +31,9 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
             return {
                 filter: (days: number) => days < 1800,
                 skip: 180,
+                xAxisLabel: 'Year',
+                xAxisDivider: 180,
+                xAxisLabelMultiplier: 0.5,
             };
         }
         if (age.years() > 0) {
@@ -40,6 +43,8 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
             return {
                 filter: (days: number) => days < 1080,
                 skip: 90,
+                xAxisLabel: 'Month',
+                xAxisDivider: 30,
             };
         }
         if (age.months() >= 3) {
@@ -49,6 +54,8 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
             return {
                 filter: (days: number) => days < 365,
                 skip: 30,
+                xAxisLabel: 'Month',
+                xAxisDivider: 30,
             };
         }
         if (age.months() > 0) {
@@ -58,6 +65,8 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
             return {
                 filter: (days: number) => days < 90,
                 skip: 7,
+                xAxisLabel: 'Week',
+                xAxisDivider: 7,
             };
         }
         /**
@@ -66,6 +75,8 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
         return {
             filter: (days: number) => days < 31,
             skip: 1,
+            xAxisLabel: 'Day',
+            xAxisDivider: 1,
         };
     })();
 
@@ -181,8 +192,33 @@ export const WeightCentileChart = (props: WeightCentileChartProps) => {
                 ],
                 type: 'number',
                 dataKey: 'ageDays',
+                tickFormatter: (label: number) =>
+                    String(
+                        (label / recommendedRange.xAxisDivider) *
+                            (recommendedRange.xAxisLabelMultiplier ?? 1)
+                    ),
             }}
+            xAxisLabel={`${recommendedRange.xAxisLabel}s`}
             valueFormatter={(value) => `${value.toFixed(2)} kg`}
+            tooltipProps={{
+                content: ({ label, payload }) => {
+                    const finalLabel = (() => {
+                        if (label % recommendedRange.xAxisDivider === 0) {
+                            return `${recommendedRange.xAxisLabel} ${String((label / recommendedRange.xAxisDivider) * (recommendedRange.xAxisLabelMultiplier ?? 1))}`;
+                        }
+
+                        /**
+                         * TODO: Improve labeling of raw measurements.
+                         * Either display date, or divisions as per divider + smaller divisions.
+                         */
+                        return `Day ${String(label)}`;
+                    })();
+
+                    return (
+                        <ChartTooltip label={finalLabel} payload={payload} />
+                    );
+                },
+            }}
         />
     );
 };
