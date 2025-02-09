@@ -63,6 +63,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
                     const pieDataEntryParts = finalDayEntries.map((entry) => {
                         return {
+                            entryUid: entry.metadata.uid,
                             entryType: entry.entryType,
                             timePart:
                                 dayjs(entry.params.endedAt).diff(
@@ -78,10 +79,9 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         .map((entryPart, index) => {
                             const previousEntryEndedAt =
                                 index === 0
-                                    ? entryPart.endedAt.replace(
-                                          /T(.*?)$/i,
-                                          'T00:00:00.000Z'
-                                      )
+                                    ? dayjs(entryPart.endedAt)
+                                          .startOf('day')
+                                          .toISOString()
                                     : pieDataEntryParts[index - 1].endedAt;
 
                             const previousEntryEndedAtDate =
@@ -104,6 +104,8 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
                             if (previousEntryDiff > 0) {
                                 parts.push({
+                                    entryUid:
+                                        '00000000-0000-0000-0000-000000000000',
                                     entryType: undefined,
                                     timePart: previousEntryDiff / 86400,
                                     startedAt: previousEntryEndedAt,
