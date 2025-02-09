@@ -2,12 +2,17 @@ import { Center, Text, Title } from '@mantine/core';
 import classes from './Statistics.module.css';
 import { useAppStore } from '../../common/store/store';
 import { RoutineChart } from './RoutineChart';
+import dayjs from 'dayjs';
 
 export const RoutineStatistics = () => {
     const entries = useAppStore((state) => state.data.logs);
 
-    // TODO: For testing purposes, limit to 100 entries
-    const routingEntries = entries.filter((_entry, index) => index < 100);
+    const now = dayjs();
+
+    // TODO: Does not take into account multiday entries
+    const routineEntries = entries.filter((entry) => {
+        return now.diff(dayjs(entry.metadata.createdAt), 'day') < 7;
+    });
 
     return (
         <>
@@ -18,11 +23,11 @@ export const RoutineStatistics = () => {
                     component="span"
                     gradient={{ from: 'pink', to: 'yellow' }}
                 >
-                    Routine Statistics
+                    Routine Statistics (last 7 days)
                 </Text>
             </Title>
             <Center>
-                <RoutineChart entries={routingEntries} />
+                <RoutineChart entries={routineEntries} />
             </Center>
         </>
     );
