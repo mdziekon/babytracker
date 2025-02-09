@@ -24,7 +24,54 @@ export const RoutineChart = (props: RoutineChartProps) => {
      * display on the chart
      */
     const entriesByDays = useMemo(() => {
-        return Object.groupBy(entries.toReversed(), (entry) => {
+        const splitEntries = entries
+            .toReversed()
+            .map((entry) => {
+                if (!isTimedEntry(entry)) {
+                    return [entry];
+                }
+                if (!entry.params.endedAt) {
+                    return [entry];
+                }
+                if (
+                    dayjs(entry.params.startedAt).isSame(
+                        dayjs(entry.params.endedAt),
+                        'day'
+                    )
+                ) {
+                    return [entry];
+                }
+
+                return [
+                    {
+                        ...entry,
+                        params: {
+                            ...entry.params,
+                            endedAt: dayjs(entry.params.startedAt)
+                                .endOf('day')
+                                .toISOString(),
+                        },
+                    } as typeof entry,
+                    {
+                        ...entry,
+                        metadata: {
+                            ...entry.metadata,
+                            createdAt: dayjs(entry.params.endedAt)
+                                .startOf('day')
+                                .toISOString(),
+                        },
+                        params: {
+                            ...entry.params,
+                            startedAt: dayjs(entry.params.endedAt)
+                                .startOf('day')
+                                .toISOString(),
+                        },
+                    } as typeof entry,
+                ];
+            })
+            .flat();
+
+        return Object.groupBy(splitEntries, (entry) => {
             const createdAtDate = dayjs(entry.metadata.createdAt);
             const createdAtDateLabel =
                 createdAtDate.format(DEFAULT_DATE_FORMAT);
