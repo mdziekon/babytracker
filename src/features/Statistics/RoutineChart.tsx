@@ -172,6 +172,46 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         })
                         .flat();
 
+                    (() => {
+                        const lastEntry = pieDataParts.at(-1);
+
+                        if (!lastEntry) {
+                            return;
+                        }
+
+                        const endOfDayEntry = {
+                            entryUid: '00000000-0000-0000-0000-000000000000',
+                            entryType: undefined,
+                            timePart: 0,
+                            startedAt: '',
+                            endedAt: '',
+                        };
+
+                        const previousEntryEndedAt = lastEntry.endedAt;
+
+                        const previousEntryEndedAtDate =
+                            dayjs(previousEntryEndedAt);
+
+                        endOfDayEntry.startedAt = previousEntryEndedAtDate
+                            .add(1, 'second')
+                            .toISOString();
+                        endOfDayEntry.endedAt = previousEntryEndedAtDate
+                            .endOf('day')
+                            .toISOString();
+
+                        const endOfDayEntryDiff = dayjs(
+                            endOfDayEntry.endedAt
+                        ).diff(dayjs(endOfDayEntry.startedAt), 'second');
+
+                        endOfDayEntry.timePart = endOfDayEntryDiff / 86400;
+
+                        if (endOfDayEntryDiff <= 0) {
+                            return;
+                        }
+
+                        pieDataParts.push(endOfDayEntry);
+                    })();
+
                     const innerRadius =
                         radiusStartOffset + (radius + ringSpacing) * index;
                     const outerRadius = innerRadius + radius;
