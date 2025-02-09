@@ -102,7 +102,15 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             } => {
                                 return Boolean(entry.params.endedAt);
                             }
-                        );
+                        )
+                        .filter((entry) => {
+                            const diff = dayjs(entry.params.endedAt).diff(
+                                dayjs(entry.params.startedAt),
+                                'second'
+                            );
+
+                            return diff >= 10;
+                        });
 
                     if (!finalDayEntries.length) {
                         return <Fragment key={dayLabel} />;
@@ -164,6 +172,10 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         })
                         .flat();
 
+                    const innerRadius =
+                        radiusStartOffset + (radius + ringSpacing) * index;
+                    const outerRadius = innerRadius + radius;
+
                     return (
                         <Pie
                             startAngle={85}
@@ -173,15 +185,8 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             dataKey="timePart"
                             cx="50%"
                             cy="50%"
-                            innerRadius={
-                                radiusStartOffset +
-                                (radius + ringSpacing) * index
-                            }
-                            outerRadius={
-                                radiusStartOffset +
-                                (radius + ringSpacing) * index +
-                                radius
-                            }
+                            innerRadius={innerRadius}
+                            outerRadius={outerRadius}
                             fill="#8884d8"
                             stroke=""
                         >
