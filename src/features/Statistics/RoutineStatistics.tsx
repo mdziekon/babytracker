@@ -1,4 +1,4 @@
-import { Text, Title } from '@mantine/core';
+import { Center, Text, Title } from '@mantine/core';
 import classes from './Statistics.module.css';
 import { useAppStore } from '../../common/store/store';
 import { RoutineChart } from './RoutineChart';
@@ -21,7 +21,9 @@ export const RoutineStatistics = () => {
                     Routine Statistics
                 </Text>
             </Title>
-            <RoutineChart entries={routingEntries} />
+            <Center>
+                <RoutineChart entries={routingEntries} />
+            </Center>
         </>
     );
 };
