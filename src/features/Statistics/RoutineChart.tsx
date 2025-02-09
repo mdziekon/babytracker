@@ -81,7 +81,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
     }, [entries]);
 
     const radiusStartOffset = 30;
-    const radius = 10;
+    const radius = 20;
     const ringSpacing = 5;
 
     return (
