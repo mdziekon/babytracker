@@ -200,7 +200,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
                                                       entry.entryType
                                                   )
                                               ][5]
-                                            : '#ffffff'
+                                            : '#ffffff10'
                                     }
                                 />
                             ))}
