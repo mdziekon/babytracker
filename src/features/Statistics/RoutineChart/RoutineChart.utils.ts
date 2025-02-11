@@ -25,7 +25,7 @@ const isClosedTimedEntry = (
     return Boolean(entry.params.endedAt);
 };
 
-const getClosedEntryDuration = (
+export const getClosedEntryDuration = (
     entry: TimedLogEntries & {
         params: { endedAt: string };
     }

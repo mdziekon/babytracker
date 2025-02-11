@@ -6,11 +6,13 @@ import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,
+    mapEntryTypeToName,
 } from '../../../common/utils/entryMappers';
 import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
     filterRoutineChartEntries,
+    getClosedEntryDuration,
     splitEntriesPerDay,
 } from './RoutineChart.utils';
 
@@ -52,12 +54,10 @@ export const RoutineChart = (props: RoutineChartProps) => {
                     }
 
                     const pieDataEntryParts = dayEntries.map((entry) => {
-                        const durationSeconds = dayjs(
-                            entry.params.endedAt
-                        ).diff(entry.params.startedAt, 'second');
+                        const durationSeconds = getClosedEntryDuration(entry);
 
                         return {
-                            name: entry.entryType.replace('EntryType.', ''),
+                            name: mapEntryTypeToName(entry.entryType),
                             entryUid: entry.metadata.uid,
                             entryType: entry.entryType,
                             color: theme.colors[
@@ -65,8 +65,8 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             ][5],
                             timePart: durationSeconds / 86400,
                             duration: dayjs.duration(durationSeconds, 'second'),
-                            startedAt: entry.params.startedAt,
-                            endedAt: entry.params.endedAt,
+                            startedAt: dayjs(entry.params.startedAt),
+                            endedAt: dayjs(entry.params.endedAt),
                         };
                     });
 
@@ -74,17 +74,13 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         .map((entryPart, index) => {
                             const previousEntryEndedAt =
                                 index === 0
-                                    ? dayjs(entryPart.endedAt)
-                                          .startOf('day')
-                                          .toISOString()
+                                    ? entryPart.endedAt.startOf('day')
                                     : pieDataEntryParts[index - 1].endedAt;
 
-                            const previousEntryEndedAtDate =
-                                dayjs(previousEntryEndedAt);
-
-                            const previousEntryDiff = dayjs(
-                                entryPart.startedAt
-                            ).diff(previousEntryEndedAtDate, 'second');
+                            const previousEntryDiff = entryPart.startedAt.diff(
+                                previousEntryEndedAt,
+                                'second'
+                            );
 
                             const parts: (
                                 | typeof entryPart
@@ -132,25 +128,23 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             color: '#ffffff10',
                             timePart: 0,
                             duration: dayjs.duration(0, 'second'),
-                            startedAt: '',
-                            endedAt: '',
+                            startedAt: dayjs(),
+                            endedAt: dayjs(),
                         };
 
                         const previousEntryEndedAt = lastEntry.endedAt;
 
-                        const previousEntryEndedAtDate =
-                            dayjs(previousEntryEndedAt);
+                        endOfDayEntry.startedAt = previousEntryEndedAt.add(
+                            1,
+                            'second'
+                        );
+                        endOfDayEntry.endedAt =
+                            previousEntryEndedAt.endOf('day');
 
-                        endOfDayEntry.startedAt = previousEntryEndedAtDate
-                            .add(1, 'second')
-                            .toISOString();
-                        endOfDayEntry.endedAt = previousEntryEndedAtDate
-                            .endOf('day')
-                            .toISOString();
-
-                        const endOfDayEntryDiff = dayjs(
-                            endOfDayEntry.endedAt
-                        ).diff(dayjs(endOfDayEntry.startedAt), 'second');
+                        const endOfDayEntryDiff = endOfDayEntry.endedAt.diff(
+                            endOfDayEntry.startedAt,
+                            'second'
+                        );
 
                         endOfDayEntry.timePart = endOfDayEntryDiff / 86400;
                         endOfDayEntry.duration = dayjs.duration(
