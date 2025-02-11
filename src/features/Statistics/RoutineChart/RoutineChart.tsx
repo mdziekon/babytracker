@@ -147,10 +147,9 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         });
                     })();
 
-                    const completePieDataEntryParts = [
-                        ...pieDataParts,
-                        ...(fillerLastEntry ? [fillerLastEntry] : []),
-                    ];
+                    if (fillerLastEntry) {
+                        pieDataParts.push(fillerLastEntry);
+                    }
 
                     const innerRadius =
                         radiusStartOffset + (radius + ringSpacing) * index;
@@ -161,7 +160,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             startAngle={85}
                             endAngle={-265}
                             key={dayLabel}
-                            data={completePieDataEntryParts}
+                            data={pieDataParts}
                             dataKey="timePart"
                             cx="50%"
                             cy="50%"
@@ -169,7 +168,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             outerRadius={outerRadius}
                             stroke=""
                         >
-                            {completePieDataEntryParts.map((entry, index) => (
+                            {pieDataParts.map((entry, index) => (
                                 <Cell
                                     key={`cell-${String(index)}`}
                                     fill={entry.color}
