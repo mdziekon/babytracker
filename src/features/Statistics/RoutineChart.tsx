@@ -1,11 +1,16 @@
-import { Cell, Pie, PieChart } from 'recharts';
+import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
 import { LogEntry } from '../../common/store/types/storeData.types';
 import { Fragment, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { DEFAULT_DATE_FORMAT } from '../../common/utils/formatting';
 import { isTimedEntry } from '../../common/utils/entryGuards';
-import { mapEntryTypeToColor } from '../../common/utils/entryMappers';
-import { useMantineTheme } from '@mantine/core';
+import {
+    mapEntryTypeToColor,
+    mapEntryTypeToIcon,
+} from '../../common/utils/entryMappers';
+import { Box, Group, Paper, Text, useMantineTheme } from '@mantine/core';
+import { ChartTooltip } from '@mantine/charts';
+import { Duration } from '../../common/features/Duration/Duration';
 
 interface RoutineChartProps {
     entries: LogEntry[];
@@ -117,14 +122,19 @@ export const RoutineChart = (props: RoutineChartProps) => {
                     }
 
                     const pieDataEntryParts = finalDayEntries.map((entry) => {
+                        const durationSeconds = dayjs(
+                            entry.params.endedAt
+                        ).diff(entry.params.startedAt, 'second');
+
                         return {
+                            name: entry.entryType.replace('EntryType.', ''),
                             entryUid: entry.metadata.uid,
                             entryType: entry.entryType,
-                            timePart:
-                                dayjs(entry.params.endedAt).diff(
-                                    entry.params.startedAt,
-                                    'second'
-                                ) / 86400,
+                            color: theme.colors[
+                                mapEntryTypeToColor(entry.entryType)
+                            ][5],
+                            timePart: durationSeconds / 86400,
+                            duration: dayjs.duration(durationSeconds, 'second'),
                             startedAt: entry.params.startedAt,
                             endedAt: entry.params.endedAt,
                         };
@@ -159,10 +169,16 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
                             if (previousEntryDiff > 0) {
                                 parts.push({
+                                    name: 'Nothing',
                                     entryUid:
                                         '00000000-0000-0000-0000-000000000000',
                                     entryType: undefined,
+                                    color: '#ffffff10',
                                     timePart: previousEntryDiff / 86400,
+                                    duration: dayjs.duration(
+                                        previousEntryDiff,
+                                        'second'
+                                    ),
                                     startedAt: previousEntryEndedAt,
                                     endedAt: entryPart.startedAt,
                                 });
@@ -180,9 +196,12 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         }
 
                         const endOfDayEntry = {
+                            name: 'Nothing',
                             entryUid: '00000000-0000-0000-0000-000000000000',
                             entryType: undefined,
+                            color: '#ffffff10',
                             timePart: 0,
+                            duration: dayjs.duration(0, 'second'),
                             startedAt: '',
                             endedAt: '',
                         };
@@ -204,6 +223,10 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         ).diff(dayjs(endOfDayEntry.startedAt), 'second');
 
                         endOfDayEntry.timePart = endOfDayEntryDiff / 86400;
+                        endOfDayEntry.duration = dayjs.duration(
+                            endOfDayEntryDiff,
+                            'second'
+                        );
 
                         if (endOfDayEntryDiff <= 0) {
                             return;
@@ -227,27 +250,64 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             cy="50%"
                             innerRadius={innerRadius}
                             outerRadius={outerRadius}
-                            fill="#8884d8"
                             stroke=""
                         >
                             {pieDataParts.map((entry, index) => (
                                 <Cell
                                     key={`cell-${String(index)}`}
-                                    fill={
-                                        entry.entryType
-                                            ? theme.colors[
-                                                  mapEntryTypeToColor(
-                                                      entry.entryType
-                                                  )
-                                              ][5]
-                                            : '#ffffff10'
-                                    }
+                                    fill={entry.color}
                                 />
                             ))}
                         </Pie>
                     );
                 }
             )}
+            <Tooltip
+                content={({ payload }) => {
+                    // TODO: Fix typings
+                    const entryData = payload?.[0];
+                    const entryPayload = entryData?.payload;
+
+                    if (!entryData || !entryPayload) {
+                        return;
+                    }
+
+                    const Icon =
+                        entryPayload.entryType &&
+                        mapEntryTypeToIcon(entryPayload.entryType);
+
+                    return (
+                        <Paper shadow="xs" p="xs">
+                            <Group justify="space-between">
+                                <Group
+                                    justify="flex-start"
+                                    gap={8}
+                                    style={{
+                                        color: Icon
+                                            ? entryPayload.color
+                                            : undefined,
+                                    }}
+                                >
+                                    {Icon && (
+                                        <Icon
+                                            style={{
+                                                width: '16px',
+                                                height: '16px',
+                                            }}
+                                        />
+                                    )}
+                                    {entryData.name}
+                                </Group>
+                                <Box>
+                                    <Duration
+                                        duration={entryPayload.duration}
+                                    />
+                                </Box>
+                            </Group>
+                        </Paper>
+                    );
+                }}
+            />
         </PieChart>
     );
 };
