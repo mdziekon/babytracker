@@ -1,7 +1,7 @@
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { LogEntry } from '../../../common/store/types/storeData.types';
 import { Fragment, useMemo } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
 import {
     mapEntryTypeToColor,
@@ -11,8 +11,8 @@ import {
 import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
+    ClosedTimedEntry,
     filterRoutineChartEntries,
-    getClosedEntryDuration,
     splitEntriesPerDay,
 } from './RoutineChart.utils';
 
@@ -53,21 +53,46 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         return <Fragment key={dayLabel} />;
                     }
 
-                    const pieDataEntryParts = dayEntries.map((entry) => {
-                        const durationSeconds = getClosedEntryDuration(entry);
+                    const createPiePart = (
+                        entry:
+                            | ClosedTimedEntry
+                            | {
+                                  entryType?: undefined;
+                                  params: {
+                                      startedAt: Dayjs;
+                                      endedAt: Dayjs;
+                                  };
+                              }
+                    ) => {
+                        const endedAt = dayjs(entry.params.endedAt);
+                        const startedAt = dayjs(entry.params.startedAt);
+                        const durationSeconds = endedAt.diff(
+                            startedAt,
+                            'second'
+                        );
 
                         return {
-                            name: mapEntryTypeToName(entry.entryType),
-                            entryUid: entry.metadata.uid,
+                            name: entry.entryType
+                                ? mapEntryTypeToName(entry.entryType)
+                                : 'Nothing',
+                            entryUid: entry.entryType
+                                ? entry.metadata.uid
+                                : '00000000-0000-0000-0000-000000000000',
                             entryType: entry.entryType,
-                            color: theme.colors[
-                                mapEntryTypeToColor(entry.entryType)
-                            ][5],
+                            color: entry.entryType
+                                ? theme.colors[
+                                      mapEntryTypeToColor(entry.entryType)
+                                  ][5]
+                                : '#ffffff10',
                             timePart: durationSeconds / 86400,
                             duration: dayjs.duration(durationSeconds, 'second'),
-                            startedAt: dayjs(entry.params.startedAt),
-                            endedAt: dayjs(entry.params.endedAt),
+                            startedAt,
+                            endedAt,
                         };
+                    };
+
+                    const pieDataEntryParts = dayEntries.map((entry) => {
+                        return createPiePart(entry);
                     });
 
                     const pieDataParts = pieDataEntryParts
@@ -82,82 +107,50 @@ export const RoutineChart = (props: RoutineChartProps) => {
                                 'second'
                             );
 
-                            const parts: (
-                                | typeof entryPart
-                                | (Omit<typeof entryPart, 'entryType'> & {
-                                      entryType: undefined;
-                                  })
-                            )[] = [];
-
                             if (previousEntryDiff < 0) {
                                 return [];
                             }
-
-                            if (previousEntryDiff > 0) {
-                                parts.push({
-                                    name: 'Nothing',
-                                    entryUid:
-                                        '00000000-0000-0000-0000-000000000000',
-                                    entryType: undefined,
-                                    color: '#ffffff10',
-                                    timePart: previousEntryDiff / 86400,
-                                    duration: dayjs.duration(
-                                        previousEntryDiff,
-                                        'second'
-                                    ),
-                                    startedAt: previousEntryEndedAt,
-                                    endedAt: entryPart.startedAt,
-                                });
+                            if (previousEntryDiff === 0) {
+                                return [entryPart];
                             }
-
-                            return [...parts, entryPart];
+                            return [
+                                createPiePart({
+                                    params: {
+                                        startedAt: previousEntryEndedAt,
+                                        endedAt: entryPart.startedAt,
+                                    },
+                                }),
+                                entryPart,
+                            ];
                         })
                         .flat();
 
-                    (() => {
+                    const fillerLastEntry = (() => {
                         const lastEntry = pieDataParts.at(-1);
 
                         if (!lastEntry) {
                             return;
                         }
 
-                        const endOfDayEntry = {
-                            name: 'Nothing',
-                            entryUid: '00000000-0000-0000-0000-000000000000',
-                            entryType: undefined,
-                            color: '#ffffff10',
-                            timePart: 0,
-                            duration: dayjs.duration(0, 'second'),
-                            startedAt: dayjs(),
-                            endedAt: dayjs(),
-                        };
+                        const lastEntryEndOfDay =
+                            lastEntry.endedAt.endOf('day');
 
-                        const previousEntryEndedAt = lastEntry.endedAt;
-
-                        endOfDayEntry.startedAt = previousEntryEndedAt.add(
-                            1,
-                            'second'
-                        );
-                        endOfDayEntry.endedAt =
-                            previousEntryEndedAt.endOf('day');
-
-                        const endOfDayEntryDiff = endOfDayEntry.endedAt.diff(
-                            endOfDayEntry.startedAt,
-                            'second'
-                        );
-
-                        endOfDayEntry.timePart = endOfDayEntryDiff / 86400;
-                        endOfDayEntry.duration = dayjs.duration(
-                            endOfDayEntryDiff,
-                            'second'
-                        );
-
-                        if (endOfDayEntryDiff <= 0) {
+                        if (lastEntry.endedAt.isSame(lastEntryEndOfDay)) {
                             return;
                         }
 
-                        pieDataParts.push(endOfDayEntry);
+                        return createPiePart({
+                            params: {
+                                startedAt: lastEntry.endedAt,
+                                endedAt: lastEntryEndOfDay,
+                            },
+                        });
                     })();
+
+                    const completePieDataEntryParts = [
+                        ...pieDataParts,
+                        ...(fillerLastEntry ? [fillerLastEntry] : []),
+                    ];
 
                     const innerRadius =
                         radiusStartOffset + (radius + ringSpacing) * index;
@@ -168,7 +161,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             startAngle={85}
                             endAngle={-265}
                             key={dayLabel}
-                            data={pieDataParts}
+                            data={completePieDataEntryParts}
                             dataKey="timePart"
                             cx="50%"
                             cy="50%"
@@ -176,7 +169,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             outerRadius={outerRadius}
                             stroke=""
                         >
-                            {pieDataParts.map((entry, index) => (
+                            {completePieDataEntryParts.map((entry, index) => (
                                 <Cell
                                     key={`cell-${String(index)}`}
                                     fill={entry.color}
