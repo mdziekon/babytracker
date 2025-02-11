@@ -119,3 +119,84 @@ export const createPiePart = (
         endedAt,
     };
 };
+
+/**
+ * @param entries Entries which were all created and have ended at the same day.
+ */
+export const createDayWorthChartDataParts = (
+    entries: ClosedTimedEntry[],
+    theme: MantineTheme
+) => {
+    const pieDataParts = entries
+        .map((entry) => {
+            return createPiePart(entry, theme);
+        })
+        .map((entryDataPart, idx, allEntryParts) => {
+            /**
+             * Create virtual "start of day" entryPart in case first real entry
+             * does not start at 00:00:00.
+             */
+            const previousEntryEndedAt =
+                idx === 0
+                    ? entryDataPart.endedAt.startOf('day')
+                    : allEntryParts[idx - 1].endedAt;
+
+            const previousEntryDiff = entryDataPart.startedAt.diff(
+                previousEntryEndedAt,
+                'second'
+            );
+
+            if (previousEntryDiff < 0) {
+                return [];
+            }
+            if (previousEntryDiff === 0) {
+                return [entryDataPart];
+            }
+            return [
+                createPiePart(
+                    {
+                        params: {
+                            startedAt: previousEntryEndedAt,
+                            endedAt: entryDataPart.startedAt,
+                        },
+                    },
+                    theme
+                ),
+                entryDataPart,
+            ];
+        })
+        .flat();
+
+    /**
+     * If last entry does not end at 23:59:59, create a virtual "end of day" entry.
+     */
+    const endOfDayDataPart = (() => {
+        const lastEntry = pieDataParts.at(-1);
+
+        if (!lastEntry) {
+            return;
+        }
+
+        const lastEntryEndOfDay = lastEntry.endedAt.endOf('day');
+
+        if (lastEntry.endedAt.isSame(lastEntryEndOfDay)) {
+            return;
+        }
+
+        return createPiePart(
+            {
+                params: {
+                    startedAt: lastEntry.endedAt,
+                    endedAt: lastEntryEndOfDay,
+                },
+            },
+            theme
+        );
+    })();
+
+    if (endOfDayDataPart) {
+        pieDataParts.push(endOfDayDataPart);
+    }
+
+    return pieDataParts;
+};

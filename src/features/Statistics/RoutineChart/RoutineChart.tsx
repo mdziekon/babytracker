@@ -7,6 +7,7 @@ import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
 import { Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
+    createDayWorthChartDataParts,
     createPiePart,
     filterRoutineChartEntries,
     splitEntriesPerDay,
@@ -39,74 +40,17 @@ export const RoutineChart = (props: RoutineChartProps) => {
             {Object.entries(entriesByDays).map(
                 ([dayLabel, dayEntries], index) => {
                     if (!dayEntries?.length) {
+                        /**
+                         * TODO: Consider displaying an empty pie instead,
+                         * so that it is obvious this day does not contain any data.
+                         */
                         return <Fragment key={dayLabel} />;
                     }
 
-                    const pieDataEntryParts = dayEntries.map((entry) => {
-                        return createPiePart(entry, theme);
-                    });
-
-                    const pieDataParts = pieDataEntryParts
-                        .map((entryPart, index) => {
-                            const previousEntryEndedAt =
-                                index === 0
-                                    ? entryPart.endedAt.startOf('day')
-                                    : pieDataEntryParts[index - 1].endedAt;
-
-                            const previousEntryDiff = entryPart.startedAt.diff(
-                                previousEntryEndedAt,
-                                'second'
-                            );
-
-                            if (previousEntryDiff < 0) {
-                                return [];
-                            }
-                            if (previousEntryDiff === 0) {
-                                return [entryPart];
-                            }
-                            return [
-                                createPiePart(
-                                    {
-                                        params: {
-                                            startedAt: previousEntryEndedAt,
-                                            endedAt: entryPart.startedAt,
-                                        },
-                                    },
-                                    theme
-                                ),
-                                entryPart,
-                            ];
-                        })
-                        .flat();
-
-                    const fillerLastEntry = (() => {
-                        const lastEntry = pieDataParts.at(-1);
-
-                        if (!lastEntry) {
-                            return;
-                        }
-
-                        const lastEntryEndOfDay =
-                            lastEntry.endedAt.endOf('day');
-
-                        if (lastEntry.endedAt.isSame(lastEntryEndOfDay)) {
-                            return;
-                        }
-
-                        return createPiePart(
-                            {
-                                params: {
-                                    startedAt: lastEntry.endedAt,
-                                    endedAt: lastEntryEndOfDay,
-                                },
-                            },
-                            theme
-                        );
-                    })();
-
-                    if (fillerLastEntry) {
-                        pieDataParts.push(fillerLastEntry);
-                    }
+                    const pieDataParts = createDayWorthChartDataParts(
+                        dayEntries,
+                        theme
+                    );
 
                     const innerRadius =
                         radiusStartOffset + (radius + ringSpacing) * index;
