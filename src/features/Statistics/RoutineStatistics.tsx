@@ -1,7 +1,7 @@
 import { Center, Text, Title } from '@mantine/core';
 import classes from './Statistics.module.css';
 import { useAppStore } from '../../common/store/store';
-import { RoutineChart } from './RoutineChart';
+import { RoutineChart } from './RoutineChart/RoutineChart';
 import dayjs from 'dayjs';
 
 export const RoutineStatistics = () => {

@@ -1,16 +1,15 @@
 import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
-import { LogEntry } from '../../common/store/types/storeData.types';
+import { LogEntry } from '../../../common/store/types/storeData.types';
 import { Fragment, useMemo } from 'react';
 import dayjs from 'dayjs';
-import { DEFAULT_DATE_FORMAT } from '../../common/utils/formatting';
-import { isTimedEntry } from '../../common/utils/entryGuards';
+import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
+import { isTimedEntry } from '../../../common/utils/entryGuards';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,
-} from '../../common/utils/entryMappers';
-import { Box, Group, Paper, Text, useMantineTheme } from '@mantine/core';
-import { ChartTooltip } from '@mantine/charts';
-import { Duration } from '../../common/features/Duration/Duration';
+} from '../../../common/utils/entryMappers';
+import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
+import { Duration } from '../../../common/features/Duration/Duration';
 
 interface RoutineChartProps {
     entries: LogEntry[];
@@ -24,10 +23,6 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
     const theme = useMantineTheme();
 
-    /**
-     * TODO: Entries crossing days boundaries need to be split to properly
-     * display on the chart
-     */
     const entriesByDays = useMemo(() => {
         const splitEntries = entries
             .toReversed()
