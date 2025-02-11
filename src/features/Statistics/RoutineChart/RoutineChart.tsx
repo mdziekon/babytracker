@@ -1,17 +1,13 @@
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { LogEntry } from '../../../common/store/types/storeData.types';
 import { Fragment, useMemo } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
-import {
-    mapEntryTypeToColor,
-    mapEntryTypeToIcon,
-    mapEntryTypeToName,
-} from '../../../common/utils/entryMappers';
+import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
 import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
-    ClosedTimedEntry,
+    createPiePart,
     filterRoutineChartEntries,
     splitEntriesPerDay,
 } from './RoutineChart.utils';
@@ -53,46 +49,8 @@ export const RoutineChart = (props: RoutineChartProps) => {
                         return <Fragment key={dayLabel} />;
                     }
 
-                    const createPiePart = (
-                        entry:
-                            | ClosedTimedEntry
-                            | {
-                                  entryType?: undefined;
-                                  params: {
-                                      startedAt: Dayjs;
-                                      endedAt: Dayjs;
-                                  };
-                              }
-                    ) => {
-                        const endedAt = dayjs(entry.params.endedAt);
-                        const startedAt = dayjs(entry.params.startedAt);
-                        const durationSeconds = endedAt.diff(
-                            startedAt,
-                            'second'
-                        );
-
-                        return {
-                            name: entry.entryType
-                                ? mapEntryTypeToName(entry.entryType)
-                                : 'Nothing',
-                            entryUid: entry.entryType
-                                ? entry.metadata.uid
-                                : '00000000-0000-0000-0000-000000000000',
-                            entryType: entry.entryType,
-                            color: entry.entryType
-                                ? theme.colors[
-                                      mapEntryTypeToColor(entry.entryType)
-                                  ][5]
-                                : '#ffffff10',
-                            timePart: durationSeconds / 86400,
-                            duration: dayjs.duration(durationSeconds, 'second'),
-                            startedAt,
-                            endedAt,
-                        };
-                    };
-
                     const pieDataEntryParts = dayEntries.map((entry) => {
-                        return createPiePart(entry);
+                        return createPiePart(entry, theme);
                     });
 
                     const pieDataParts = pieDataEntryParts
@@ -114,12 +72,15 @@ export const RoutineChart = (props: RoutineChartProps) => {
                                 return [entryPart];
                             }
                             return [
-                                createPiePart({
-                                    params: {
-                                        startedAt: previousEntryEndedAt,
-                                        endedAt: entryPart.startedAt,
+                                createPiePart(
+                                    {
+                                        params: {
+                                            startedAt: previousEntryEndedAt,
+                                            endedAt: entryPart.startedAt,
+                                        },
                                     },
-                                }),
+                                    theme
+                                ),
                                 entryPart,
                             ];
                         })
@@ -139,12 +100,15 @@ export const RoutineChart = (props: RoutineChartProps) => {
                             return;
                         }
 
-                        return createPiePart({
-                            params: {
-                                startedAt: lastEntry.endedAt,
-                                endedAt: lastEntryEndOfDay,
+                        return createPiePart(
+                            {
+                                params: {
+                                    startedAt: lastEntry.endedAt,
+                                    endedAt: lastEntryEndOfDay,
+                                },
                             },
-                        });
+                            theme
+                        );
                     })();
 
                     if (fillerLastEntry) {

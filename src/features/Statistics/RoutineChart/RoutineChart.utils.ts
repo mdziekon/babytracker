@@ -1,7 +1,12 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { LogEntry } from '../../../common/store/types/storeData.types';
 import { isTimedEntry } from '../../../common/utils/entryGuards';
 import { TimedLogEntries } from '../../../common/store/store.helperTypes';
+import {
+    mapEntryTypeToColor,
+    mapEntryTypeToName,
+} from '../../../common/utils/entryMappers';
+import { MantineTheme } from '@mantine/core';
 
 /**
  * Filters out entries which:
@@ -81,4 +86,36 @@ export const splitEntriesPerDay = <EntryType extends LogEntry>(
             ];
         })
         .flat();
+};
+
+export const createPiePart = (
+    entry:
+        | ClosedTimedEntry
+        | {
+              entryType?: undefined;
+              params: {
+                  startedAt: Dayjs;
+                  endedAt: Dayjs;
+              };
+          },
+    theme: MantineTheme
+) => {
+    const endedAt = dayjs(entry.params.endedAt);
+    const startedAt = dayjs(entry.params.startedAt);
+    const durationSeconds = endedAt.diff(startedAt, 'second');
+
+    return {
+        name: entry.entryType ? mapEntryTypeToName(entry.entryType) : 'Nothing',
+        entryUid: entry.entryType
+            ? entry.metadata.uid
+            : '00000000-0000-0000-0000-000000000000',
+        entryType: entry.entryType,
+        color: entry.entryType
+            ? theme.colors[mapEntryTypeToColor(entry.entryType)][5]
+            : '#ffffff10',
+        timePart: durationSeconds / 86400,
+        duration: dayjs.duration(durationSeconds, 'second'),
+        startedAt,
+        endedAt,
+    };
 };
