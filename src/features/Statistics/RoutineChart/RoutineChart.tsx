@@ -10,8 +10,12 @@ import {
 } from '../../../common/utils/entryMappers';
 import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
+import { splitEntriesPerDay } from './RoutineChart.utils';
 
 interface RoutineChartProps {
+    /**
+     * Entries to display, as stored by the Store (ie. in descending order).
+     */
     entries: LogEntry[];
 }
 
@@ -24,59 +28,11 @@ export const RoutineChart = (props: RoutineChartProps) => {
     const theme = useMantineTheme();
 
     const entriesByDays = useMemo(() => {
-        const splitEntries = entries
-            .toReversed()
-            .map((entry) => {
-                if (!isTimedEntry(entry)) {
-                    return [entry];
-                }
-                if (!entry.params.endedAt) {
-                    return [entry];
-                }
-                if (
-                    dayjs(entry.params.startedAt).isSame(
-                        dayjs(entry.params.endedAt),
-                        'day'
-                    )
-                ) {
-                    return [entry];
-                }
-
-                return [
-                    {
-                        ...entry,
-                        params: {
-                            ...entry.params,
-                            endedAt: dayjs(entry.params.startedAt)
-                                .endOf('day')
-                                .toISOString(),
-                        },
-                    } as typeof entry,
-                    {
-                        ...entry,
-                        metadata: {
-                            ...entry.metadata,
-                            createdAt: dayjs(entry.params.endedAt)
-                                .startOf('day')
-                                .toISOString(),
-                        },
-                        params: {
-                            ...entry.params,
-                            startedAt: dayjs(entry.params.endedAt)
-                                .startOf('day')
-                                .toISOString(),
-                        },
-                    } as typeof entry,
-                ];
-            })
-            .flat();
+        const ascendingEntries = entries.toReversed();
+        const splitEntries = splitEntriesPerDay(ascendingEntries);
 
         return Object.groupBy(splitEntries, (entry) => {
-            const createdAtDate = dayjs(entry.metadata.createdAt);
-            const createdAtDateLabel =
-                createdAtDate.format(DEFAULT_DATE_FORMAT);
-
-            return createdAtDateLabel;
+            return dayjs(entry.metadata.createdAt).format(DEFAULT_DATE_FORMAT);
         });
     }, [entries]);
 
