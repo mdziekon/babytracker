@@ -22,7 +22,7 @@ export const filterRoutineChartEntries = (entries: LogEntry[]) => {
         .filter((entry) => getClosedEntryDuration(entry) >= 10);
 };
 
-export type ClosedTimedEntry = TimedLogEntries & {
+type ClosedTimedEntry = TimedLogEntries & {
     params: { endedAt: string };
 };
 

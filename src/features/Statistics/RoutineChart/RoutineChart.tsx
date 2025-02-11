@@ -4,7 +4,7 @@ import { Fragment, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
 import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
-import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
+import { Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
     createPiePart,
@@ -19,9 +19,6 @@ interface RoutineChartProps {
     entries: LogEntry[];
 }
 
-/**
- * TODO: Proof of Concept of the Pie chart usage
- */
 export const RoutineChart = (props: RoutineChartProps) => {
     const { entries } = props;
 
@@ -36,10 +33,6 @@ export const RoutineChart = (props: RoutineChartProps) => {
             return dayjs(entry.metadata.createdAt).format(DEFAULT_DATE_FORMAT);
         });
     }, [entries]);
-
-    const radiusStartOffset = 30;
-    const radius = 20;
-    const ringSpacing = 5;
 
     return (
         <PieChart width={600} height={600}>
@@ -144,50 +137,55 @@ export const RoutineChart = (props: RoutineChartProps) => {
             )}
             <Tooltip
                 content={({ payload }) => {
-                    // TODO: Fix typings
                     const entryData = payload?.[0];
-                    const entryPayload = entryData?.payload;
+                    const piePartData = entryData?.payload as unknown as
+                        | ReturnType<typeof createPiePart>
+                        | undefined;
 
-                    if (!entryData || !entryPayload) {
+                    if (!entryData || !piePartData) {
                         return;
                     }
 
-                    const Icon =
-                        entryPayload.entryType &&
-                        mapEntryTypeToIcon(entryPayload.entryType);
-
                     return (
-                        <Paper shadow="xs" p="xs">
-                            <Group justify="space-between">
-                                <Group
-                                    justify="flex-start"
-                                    gap={8}
-                                    style={{
-                                        color: Icon
-                                            ? entryPayload.color
-                                            : undefined,
-                                    }}
-                                >
-                                    {Icon && (
-                                        <Icon
-                                            style={{
-                                                width: '16px',
-                                                height: '16px',
-                                            }}
-                                        />
-                                    )}
-                                    {entryData.name}
-                                </Group>
-                                <Box>
-                                    <Duration
-                                        duration={entryPayload.duration}
-                                    />
-                                </Box>
-                            </Group>
-                        </Paper>
+                        <TooltipContent
+                            name={entryData.name}
+                            piePart={piePartData}
+                        />
                     );
                 }}
             />
         </PieChart>
     );
 };
+
+const TooltipContent = (props: {
+    name: string | number | undefined;
+    piePart: ReturnType<typeof createPiePart>;
+}) => {
+    const { name, piePart } = props;
+
+    const IconComponent =
+        piePart.entryType && mapEntryTypeToIcon(piePart.entryType);
+
+    return (
+        <Paper shadow="md" p="xs">
+            <Group justify="space-between">
+                <Group
+                    justify="flex-start"
+                    gap={8}
+                    style={{
+                        color: IconComponent ? piePart.color : undefined,
+                    }}
+                >
+                    {IconComponent && <IconComponent size={16} />}
+                    {name}
+                </Group>
+                <Duration duration={piePart.duration} />
+            </Group>
+        </Paper>
+    );
+};
+
+const radiusStartOffset = 30;
+const radius = 20;
+const ringSpacing = 5;
