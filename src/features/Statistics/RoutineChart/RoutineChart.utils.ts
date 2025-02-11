@@ -1,13 +1,49 @@
 import dayjs from 'dayjs';
 import { LogEntry } from '../../../common/store/types/storeData.types';
 import { isTimedEntry } from '../../../common/utils/entryGuards';
+import { TimedLogEntries } from '../../../common/store/store.helperTypes';
+
+/**
+ * Filters out entries which:
+ * - are not TimedEntries
+ * - do not have endedAt property yet
+ * - are too short
+ */
+export const filterRoutineChartEntries = (entries: LogEntry[]) => {
+    return entries
+        .filter((entry) => {
+            return isTimedEntry(entry) && isClosedTimedEntry(entry);
+        })
+        .filter((entry) => getClosedEntryDuration(entry) >= 10);
+};
+
+const isClosedTimedEntry = (
+    entry: TimedLogEntries
+): entry is typeof entry & {
+    params: { endedAt: string };
+} => {
+    return Boolean(entry.params.endedAt);
+};
+
+const getClosedEntryDuration = (
+    entry: TimedLogEntries & {
+        params: { endedAt: string };
+    }
+) => {
+    return dayjs(entry.params.endedAt).diff(
+        dayjs(entry.params.startedAt),
+        'second'
+    );
+};
 
 /**
  * Splits entries spanning more than one day into two entries for each day,
  * then returns everything as flat array.
  * Note: assumes ascending order of entries.
  */
-export const splitEntriesPerDay = (entries: LogEntry[]) => {
+export const splitEntriesPerDay = <EntryType extends LogEntry>(
+    entries: EntryType[]
+) => {
     return entries
         .map((entry) => {
             if (!isTimedEntry(entry) || !entry.params.endedAt) {

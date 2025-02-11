@@ -1,16 +1,18 @@
-import { Cell, Legend, Pie, PieChart, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { LogEntry } from '../../../common/store/types/storeData.types';
 import { Fragment, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
-import { isTimedEntry } from '../../../common/utils/entryGuards';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,
 } from '../../../common/utils/entryMappers';
 import { Box, Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
-import { splitEntriesPerDay } from './RoutineChart.utils';
+import {
+    filterRoutineChartEntries,
+    splitEntriesPerDay,
+} from './RoutineChart.utils';
 
 interface RoutineChartProps {
     /**
@@ -29,7 +31,8 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
     const entriesByDays = useMemo(() => {
         const ascendingEntries = entries.toReversed();
-        const splitEntries = splitEntriesPerDay(ascendingEntries);
+        const routineChartEntries = filterRoutineChartEntries(ascendingEntries);
+        const splitEntries = splitEntriesPerDay(routineChartEntries);
 
         return Object.groupBy(splitEntries, (entry) => {
             return dayjs(entry.metadata.createdAt).format(DEFAULT_DATE_FORMAT);
@@ -44,35 +47,11 @@ export const RoutineChart = (props: RoutineChartProps) => {
         <PieChart width={600} height={600}>
             {Object.entries(entriesByDays).map(
                 ([dayLabel, dayEntries], index) => {
-                    if (!dayEntries) {
+                    if (!dayEntries?.length) {
                         return <Fragment key={dayLabel} />;
                     }
 
-                    const finalDayEntries = dayEntries
-                        .filter((entry) => isTimedEntry(entry))
-                        .filter(
-                            (
-                                entry
-                            ): entry is typeof entry & {
-                                params: { endedAt: string };
-                            } => {
-                                return Boolean(entry.params.endedAt);
-                            }
-                        )
-                        .filter((entry) => {
-                            const diff = dayjs(entry.params.endedAt).diff(
-                                dayjs(entry.params.startedAt),
-                                'second'
-                            );
-
-                            return diff >= 10;
-                        });
-
-                    if (!finalDayEntries.length) {
-                        return <Fragment key={dayLabel} />;
-                    }
-
-                    const pieDataEntryParts = finalDayEntries.map((entry) => {
+                    const pieDataEntryParts = dayEntries.map((entry) => {
                         const durationSeconds = dayjs(
                             entry.params.endedAt
                         ).diff(entry.params.startedAt, 'second');
