@@ -10,7 +10,6 @@ import classes from './Log.module.css';
 import { EntryTypeIcon } from './LogEntryDisplay/EntryTypeIcon';
 import { EntryActions } from './LogEntryDisplay/EntryActions';
 import { EntryDates } from './LogEntryDisplay/EntryDates';
-import { isTimedEntry } from '../../common/utils/entryGuards';
 import { routes } from '../../common/routes';
 import { useInViewport } from '@mantine/hooks';
 import React, { useCallback, useMemo } from 'react';
@@ -27,8 +26,6 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
     const navigate = useNavigate();
 
     const { ref, inViewport } = useInViewport();
-
-    const isInProgress = isTimedEntry(entry) && !entry.params.endedAt;
 
     const handleGotoEvent = useCallback(() => {
         void navigate(routes.eventView(entry.metadata.uid));
@@ -65,10 +62,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             onClick={handleGotoEvent}
         >
             <Table.Td className={classes.iconColumn}>
-                <EntryTypeIcon
-                    entryType={entry.entryType}
-                    isInProgress={isInProgress}
-                />
+                {inViewport && <EntryTypeIcon entry={entry} />}
             </Table.Td>
             <Table.Td>
                 {inViewport && (
