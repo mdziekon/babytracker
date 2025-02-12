@@ -112,10 +112,11 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                                     title={
                                         <Duration duration={entryDuration} />
                                     }
+                                    shouldPreventShrink
                                 />
                             </Box>
                         ) : (
-                            <Box style={{ visibility: 'hidden' }}>.</Box>
+                            invisibleSpacer
                         )}
                         {entryStartedTimeAgo && (
                             <Box className={classes.durationColumn}>
@@ -127,6 +128,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                                             duration={entryStartedTimeAgo}
                                         />
                                     }
+                                    shouldPreventShrink
                                 />
                             </Box>
                         )}
@@ -166,3 +168,5 @@ const hasEndedAt = (
 const onEventStopPropagation = (event: React.MouseEvent<unknown>) => {
     event.stopPropagation();
 };
+
+const invisibleSpacer = <Box style={{ visibility: 'hidden' }}>.</Box>;
