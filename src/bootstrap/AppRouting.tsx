@@ -8,6 +8,7 @@ import { routes } from '../common/routes';
 import { StatisticsHome } from '../features/Statistics/StatisticsHome';
 import { WeightStatistics } from '../features/Statistics/WeightStatistics';
 import { EditBabyInfo } from '../features/Settings/EditBabyInfo/EditBabyInfo';
+import { RoutineStatistics } from '../features/Statistics/RoutineStatistics';
 
 export const AppRouting = () => {
     return (
@@ -40,6 +41,10 @@ export const AppRouting = () => {
                 <Route
                     path={routes.statisticsWeight}
                     element={<WeightStatistics />}
+                />
+                <Route
+                    path={routes.statisticsRoutine}
+                    element={<RoutineStatistics />}
                 />
             </Route>
         </Routes>

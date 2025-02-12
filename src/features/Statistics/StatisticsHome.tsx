@@ -4,7 +4,7 @@ import {
     ActionProps,
     ActionsGrid,
 } from '../../common/features/ActionsGrid/ActionsGrid';
-import { IconWeight } from '@tabler/icons-react';
+import { IconRepeat, IconWeight } from '@tabler/icons-react';
 import { EntryType } from '../../common/store/types/storeData.types';
 import { mapEntryTypeToColor } from '../../common/utils/entryMappers';
 import { routes } from '../../common/routes';
@@ -16,6 +16,12 @@ export const StatisticsHome = () => {
             icon: IconWeight,
             color: mapEntryTypeToColor(EntryType.WeightMeasurement),
             linkTarget: routes.statisticsWeight,
+        },
+        {
+            title: 'Routine',
+            icon: IconRepeat,
+            color: 'orange',
+            linkTarget: routes.statisticsRoutine,
         },
     ] satisfies ActionProps[];
 
