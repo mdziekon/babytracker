@@ -25,10 +25,14 @@ export const LogFilters = (props: LogFiltersProps) => {
         useDisclosure(false);
 
     const [filters, setFilters] = useState(defaultFilters);
+    const [prevFilters, setPrevFilters] = useState(filters);
 
     useEffect(() => {
-        onChange(filters);
-    }, [onChange, filters]);
+        if (filters !== prevFilters) {
+            setPrevFilters(filters);
+            onChange(filters);
+        }
+    }, [onChange, filters, prevFilters]);
 
     const onLogTypeChange = useCallback((value: string[]) => {
         setFilters((prev) => {
