@@ -1,5 +1,5 @@
-import { Box, rem, Table } from '@mantine/core';
-import dayjs from 'dayjs';
+import { Box, Table } from '@mantine/core';
+import dayjs, { Dayjs } from 'dayjs';
 import { IconCalendar, IconClock } from '@tabler/icons-react';
 import {
     DateISO8601,
@@ -21,11 +21,12 @@ import { TimeAgo } from '../../common/features/TimeAgo/TimeAgo';
 
 interface LogEntryProps {
     entry: LogEntry;
+    now: Dayjs;
     onOpenConfirmDelete: (entry: LogEntry) => void;
 }
 
 const LogEntryDisplayBase = (props: LogEntryProps) => {
-    const { entry, onOpenConfirmDelete } = props;
+    const { entry, now, onOpenConfirmDelete } = props;
     const navigate = useNavigate();
 
     const { ref, inViewport } = useInViewport();
@@ -67,7 +68,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
         return dayjs.duration(entryTime.ended.diff(entryTime.started));
     })();
     const entryStartedTimeAgo = (() => {
-        const startedTimeAgo = dayjs.duration(dayjs().diff(entryTime.started));
+        const startedTimeAgo = dayjs.duration(now.diff(entryTime.started));
 
         if (startedTimeAgo.asHours() > 24) {
             return;
@@ -82,7 +83,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             ref={ref}
             onClick={handleGotoEvent}
         >
-            <Table.Td w={rem(64)} h={rem(64)}>
+            <Table.Td className={classes.iconColumn}>
                 <EntryTypeIcon
                     entryType={entry.entryType}
                     isInProgress={isInProgress}
@@ -95,9 +96,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                             started={entryTime.started}
                             ended={entryTime.ended}
                         />
-                        <Box>
-                            <LogEntryEventMiniDetails event={entry} />
-                        </Box>
+                        <LogEntryEventMiniDetails event={entry} />
                     </>
                 )}
             </Table.Td>
@@ -108,7 +107,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                             <Box className={classes.durationColumn}>
                                 <MiniDetailsEntry
                                     size="sm"
-                                    icon={<IconClock title="Duration" />}
+                                    icon={iconDurationEl}
                                     title={
                                         <Duration duration={entryDuration} />
                                     }
@@ -122,7 +121,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
                             <Box className={classes.durationColumn}>
                                 <MiniDetailsEntry
                                     size="sm"
-                                    icon={<IconCalendar title="Created" />}
+                                    icon={iconCreatedEl}
                                     title={
                                         <TimeAgo
                                             duration={entryStartedTimeAgo}
@@ -138,7 +137,6 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             <Table.Td
                 onClick={onEventStopPropagation}
                 className={classes.ctaColumn}
-                w={rem(48)}
                 align="right"
             >
                 {inViewport && (
@@ -170,3 +168,5 @@ const onEventStopPropagation = (event: React.MouseEvent<unknown>) => {
 };
 
 const invisibleSpacer = <Box style={{ visibility: 'hidden' }}>.</Box>;
+const iconDurationEl = <IconClock title="Duration" />;
+const iconCreatedEl = <IconCalendar title="Created" />;

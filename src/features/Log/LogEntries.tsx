@@ -87,6 +87,8 @@ export const LogEntries = (props: LogEntriesProps) => {
         );
     }
 
+    const now = dayjs();
+
     return (
         <>
             {entriesGroupsIterable.map(([groupTitle, groupedEntries]) => {
@@ -116,6 +118,7 @@ export const LogEntries = (props: LogEntriesProps) => {
                                 <LogEntryDisplay
                                     key={groupedEntry.metadata.uid}
                                     entry={groupedEntry}
+                                    now={now}
                                     onOpenConfirmDelete={
                                         handleOpenConfirmDelete
                                     }
