@@ -36,10 +36,6 @@ export const RoutineChart = (props: RoutineChartProps) => {
                 const dayLabel = dayProps.date.format(DEFAULT_DATE_FORMAT);
 
                 if (!dayProps.entries.length) {
-                    /**
-                     * TODO: Consider displaying an empty pie instead,
-                     * so that it is obvious this day does not contain any data.
-                     */
                     return <Fragment key={dayLabel} />;
                 }
 

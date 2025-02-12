@@ -22,7 +22,7 @@ export const RoutineStatistics = () => {
                 nowStartOfDay.diff(
                     dayjs(entry.metadata.createdAt).startOf('day'),
                     'day'
-                ) <=
+                ) <
                 DAYS_LIMIT + 1
             );
         });
@@ -34,7 +34,7 @@ export const RoutineStatistics = () => {
                 nowStartOfDay.diff(
                     dayjs(entry.params.startedAt).startOf('day'),
                     'day'
-                ) <= DAYS_LIMIT
+                ) < DAYS_LIMIT
             );
         });
 
@@ -58,13 +58,20 @@ export const RoutineStatistics = () => {
             return accumulator;
         }, {});
 
-        return Object.values(groupedEntries)
-            .filter((value): value is NonNullable<typeof value> =>
-                Boolean(value)
-            )
-            .toSorted((left, right) => {
-                return left.date.unix() - right.date.unix();
-            });
+        /**
+         * Create "per day" slots, regardless whether there's actually any entries,
+         * so that all days are being represented on the chart.
+         */
+        return Array.from({ length: DAYS_LIMIT }, (_, idx) => {
+            const date = nowStartOfDay.subtract(idx, 'day');
+            const dateLabel = date.format(DEFAULT_DATE_FORMAT);
+            const dayProps = groupedEntries[dateLabel];
+
+            return {
+                date: nowStartOfDay.subtract(idx, 'day'),
+                entries: dayProps?.entries ?? [],
+            };
+        }).toReversed();
     }, [entries, nowStartOfDay]);
 
     return (
