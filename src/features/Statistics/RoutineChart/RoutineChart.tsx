@@ -30,8 +30,11 @@ export const RoutineChart = (props: RoutineChartProps) => {
 
     const theme = useMantineTheme();
 
+    /**
+     * TODO: Make this chart more responsive
+     */
     return (
-        <PieChart width={400} height={400}>
+        <PieChart width={360} height={400}>
             {entriesPerDay.map((dayProps, index) => {
                 const dayLabel = dayProps.date.format(DEFAULT_DATE_FORMAT);
 
@@ -137,6 +140,6 @@ const TooltipContent = (props: {
     );
 };
 
-const radiusStartOffset = 30;
+const radiusStartOffset = 25;
 const radius = 20;
-const ringSpacing = 5;
+const ringSpacing = 4;
