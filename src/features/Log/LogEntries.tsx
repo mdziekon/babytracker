@@ -44,7 +44,9 @@ export const LogEntries = (props: LogEntriesProps) => {
 
     const entriesGroups = useMemo(() => {
         return Object.groupBy(entries, (entry) => {
-            const createdAtDate = dayjs(entry.metadata.createdAt);
+            const createdAtDate = dayjs(entry.metadata.createdAt).startOf(
+                'day'
+            );
 
             const relativeLabel = formatDateToRelativeLabel(createdAtDate);
 
