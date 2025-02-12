@@ -33,10 +33,14 @@ export const LogTypeCombobox = (props: LogTypeComboboxProps) => {
     });
 
     const [value, setValue] = useState<string[]>([]);
+    const [prevValue, setPrevValue] = useState(value);
 
     useEffect(() => {
-        onChange(value);
-    }, [onChange, value]);
+        if (value !== prevValue) {
+            setPrevValue(value);
+            onChange(value);
+        }
+    }, [onChange, prevValue, value]);
 
     const handleValueSelect = (value: string) => {
         setValue((current) =>

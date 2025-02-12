@@ -37,12 +37,20 @@ table.logTable {
     tr.infoRow:hover {
         background-color: unset;
     }
+    td.iconColumn {
+        width: 4rem;
+        height: 4rem;
+    }
     td.ctaColumn {
         cursor: initial;
+        width: 3rem;
     }
     .durationColumn {
         display: flex;
         justify-content: flex-end;
+    }
+    .hidden {
+        visibility: hidden;
     }
 
     @media (max-width: $mantine-breakpoint-xs) {
