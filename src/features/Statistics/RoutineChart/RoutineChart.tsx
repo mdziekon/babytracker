@@ -2,14 +2,18 @@ import { Cell, Pie, PieChart, Tooltip } from 'recharts';
 import { Fragment } from 'react';
 import { Dayjs } from 'dayjs';
 import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
-import { Group, Paper, useMantineTheme } from '@mantine/core';
+import { Group, Paper, Stack, Text, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
     ClosedTimedEntry,
     createDayWorthChartDataParts,
     createPiePart,
 } from './RoutineChart.utils';
-import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
+import {
+    DEFAULT_DATE_FORMAT,
+    DEFAULT_DATETIME_FORMAT,
+} from '../../../common/utils/formatting';
+import { IconCalendar, IconCalendarX } from '@tabler/icons-react';
 
 interface RoutineChartProps {
     /**
@@ -104,19 +108,35 @@ const TooltipContent = (props: {
 
     return (
         <Paper shadow="md" p="xs">
-            <Group justify="space-between">
-                <Group
-                    justify="flex-start"
-                    gap={8}
-                    style={{
-                        color: IconComponent ? piePart.color : undefined,
-                    }}
-                >
-                    {IconComponent && <IconComponent size={16} />}
-                    {name}
+            <Stack gap={4}>
+                <Group justify="space-between">
+                    <Group
+                        justify="flex-start"
+                        gap={8}
+                        style={{
+                            color: IconComponent ? piePart.color : undefined,
+                        }}
+                    >
+                        {IconComponent && <IconComponent size={16} />}
+                        {name}
+                    </Group>
+                    <Duration duration={piePart.duration} />
                 </Group>
-                <Duration duration={piePart.duration} />
-            </Group>
+                <Group justify="space-between">
+                    <Group justify="flex-start" gap={8}>
+                        <IconCalendar size={16} stroke={1.5} />
+                        <Text>Started: </Text>
+                    </Group>
+                    {piePart.startedAt.format(DEFAULT_DATETIME_FORMAT)}
+                </Group>
+                <Group justify="space-between">
+                    <Group justify="flex-start" gap={8}>
+                        <IconCalendarX size={16} stroke={1.5} />
+                        <Text>Finished: </Text>
+                    </Group>
+                    {piePart.endedAt.format(DEFAULT_DATETIME_FORMAT)}
+                </Group>
+            </Stack>
         </Paper>
     );
 };
