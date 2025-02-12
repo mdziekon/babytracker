@@ -1,4 +1,4 @@
-import { Center, Text, Title } from '@mantine/core';
+import { Alert, Center, Stack, Text, Title } from '@mantine/core';
 import classes from './Statistics.module.css';
 import { useAppStore } from '../../common/store/store';
 import { RoutineChart } from './RoutineChart/RoutineChart';
@@ -10,6 +10,7 @@ import {
     splitEntriesPerDay,
 } from './RoutineChart/RoutineChart.utils';
 import { DEFAULT_DATE_FORMAT } from '../../common/utils/formatting';
+import { IconInfoCircle } from '@tabler/icons-react';
 
 export const RoutineStatistics = () => {
     const entries = useAppStore((state) => state.data.logs);
@@ -74,6 +75,10 @@ export const RoutineStatistics = () => {
         }).toReversed();
     }, [entries, nowStartOfDay]);
 
+    const hasDataToDisplay = entriesByDays.some(
+        (dayProps) => dayProps.entries.length > 0
+    );
+
     return (
         <>
             <Title className={classes.title} ta="center" mt={16}>
@@ -83,11 +88,35 @@ export const RoutineStatistics = () => {
                     component="span"
                     gradient={{ from: 'pink', to: 'yellow' }}
                 >
-                    Routine Statistics (last 7 days)
+                    Routine Statistics
                 </Text>
             </Title>
             <Center>
-                <RoutineChart entriesPerDay={entriesByDays} />
+                {hasDataToDisplay ? (
+                    <Stack gap={32}>
+                        <RoutineChart entriesPerDay={entriesByDays} />
+                        <Alert
+                            mt="lg"
+                            variant="light"
+                            color="blue"
+                            title="Info"
+                            icon={<IconInfoCircle />}
+                        >
+                            Displaying last 7 days of activity
+                        </Alert>
+                    </Stack>
+                ) : (
+                    <Alert
+                        mt="lg"
+                        variant="light"
+                        color="blue"
+                        title="Info"
+                        icon={<IconInfoCircle />}
+                        miw={300}
+                    >
+                        Nothing to display yet...
+                    </Alert>
+                )}
             </Center>
         </>
     );

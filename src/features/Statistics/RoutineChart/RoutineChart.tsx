@@ -31,7 +31,7 @@ export const RoutineChart = (props: RoutineChartProps) => {
     const theme = useMantineTheme();
 
     return (
-        <PieChart width={400} height={600}>
+        <PieChart width={400} height={400}>
             {entriesPerDay.map((dayProps, index) => {
                 const dayLabel = dayProps.date.format(DEFAULT_DATE_FORMAT);
 
