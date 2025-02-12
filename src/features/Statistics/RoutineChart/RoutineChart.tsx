@@ -1,84 +1,75 @@
 import { Cell, Pie, PieChart, Tooltip } from 'recharts';
-import { LogEntry } from '../../../common/store/types/storeData.types';
-import { Fragment, useMemo } from 'react';
-import dayjs from 'dayjs';
-import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
+import { Fragment } from 'react';
+import { Dayjs } from 'dayjs';
 import { mapEntryTypeToIcon } from '../../../common/utils/entryMappers';
 import { Group, Paper, useMantineTheme } from '@mantine/core';
 import { Duration } from '../../../common/features/Duration/Duration';
 import {
+    ClosedTimedEntry,
     createDayWorthChartDataParts,
     createPiePart,
-    filterRoutineChartEntries,
-    splitEntriesPerDay,
 } from './RoutineChart.utils';
+import { DEFAULT_DATE_FORMAT } from '../../../common/utils/formatting';
 
 interface RoutineChartProps {
     /**
-     * Entries to display, as stored by the Store (ie. in descending order).
+     * Entries to display, in ascending order
      */
-    entries: LogEntry[];
+    entriesPerDay: {
+        date: Dayjs;
+        entries: ClosedTimedEntry[];
+    }[];
 }
 
 export const RoutineChart = (props: RoutineChartProps) => {
-    const { entries } = props;
+    const { entriesPerDay } = props;
 
     const theme = useMantineTheme();
 
-    const entriesByDays = useMemo(() => {
-        const ascendingEntries = entries.toReversed();
-        const routineChartEntries = filterRoutineChartEntries(ascendingEntries);
-        const splitEntries = splitEntriesPerDay(routineChartEntries);
-
-        return Object.groupBy(splitEntries, (entry) => {
-            return dayjs(entry.metadata.createdAt).format(DEFAULT_DATE_FORMAT);
-        });
-    }, [entries]);
-
     return (
-        <PieChart width={600} height={600}>
-            {Object.entries(entriesByDays).map(
-                ([dayLabel, dayEntries], index) => {
-                    if (!dayEntries?.length) {
-                        /**
-                         * TODO: Consider displaying an empty pie instead,
-                         * so that it is obvious this day does not contain any data.
-                         */
-                        return <Fragment key={dayLabel} />;
-                    }
+        <PieChart width={400} height={600}>
+            {entriesPerDay.map((dayProps, index) => {
+                const dayLabel = dayProps.date.format(DEFAULT_DATE_FORMAT);
 
-                    const pieDataParts = createDayWorthChartDataParts(
-                        dayEntries,
-                        theme
-                    );
-
-                    const innerRadius =
-                        radiusStartOffset + (radius + ringSpacing) * index;
-                    const outerRadius = innerRadius + radius;
-
-                    return (
-                        <Pie
-                            startAngle={85}
-                            endAngle={-265}
-                            key={dayLabel}
-                            data={pieDataParts}
-                            dataKey="timePart"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={innerRadius}
-                            outerRadius={outerRadius}
-                            stroke=""
-                        >
-                            {pieDataParts.map((entry, index) => (
-                                <Cell
-                                    key={`cell-${String(index)}`}
-                                    fill={entry.color}
-                                />
-                            ))}
-                        </Pie>
-                    );
+                if (!dayProps.entries.length) {
+                    /**
+                     * TODO: Consider displaying an empty pie instead,
+                     * so that it is obvious this day does not contain any data.
+                     */
+                    return <Fragment key={dayLabel} />;
                 }
-            )}
+
+                const pieDataParts = createDayWorthChartDataParts(
+                    dayProps.entries,
+                    theme
+                );
+
+                const innerRadius =
+                    radiusStartOffset + (radius + ringSpacing) * index;
+                const outerRadius = innerRadius + radius;
+
+                return (
+                    <Pie
+                        startAngle={85}
+                        endAngle={-265}
+                        key={dayLabel}
+                        data={pieDataParts}
+                        dataKey="timePart"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={innerRadius}
+                        outerRadius={outerRadius}
+                        stroke=""
+                    >
+                        {pieDataParts.map((entry, index) => (
+                            <Cell
+                                key={`cell-${String(index)}`}
+                                fill={entry.color}
+                            />
+                        ))}
+                    </Pie>
+                );
+            })}
             <Tooltip
                 content={({ payload }) => {
                     const entryData = payload?.[0];
