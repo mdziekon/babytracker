@@ -14,19 +14,23 @@ import { DEFAULT_DATE_FORMAT } from '../../common/utils/formatting';
 export const RoutineStatistics = () => {
     const entries = useAppStore((state) => state.data.logs);
 
-    const now = dayjs();
+    const nowStartOfDay = dayjs().startOf('day');
 
     const entriesByDays = useMemo(() => {
         const routineEntries = entries.filter((entry) => {
             return (
-                now.diff(dayjs(entry.metadata.createdAt), 'day') < DAYS_LIMIT
+                nowStartOfDay.diff(
+                    dayjs(entry.metadata.createdAt).startOf('day'),
+                    'day'
+                ) <= DAYS_LIMIT
             );
         });
         const ascendingEntries = routineEntries.toReversed();
         const routineChartEntries = filterRoutineChartEntries(ascendingEntries);
         const splitEntries = splitEntriesPerDay(routineChartEntries);
+        const splitEntriesInRange = splitEntries;
 
-        const groupedEntries = splitEntries.reduce<
+        const groupedEntries = splitEntriesInRange.reduce<
             Partial<
                 Record<string, { date: Dayjs; entries: ClosedTimedEntry[] }>
             >
@@ -53,7 +57,7 @@ export const RoutineStatistics = () => {
             .toSorted((left, right) => {
                 return left.date.unix() - right.date.unix();
             });
-    }, [entries, now]);
+    }, [entries, nowStartOfDay]);
 
     return (
         <>
