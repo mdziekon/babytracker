@@ -1,13 +1,16 @@
 import { Fragment, useCallback, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import { Table } from '@mantine/core';
+import { Group, Table, Text } from '@mantine/core';
 import { LogEntryDisplay } from './LogEntryDisplay';
 import { useAppStore } from '../../common/store/store';
 import { isTimedEntry } from '../../common/utils/entryGuards';
 import { EntryDeleteModal } from '../../common/features/EntryDeleteModal/EntryDeleteModal';
 import { useDisclosure } from '@mantine/hooks';
 import { LogEntry } from '../../common/store/types/storeData.types';
-import { formatDateToRelativeLabel } from '../../common/utils/formatting';
+import {
+    DEFAULT_DATE_FORMAT,
+    formatDateToRelativeLabel,
+} from '../../common/utils/formatting';
 import { LogFiltersState } from './LogFilters/LogFilters';
 import classes from './Log.module.css';
 
@@ -87,14 +90,26 @@ export const LogEntries = (props: LogEntriesProps) => {
     return (
         <>
             {entriesGroupsIterable.map(([groupTitle, groupedEntries]) => {
-                if (!groupedEntries) {
+                if (!groupedEntries || groupedEntries.length === 0) {
                     return;
                 }
+
+                const firstEntry = groupedEntries[0];
+                const firstEntryDateLabel = dayjs(
+                    firstEntry.metadata.createdAt
+                ).format(DEFAULT_DATE_FORMAT);
 
                 return (
                     <Fragment key={groupTitle}>
                         <Table.Tr bg="gray.8">
-                            <Table.Th colSpan={4}>{groupTitle}</Table.Th>
+                            <Table.Th colSpan={4}>
+                                <Group justify="space-between">
+                                    <span>{groupTitle}</span>
+                                    <Text fw={400} fs="italic" size="sm">
+                                        {firstEntryDateLabel}
+                                    </Text>
+                                </Group>
+                            </Table.Th>
                         </Table.Tr>
                         {groupedEntries.map((groupedEntry) => {
                             return (
