@@ -22,13 +22,21 @@ export const RoutineStatistics = () => {
                 nowStartOfDay.diff(
                     dayjs(entry.metadata.createdAt).startOf('day'),
                     'day'
-                ) <= DAYS_LIMIT
+                ) <=
+                DAYS_LIMIT + 1
             );
         });
         const ascendingEntries = routineEntries.toReversed();
         const routineChartEntries = filterRoutineChartEntries(ascendingEntries);
         const splitEntries = splitEntriesPerDay(routineChartEntries);
-        const splitEntriesInRange = splitEntries;
+        const splitEntriesInRange = splitEntries.filter((entry) => {
+            return (
+                nowStartOfDay.diff(
+                    dayjs(entry.params.startedAt).startOf('day'),
+                    'day'
+                ) <= DAYS_LIMIT
+            );
+        });
 
         const groupedEntries = splitEntriesInRange.reduce<
             Partial<
