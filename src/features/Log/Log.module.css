@@ -49,6 +49,9 @@ table.logTable {
         display: flex;
         justify-content: flex-end;
     }
+    .hidden {
+        visibility: hidden;
+    }
 
     @media (max-width: $mantine-breakpoint-xs) {
         margin-inline: -1rem;

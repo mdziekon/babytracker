@@ -1,6 +1,5 @@
-import { Box, Table } from '@mantine/core';
+import { Table } from '@mantine/core';
 import dayjs, { Dayjs } from 'dayjs';
-import { IconCalendar, IconClock } from '@tabler/icons-react';
 import {
     DateISO8601,
     LogEntry,
@@ -8,16 +7,14 @@ import {
 import { useNavigate } from 'react-router';
 import { LogEntryEventMiniDetails } from './LogEntryEventMiniDetails/LogEntryEventMiniDetails';
 import classes from './Log.module.css';
-import { MiniDetailsEntry } from './LogEntryEventMiniDetails/MiniDetailsEntry/MiniDetailsEntry';
 import { EntryTypeIcon } from './LogEntryDisplay/EntryTypeIcon';
 import { EntryActions } from './LogEntryDisplay/EntryActions';
 import { EntryDates } from './LogEntryDisplay/EntryDates';
-import { Duration } from '../../common/features/Duration/Duration';
 import { isTimedEntry } from '../../common/utils/entryGuards';
 import { routes } from '../../common/routes';
 import { useInViewport } from '@mantine/hooks';
-import React, { useCallback } from 'react';
-import { TimeAgo } from '../../common/features/TimeAgo/TimeAgo';
+import React, { useCallback, useMemo } from 'react';
+import { EntryDurationColumn } from './LogEntryDisplay/EntryDurationColumn';
 
 interface LogEntryProps {
     entry: LogEntry;
@@ -40,7 +37,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
         onOpenConfirmDelete(entry);
     }, [entry, onOpenConfirmDelete]);
 
-    const entryTime = (() => {
+    const entryTime = useMemo(() => {
         if (hasStartedAt(entry)) {
             if (hasEndedAt(entry)) {
                 return {
@@ -59,23 +56,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             started: dayjs(entry.metadata.createdAt),
             ended: undefined,
         };
-    })();
-    const entryDuration = (() => {
-        if (!entryTime.ended) {
-            return;
-        }
-
-        return dayjs.duration(entryTime.ended.diff(entryTime.started));
-    })();
-    const entryStartedTimeAgo = (() => {
-        const startedTimeAgo = dayjs.duration(now.diff(entryTime.started));
-
-        if (startedTimeAgo.asHours() > 24) {
-            return;
-        }
-
-        return startedTimeAgo;
-    })();
+    }, [entry]);
 
     return (
         <Table.Tr
@@ -102,36 +83,11 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             </Table.Td>
             <Table.Td className={classes.durationColumn}>
                 {inViewport && (
-                    <Box>
-                        {entryDuration ? (
-                            <Box className={classes.durationColumn}>
-                                <MiniDetailsEntry
-                                    size="sm"
-                                    icon={iconDurationEl}
-                                    title={
-                                        <Duration duration={entryDuration} />
-                                    }
-                                    shouldPreventShrink
-                                />
-                            </Box>
-                        ) : (
-                            invisibleSpacer
-                        )}
-                        {entryStartedTimeAgo && (
-                            <Box className={classes.durationColumn}>
-                                <MiniDetailsEntry
-                                    size="sm"
-                                    icon={iconCreatedEl}
-                                    title={
-                                        <TimeAgo
-                                            duration={entryStartedTimeAgo}
-                                        />
-                                    }
-                                    shouldPreventShrink
-                                />
-                            </Box>
-                        )}
-                    </Box>
+                    <EntryDurationColumn
+                        started={entryTime.started}
+                        ended={entryTime.ended}
+                        now={now}
+                    />
                 )}
             </Table.Td>
             <Table.Td
@@ -166,7 +122,3 @@ const hasEndedAt = (
 const onEventStopPropagation = (event: React.MouseEvent<unknown>) => {
     event.stopPropagation();
 };
-
-const invisibleSpacer = <Box style={{ visibility: 'hidden' }}>.</Box>;
-const iconDurationEl = <IconClock title="Duration" />;
-const iconCreatedEl = <IconCalendar title="Created" />;
