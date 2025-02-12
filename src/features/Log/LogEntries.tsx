@@ -101,7 +101,7 @@ export const LogEntries = (props: LogEntriesProps) => {
 
                 return (
                     <Fragment key={groupTitle}>
-                        <Table.Tr bg="gray.8">
+                        <Table.Tr bg="gray.8" className={classes.headerRow}>
                             <Table.Th colSpan={4}>
                                 <Group justify="space-between">
                                     <span>{groupTitle}</span>

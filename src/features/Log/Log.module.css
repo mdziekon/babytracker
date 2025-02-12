@@ -30,7 +30,7 @@ table.logTable {
         }
     }
 
-    tr:not(.infoRow) {
+    tr:not(.infoRow):not(.headerRow) {
         cursor: pointer;
     }
     tr.infoRow,
