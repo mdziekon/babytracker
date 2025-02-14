@@ -1,15 +1,20 @@
 import { Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconCopy, IconPencil, IconTrash } from '@tabler/icons-react';
 import { useNavigate, Link } from 'react-router';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { ResponsiveStack } from '../../../../common/design/ResponsiveStack';
 import { EntryDeleteModal } from '../../../../common/features/EntryDeleteModal/EntryDeleteModal';
-import { LogEntry } from '../../../../common/store/types/storeData.types';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../../common/store/types/storeData.types';
 import { EventCard } from '../../common/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { EventNotes } from './EventNotes/EventNotes';
 import { routes } from '../../../../common/routes';
+import { useDuplicateEntry } from '../../../../common/hooks/useDuplicateEntry';
+import { useMemo } from 'react';
 
 interface CompleteEventProps {
     event: LogEntry;
@@ -17,12 +22,39 @@ interface CompleteEventProps {
 
 export const CompleteEvent = (props: CompleteEventProps) => {
     const { event } = props;
+    const { duplicateEntry } = useDuplicateEntry();
     const navigate = useNavigate();
 
     const [
         isConfirmDeleteOpen,
         { open: openConfirmDelete, close: closeConfirmDelete },
     ] = useDisclosure(false);
+
+    const specificActions = useMemo(() => {
+        if (event.entryType === EntryType.Medicine) {
+            const handleDuplicateEntry = () => {
+                duplicateEntry(event);
+            };
+
+            return (
+                <ResponsiveStack>
+                    <ResponsiveButton
+                        variant="light"
+                        color="grape"
+                        fullWidth
+                        onClick={handleDuplicateEntry}
+                    >
+                        <IconCopy />
+                        <Text component="span" ml="0.25rem">
+                            Duplicate (with current date)
+                        </Text>
+                    </ResponsiveButton>
+                </ResponsiveStack>
+            );
+        }
+
+        return;
+    }, [duplicateEntry, event]);
 
     return (
         <>
@@ -31,6 +63,7 @@ export const CompleteEvent = (props: CompleteEventProps) => {
                 middle={[
                     <EventDetails event={event} />,
                     <EventNotes event={event} />,
+                    specificActions,
                 ]}
                 footer={
                     <ResponsiveStack>

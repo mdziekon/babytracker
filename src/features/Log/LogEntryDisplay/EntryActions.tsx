@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ActionIcon, Menu } from '@mantine/core';
 
 import classes from './EntryActions.module.css';
-import { IconDots, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconCopy, IconDots, IconPencil, IconTrash } from '@tabler/icons-react';
 import { Link } from 'react-router';
 import { routes } from '../../../common/routes';
+import {
+    EntryType,
+    LogEntry,
+} from '../../../common/store/types/storeData.types';
+import { useDuplicateEntry } from '../../../common/hooks/useDuplicateEntry';
 
 interface EntryActionsProps {
-    entryUid: string;
+    event: LogEntry;
     onOpenConfirmDelete: () => void;
 }
 
 const EntryActionsBase = (props: EntryActionsProps) => {
+    const { event, onOpenConfirmDelete } = props;
+    const { duplicateEntry } = useDuplicateEntry();
+
+    const specificActions = useMemo(() => {
+        if (event.entryType === EntryType.Medicine) {
+            const handleDuplicateEntry = () => {
+                duplicateEntry(event);
+            };
+
+            return (
+                <>
+                    <Menu.Item
+                        leftSection={
+                            <IconCopy className={classes.menuItemIcon} />
+                        }
+                        onClick={handleDuplicateEntry}
+                    >
+                        Duplicate (with current date)
+                    </Menu.Item>
+                </>
+            );
+        }
+
+        return;
+    }, [duplicateEntry, event]);
+
     return (
         <Menu shadow="md" position="bottom-end">
             <Menu.Target>
@@ -20,19 +51,25 @@ const EntryActionsBase = (props: EntryActionsProps) => {
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown>
+                {specificActions && (
+                    <>
+                        {specificActions}
+                        <Menu.Divider />
+                    </>
+                )}
                 <Menu.Item
                     component={Link}
                     leftSection={
                         <IconPencil className={classes.menuItemIcon} />
                     }
-                    to={routes.eventEdit(props.entryUid)}
+                    to={routes.eventEdit(event.metadata.uid)}
                 >
                     Edit entry
                 </Menu.Item>
                 <Menu.Item
                     color="red"
                     leftSection={<IconTrash className={classes.menuItemIcon} />}
-                    onClick={props.onOpenConfirmDelete}
+                    onClick={onOpenConfirmDelete}
                 >
                     Delete entry
                 </Menu.Item>

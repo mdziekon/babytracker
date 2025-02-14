@@ -88,6 +88,10 @@ export const EventCard = (props: EventCardProps) => {
             </Text>
 
             {Children.map(middle, (child) => {
+                if (!child) {
+                    return;
+                }
+
                 return (
                     <Box className={classes.sectionWithDivider}>{child}</Box>
                 );
