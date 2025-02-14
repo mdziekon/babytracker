@@ -27,6 +27,7 @@ export const MedicineDoseInput = (props: MedicineDoseInputProps) => {
             clampBehavior="strict"
             thousandSeparator=" "
             allowNegative={false}
+            allowLeadingZeros={false}
             {...baseProps}
         />
     );
