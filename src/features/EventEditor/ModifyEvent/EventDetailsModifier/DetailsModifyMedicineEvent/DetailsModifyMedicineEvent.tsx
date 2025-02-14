@@ -120,6 +120,7 @@ export const DetailsModifyMedicineEvent = (
                     {...getInputProps('medicineName')}
                     data={knownMedicineNames}
                     comboboxProps={{ shadow: 'md' }}
+                    maxDropdownHeight={200}
                 />
                 <Autocomplete
                     label="Medicine active substance"
@@ -129,6 +130,7 @@ export const DetailsModifyMedicineEvent = (
                     {...getInputProps('medicineActiveSubstance')}
                     data={knownMedicineActiveSubstances}
                     comboboxProps={{ shadow: 'md' }}
+                    maxDropdownHeight={200}
                 />
                 <MedicineDoseTypeInput
                     label="Dose type"
