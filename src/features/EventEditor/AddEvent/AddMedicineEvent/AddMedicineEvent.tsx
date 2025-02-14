@@ -41,7 +41,6 @@ export const AddMedicineEvent = () => {
         validateField,
     } = useForm<MedicineEventFormSchema>({
         mode: 'uncontrolled',
-        initialValues: medicineEventFormDefaultValues,
         validate: medicineEventFormValidation,
         validateInputOnChange: true,
     });
