@@ -1,4 +1,4 @@
-import { Box, TextInput } from '@mantine/core';
+import { Autocomplete, Box } from '@mantine/core';
 import {
     EntryType,
     LogEntry,
@@ -14,6 +14,8 @@ import {
     MedicineEventFormSchema,
     medicineEventFormValidation,
 } from '../../../common/formSchemas/medicineEventForm.schema';
+import { useAppStore } from '../../../../../common/store/store';
+import { useUniqueMedicineKinds } from '../../../common/utils/useUniqueMedicineKinds';
 
 interface DetailsModifyMedicineEventProps {
     event: LogEntry & { entryType: EntryType.Medicine };
@@ -24,6 +26,10 @@ export const DetailsModifyMedicineEvent = (
     props: DetailsModifyMedicineEventProps
 ) => {
     const { event, registerEventModifier } = props;
+    const allEntries = useAppStore((state) => state.data.logs);
+
+    const { knownMedicineNames, knownMedicineActiveSubstances } =
+        useUniqueMedicineKinds(allEntries);
 
     const {
         key: formKey,
@@ -107,18 +113,24 @@ export const DetailsModifyMedicineEvent = (
     return (
         <>
             <Box>
-                <TextInput
+                <Autocomplete
                     label="Medicine name"
                     placeholder="Eg. Nurofen"
                     key={formKey('medicineName')}
                     {...getInputProps('medicineName')}
+                    data={knownMedicineNames}
+                    comboboxProps={{ shadow: 'md' }}
+                    maxDropdownHeight={200}
                 />
-                <TextInput
+                <Autocomplete
                     label="Medicine active substance"
                     placeholder="Eg. Ibuprofen"
                     mt="md"
                     key={formKey('medicineActiveSubstance')}
                     {...getInputProps('medicineActiveSubstance')}
+                    data={knownMedicineActiveSubstances}
+                    comboboxProps={{ shadow: 'md' }}
+                    maxDropdownHeight={200}
                 />
                 <MedicineDoseTypeInput
                     label="Dose type"

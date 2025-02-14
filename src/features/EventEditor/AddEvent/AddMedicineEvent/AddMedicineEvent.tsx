@@ -1,4 +1,4 @@
-import { Box, TextInput } from '@mantine/core';
+import { Autocomplete, Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import {
     EntryType,
@@ -20,12 +20,17 @@ import {
     MedicineEventFormSchema,
     medicineEventFormValidation,
 } from '../../common/formSchemas/medicineEventForm.schema';
+import { useUniqueMedicineKinds } from '../../common/utils/useUniqueMedicineKinds';
 
 const eventType = EntryType.Medicine;
 
 export const AddMedicineEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
+    const allEntries = useAppStore((state) => state.data.logs);
     const navigate = useNavigate();
+
+    const { knownMedicineNames, knownMedicineActiveSubstances } =
+        useUniqueMedicineKinds(allEntries);
 
     const {
         onSubmit: onFormSubmit,
@@ -36,7 +41,6 @@ export const AddMedicineEvent = () => {
         validateField,
     } = useForm<MedicineEventFormSchema>({
         mode: 'uncontrolled',
-        initialValues: medicineEventFormDefaultValues,
         validate: medicineEventFormValidation,
         validateInputOnChange: true,
     });
@@ -80,18 +84,24 @@ export const AddMedicineEvent = () => {
 
     const middle = (
         <>
-            <TextInput
+            <Autocomplete
                 label="Medicine name"
                 placeholder="Eg. Nurofen"
                 key={formKey('medicineName')}
                 {...getInputProps('medicineName')}
+                data={knownMedicineNames}
+                comboboxProps={{ shadow: 'md' }}
+                maxDropdownHeight={200}
             />
-            <TextInput
+            <Autocomplete
                 label="Medicine active substance"
                 placeholder="Eg. Ibuprofen"
                 mt="md"
                 key={formKey('medicineActiveSubstance')}
                 {...getInputProps('medicineActiveSubstance')}
+                data={knownMedicineActiveSubstances}
+                comboboxProps={{ shadow: 'md' }}
+                maxDropdownHeight={200}
             />
             <MedicineDoseTypeInput
                 label="Dose type"
