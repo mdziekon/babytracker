@@ -91,7 +91,7 @@ const LogEntryDisplayBase = (props: LogEntryProps) => {
             >
                 {inViewport && (
                     <EntryActions
-                        entryUid={entry.metadata.uid}
+                        event={entry}
                         onOpenConfirmDelete={handleOpenConfirmDelete}
                     />
                 )}
