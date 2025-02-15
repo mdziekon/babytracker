@@ -43,7 +43,7 @@ export const DetailsModifyDoctorsAppointmentEvent = (
 
     useEffect(() => {
         const unregister = registerEventModifier(
-            'medicineEvent',
+            'doctorsAppointmentEvent',
             (modEvent, options) => {
                 let isValid = true;
 
