@@ -8,6 +8,7 @@ import {
     IconMoonStars,
     IconPillFilled,
     IconScubaDiving,
+    IconStethoscope,
     IconWeight,
 } from '@tabler/icons-react';
 import { EntryType, MedicineDoseType } from '../store/types/storeData.types';
@@ -24,6 +25,7 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
         [EntryType.Bath]: IconBath,
         [EntryType.Walk]: IconBabyCarriage,
         [EntryType.Medicine]: IconPillFilled,
+        [EntryType.DoctorsAppointment]: IconStethoscope,
     };
 
     return mapping[entryType];
@@ -41,6 +43,7 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
         [EntryType.Bath]: 'Bath',
         [EntryType.Walk]: 'Walk',
         [EntryType.Medicine]: 'Medicine',
+        [EntryType.DoctorsAppointment]: "Doctor's Appointment",
     };
 
     return mapping[entryType];
@@ -58,6 +61,7 @@ export const mapEntryTypeToColor = (entryType: EntryType) => {
         [EntryType.Bath]: 'orange',
         [EntryType.Walk]: 'blue',
         [EntryType.Medicine]: 'teal',
+        [EntryType.DoctorsAppointment]: 'cyan',
     };
 
     return mapping[entryType];

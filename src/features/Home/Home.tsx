@@ -70,4 +70,7 @@ const actions = [
     {
         entryType: EntryType.Medicine,
     },
+    {
+        entryType: EntryType.DoctorsAppointment,
+    },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
