@@ -1,4 +1,12 @@
-import { Avatar, Badge, Box, Card, Center, Text } from '@mantine/core';
+import {
+    Avatar,
+    Badge,
+    BadgeProps,
+    Box,
+    Card,
+    Center,
+    Text,
+} from '@mantine/core';
 import { EntryType } from '../../../../common/store/types/storeData.types';
 import {
     mapEntryTypeToColor,
@@ -11,12 +19,9 @@ import { Children } from 'react';
 
 interface EventCardProps {
     eventType: EntryType;
-    eventIconBadges?: {
-        ['top-left']?: React.JSX.Element;
-        ['top-right']?: React.JSX.Element;
-        ['bottom-left']?: React.JSX.Element;
-        ['bottom-right']?: React.JSX.Element;
-    };
+    eventIconBadges?: Partial<
+        Record<EventCardBadgePosition, React.ReactElement<BadgeProps>>
+    >;
     middle?: React.ReactNode;
     footer?: React.ReactNode;
 }
@@ -24,6 +29,36 @@ interface EventCardProps {
 export const EventCard = (props: EventCardProps) => {
     const { eventType, eventIconBadges, middle, footer } = props;
     const EntryTypeIcon = mapEntryTypeToIcon(eventType);
+
+    const badges = Object.values(EventCardBadgePosition).map(
+        (badgePosition) => {
+            const badge = eventIconBadges?.[badgePosition];
+
+            if (!badge) {
+                return;
+            }
+
+            const verticalPosition = badgePosition.includes('Top')
+                ? 'top'
+                : 'bottom';
+            const horizontalPosition = badgePosition.includes('Left')
+                ? 'left'
+                : 'right';
+
+            return (
+                <Badge
+                    key={badgePosition}
+                    {...badge.props}
+                    style={{
+                        ...badge.props.style,
+                        position: 'absolute',
+                        [verticalPosition]: 0,
+                        [horizontalPosition]: 0,
+                    }}
+                />
+            );
+        }
+    );
 
     return (
         <Card withBorder padding="lg" radius="md" className={classes.card}>
@@ -40,45 +75,7 @@ export const EventCard = (props: EventCardProps) => {
                                 style={{ width: '70%', height: '70%' }}
                             />
                         </Avatar>
-                        {eventIconBadges?.['top-left'] && (
-                            <Badge
-                                {...eventIconBadges['top-left'].props}
-                                className={[
-                                    classes.avatarBadgeTopLeft,
-                                    eventIconBadges['top-left'].props.className,
-                                ].join(' ')}
-                            />
-                        )}
-                        {eventIconBadges?.['top-right'] && (
-                            <Badge
-                                {...eventIconBadges['top-right'].props}
-                                className={[
-                                    classes.avatarBadgeTopRight,
-                                    eventIconBadges['top-right'].props
-                                        .className,
-                                ].join(' ')}
-                            />
-                        )}
-                        {eventIconBadges?.['bottom-left'] && (
-                            <Badge
-                                {...eventIconBadges['bottom-left'].props}
-                                className={[
-                                    classes.avatarBadgeBottomLeft,
-                                    eventIconBadges['bottom-left'].props
-                                        .className,
-                                ].join(' ')}
-                            />
-                        )}
-                        {eventIconBadges?.['bottom-right'] && (
-                            <Badge
-                                {...eventIconBadges['bottom-right'].props}
-                                className={[
-                                    classes.avatarBadgeBottomRight,
-                                    eventIconBadges['bottom-right'].props
-                                        .className,
-                                ].join(' ')}
-                            />
-                        )}
+                        {badges}
                     </Box>
                 </Center>
             </Card.Section>
@@ -103,3 +100,10 @@ export const EventCard = (props: EventCardProps) => {
         </Card>
     );
 };
+
+export enum EventCardBadgePosition {
+    TopLeft = 'EventCardBadgePosition.TopLeft',
+    TopRight = 'EventCardBadgePosition.TopRight',
+    BottomLeft = 'EventCardBadgePosition.BottomLeft',
+    BottomRight = 'EventCardBadgePosition.BottomRight',
+}
