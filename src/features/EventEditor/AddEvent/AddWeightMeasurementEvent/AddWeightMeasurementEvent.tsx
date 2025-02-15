@@ -8,7 +8,7 @@ import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
 import { RecentEvents } from '../../common/components/RecentEvents/RecentEvents';
-import { WeightInput } from '../../common/WeightInput/WeightInput';
+import { WeightInput } from '../../common/components/WeightInput/WeightInput';
 import { useForm } from '@mantine/form';
 import {
     WeightMeasurementEventFormSchema,

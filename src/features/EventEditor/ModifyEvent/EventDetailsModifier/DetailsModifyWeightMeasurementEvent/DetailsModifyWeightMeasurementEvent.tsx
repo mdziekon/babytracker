@@ -6,7 +6,7 @@ import {
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect } from 'react';
-import { WeightInput } from '../../../common/WeightInput/WeightInput';
+import { WeightInput } from '../../../common/components/WeightInput/WeightInput';
 import {
     WeightMeasurementEventFormSchema,
     weightMeasurementEventFormValidation,
