@@ -8,12 +8,16 @@ import {
 } from '@tabler/icons-react';
 import { TimedLogEntryTypes } from '../../../../../common/store/store.helperTypes';
 import { DateTimePicker } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+import { FormValidateInput, isNotEmpty, useForm } from '@mantine/form';
 import { useEffect } from 'react';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { DurationFromNow } from '../../../../../common/features/Duration/DurationFromNow';
 import { Duration } from '../../../../../common/features/Duration/Duration';
 import { DEFAULT_DATETIME_FORMAT } from '../../../../../common/utils/formatting';
+import {
+    isNotAfter,
+    isNotInFuture,
+} from '../../../../../common/utils/validators';
 
 interface DetailsModifyTimedEventProps {
     event: LogEntry & { entryType: TimedLogEntryTypes };
@@ -25,19 +29,64 @@ interface DetailsModifyTimedEventFormSchema {
     endedAt?: Date;
 }
 
+const timedEventFormValidationSchema = {
+    startedAt: (value: Date | undefined, values) => {
+        const validators = [
+            isNotEmpty('Start date cannot be empty'),
+            isNotInFuture(),
+            isNotAfter(values.endedAt, {
+                errorMessage: 'Start date cannot be after end date',
+            }),
+        ];
+
+        for (const validator of validators) {
+            const errorMessage = validator(value);
+            if (errorMessage) {
+                return errorMessage;
+            }
+        }
+    },
+    endedAt: (value: Date | undefined) => {
+        const validators = [
+            isNotEmpty('End date cannot be empty'),
+            isNotInFuture(),
+        ];
+
+        for (const validator of validators) {
+            const errorMessage = validator(value);
+            if (errorMessage) {
+                return errorMessage;
+            }
+        }
+    },
+} satisfies FormValidateInput<DetailsModifyTimedEventFormSchema>;
+
 export const DetailsModifyTimedEvent = (
     props: DetailsModifyTimedEventProps
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps, validate } =
-        useForm<DetailsModifyTimedEventFormSchema>({
-            initialValues: {
-                startedAt: dayjs(event.params.startedAt).toDate(),
-                endedAt: dayjs(event.params.endedAt).toDate(),
-            },
-            // TODO: Add "before" & "after" validators
-        });
+    const {
+        getValues,
+        isTouched,
+        getInputProps,
+        validate,
+        watch,
+        validateField,
+    } = useForm<DetailsModifyTimedEventFormSchema>({
+        initialValues: {
+            startedAt: dayjs(event.params.startedAt).toDate(),
+            endedAt: dayjs(event.params.endedAt).toDate(),
+        },
+        validate: timedEventFormValidationSchema,
+    });
+
+    watch('startedAt', () => {
+        validateField('endedAt');
+    });
+    watch('endedAt', () => {
+        validateField('startedAt');
+    });
 
     useEffect(() => {
         const unregister = registerEventModifier(
