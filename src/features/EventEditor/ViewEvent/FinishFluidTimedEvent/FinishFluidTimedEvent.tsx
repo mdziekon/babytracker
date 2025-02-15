@@ -9,7 +9,7 @@ import {
     EntryBottleFeedingVariant,
     EntryMilkPumpingVariant,
 } from '../../../../common/store/types/storeData.types';
-import { EventCard } from '../../common/EventCard/EventCard';
+import { EventCard } from '../../common/components/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 
 interface FinishFluidTimedEventProps {

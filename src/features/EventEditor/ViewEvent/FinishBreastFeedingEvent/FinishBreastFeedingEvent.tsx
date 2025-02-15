@@ -10,7 +10,7 @@ import {
 import {
     EventCard,
     EventCardBadgePosition,
-} from '../../common/EventCard/EventCard';
+} from '../../common/components/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { v4 as uuidv4 } from 'uuid';
 

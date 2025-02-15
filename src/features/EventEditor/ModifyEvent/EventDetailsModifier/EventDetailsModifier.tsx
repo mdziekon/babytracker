@@ -10,7 +10,7 @@ import { DetailsModifyFluidTimedEvent } from './DetailsModifyFluidTimedEvent/Det
 import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsModifyCreatedEvent';
 
 import { RegisterEventModifier } from '../ModifyEvent.types';
-import { DetailsList } from '../../common/DetailsList/DetailsList';
+import { DetailsList } from '../../common/components/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/DetailsModifyMedicineEvent';
 import { DetailsModifyDoctorsAppointmentEvent } from './DetailsModifyDoctorsAppointmentEvent/DetailsModifyDoctorsAppointmentEvent';

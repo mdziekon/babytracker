@@ -1,6 +1,6 @@
 import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/types/storeData.types';
-import { EventCard } from '../common/EventCard/EventCard';
+import { EventCard } from '../common/components/EventCard/EventCard';
 import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';

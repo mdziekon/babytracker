@@ -7,12 +7,12 @@ import {
     Center,
     Text,
 } from '@mantine/core';
-import { EntryType } from '../../../../common/store/types/storeData.types';
+import { EntryType } from '../../../../../common/store/types/storeData.types';
 import {
     mapEntryTypeToColor,
     mapEntryTypeToIcon,
     mapEntryTypeToName,
-} from '../../../../common/utils/entryMappers';
+} from '../../../../../common/utils/entryMappers';
 
 import classes from './EventCard.module.css';
 import { Children } from 'react';

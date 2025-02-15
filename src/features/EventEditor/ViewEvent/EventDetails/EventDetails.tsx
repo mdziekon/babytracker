@@ -8,7 +8,7 @@ import { DetailsDiaperChangeEvent } from './DetailsDiaperChangeEvent/DetailsDiap
 import { DetailsMedicineEvent } from './DetailsMedicineEvent/DetailsMedicineEvent';
 import { DetailsFluidTimedEvent } from './DetailsFluidTimedEvent/DetailsFluidTimedEvent';
 import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
-import { DetailsList } from '../../common/DetailsList/DetailsList';
+import { DetailsList } from '../../common/components/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/DetailsWeightMeasurementEvent';
 import { DetailsOtherEvent } from './DetailsOtherEvent/DetailsOtherEvent';

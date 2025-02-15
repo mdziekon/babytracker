@@ -1,6 +1,6 @@
 import { Select } from '@mantine/core';
 import { ComponentProps } from 'react';
-import { MedicineDoseType } from '../../../../common/store/types/storeData.types';
+import { MedicineDoseType } from '../../../../../common/store/types/storeData.types';
 
 type MedicineDoseTypeInputProps = ComponentProps<typeof Select>;
 

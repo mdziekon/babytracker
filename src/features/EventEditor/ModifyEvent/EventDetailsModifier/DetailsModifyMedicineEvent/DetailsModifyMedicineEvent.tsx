@@ -7,8 +7,8 @@ import {
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect, useState } from 'react';
-import { MedicineDoseInput } from '../../../common/MedicineDoseInput/MedicineDoseInput';
-import { MedicineDoseTypeInput } from '../../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
+import { MedicineDoseInput } from '../../../common/components/MedicineDoseInput/MedicineDoseInput';
+import { MedicineDoseTypeInput } from '../../../common/components/MedicineDoseTypeInput/MedicineDoseTypeInput';
 import {
     enableMedicineEventFormValidationEffects,
     MedicineEventFormSchema,

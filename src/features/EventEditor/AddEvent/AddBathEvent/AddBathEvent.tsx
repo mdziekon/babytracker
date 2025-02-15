@@ -1,12 +1,12 @@
 import { useAppStore } from '../../../../common/store/store';
 import { EntryType } from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../common/EventCard/EventCard';
+import { EventCard } from '../../common/components/EventCard/EventCard';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
 import { Box } from '@mantine/core';
-import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
+import { RecentEvents } from '../../common/components/RecentEvents/RecentEvents';
 
 const eventType = EntryType.Bath;
 
