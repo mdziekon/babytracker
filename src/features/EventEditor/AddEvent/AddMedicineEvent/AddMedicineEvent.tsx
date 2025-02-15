@@ -132,7 +132,7 @@ export const AddMedicineEvent = () => {
         <form onSubmit={handleSubmit}>
             <EventCard eventType={eventType} middle={middle} footer={actions} />
             <Box mt={64}>
-                <RecentEvents eventType={eventType} />
+                <RecentEvents eventType={eventType} eventsLimit={5} />
             </Box>
         </form>
     );

@@ -9,6 +9,8 @@ export enum EntryType {
     Bath = 'EntryType.Bath',
     Walk = 'EntryType.Walk',
     Medicine = 'EntryType.Medicine',
+    DoctorsAppointment = 'EntryType.DoctorsAppointment',
+    Other = 'EntryType.Other',
 }
 
 export interface EntryBreastFeedingVariant {
@@ -81,6 +83,18 @@ export interface EntryMedicineVariant {
         doseType: MedicineDoseType;
     };
 }
+export interface EntryDoctorsAppointmentVariant {
+    entryType: EntryType.DoctorsAppointment;
+    params: {
+        visitType: string;
+    };
+}
+export interface EntryOtherVariant {
+    entryType: EntryType.Other;
+    params: {
+        subtype: string;
+    };
+}
 
 export enum MedicineDoseType {
     /**
@@ -111,7 +125,9 @@ export type EntryVariants =
     | EntryBellyPositionVariant
     | EntryBathVariant
     | EntryWalkVariant
-    | EntryMedicineVariant;
+    | EntryMedicineVariant
+    | EntryDoctorsAppointmentVariant
+    | EntryOtherVariant;
 
 export type UUIDv4 = string;
 export type DateISO8601 = string;

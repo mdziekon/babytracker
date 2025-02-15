@@ -21,7 +21,10 @@ const EntryActionsBase = (props: EntryActionsProps) => {
     const { duplicateEntry } = useDuplicateEntry();
 
     const specificActions = useMemo(() => {
-        if (event.entryType === EntryType.Medicine) {
+        if (
+            event.entryType === EntryType.Medicine ||
+            event.entryType === EntryType.DoctorsAppointment
+        ) {
             const handleDuplicateEntry = () => {
                 duplicateEntry(event);
             };

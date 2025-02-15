@@ -13,6 +13,8 @@ import { RegisterEventModifier } from '../ModifyEvent.types';
 import { DetailsList } from '../../common/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/DetailsModifyMedicineEvent';
+import { DetailsModifyDoctorsAppointmentEvent } from './DetailsModifyDoctorsAppointmentEvent/DetailsModifyDoctorsAppointmentEvent';
+import { DetailsModifyOtherEvent } from './DetailsModifyOtherEvent/DetailsModifyDoctorsAppointmentEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -78,6 +80,22 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
     if (event.entryType === EntryType.Medicine) {
         details.push(
             <DetailsModifyMedicineEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.DoctorsAppointment) {
+        details.push(
+            <DetailsModifyDoctorsAppointmentEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.Other) {
+        details.push(
+            <DetailsModifyOtherEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />

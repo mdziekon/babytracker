@@ -31,7 +31,10 @@ export const CompleteEvent = (props: CompleteEventProps) => {
     ] = useDisclosure(false);
 
     const specificActions = useMemo(() => {
-        if (event.entryType === EntryType.Medicine) {
+        if (
+            event.entryType === EntryType.Medicine ||
+            event.entryType === EntryType.DoctorsAppointment
+        ) {
             const handleDuplicateEntry = () => {
                 duplicateEntry(event);
             };
