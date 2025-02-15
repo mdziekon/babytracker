@@ -5,15 +5,15 @@ import {
     MedicineDoseType,
 } from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../common/EventCard/EventCard';
+import { EventCard } from '../../common/components/EventCard/EventCard';
 import { useMemo, useState } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
-import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
+import { RecentEvents } from '../../common/components/RecentEvents/RecentEvents';
 import { useForm } from '@mantine/form';
-import { MedicineDoseInput } from '../../common/MedicineDoseInput/MedicineDoseInput';
-import { MedicineDoseTypeInput } from '../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
+import { MedicineDoseInput } from '../../common/components/MedicineDoseInput/MedicineDoseInput';
+import { MedicineDoseTypeInput } from '../../common/components/MedicineDoseTypeInput/MedicineDoseTypeInput';
 import {
     enableMedicineEventFormValidationEffects,
     medicineEventFormDefaultValues,

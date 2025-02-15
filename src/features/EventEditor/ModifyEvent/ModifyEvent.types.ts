@@ -18,5 +18,6 @@ export type EventModifier = (
 
 export type RegisterEventModifier = (
     name: string,
-    modifier: EventModifier
+    modifier: EventModifier,
+    validate: () => { hasErrors: boolean }
 ) => () => void;

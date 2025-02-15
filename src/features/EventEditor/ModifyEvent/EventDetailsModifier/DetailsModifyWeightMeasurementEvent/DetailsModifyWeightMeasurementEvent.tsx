@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Box } from '@mantine/core';
 import {
     EntryType,
     LogEntry,
@@ -6,18 +6,15 @@ import {
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect } from 'react';
-import { IconWeight } from '@tabler/icons-react';
-import { WeightInput } from '../../../common/WeightInput/WeightInput';
+import { WeightInput } from '../../../common/components/WeightInput/WeightInput';
+import {
+    WeightMeasurementEventFormSchema,
+    weightMeasurementEventFormValidation,
+} from '../../../common/formSchemas/weightMeasurementEventForm.schema';
 
 interface DetailsModifyWeightMeasurementEventProps {
     event: LogEntry & { entryType: EntryType.WeightMeasurement };
     registerEventModifier: RegisterEventModifier;
-}
-
-interface DetailsModifyWeightMeasurementEventFormSchema {
-    weightValue: (LogEntry & {
-        entryType: EntryType.WeightMeasurement;
-    })['params']['weightValue'];
 }
 
 export const DetailsModifyWeightMeasurementEvent = (
@@ -25,12 +22,20 @@ export const DetailsModifyWeightMeasurementEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
-        useForm<DetailsModifyWeightMeasurementEventFormSchema>({
-            initialValues: {
-                weightValue: event.params.weightValue,
-            },
-        });
+    const {
+        key: formKey,
+        getInputProps,
+        getValues,
+        isTouched,
+        validate,
+    } = useForm<WeightMeasurementEventFormSchema>({
+        mode: 'uncontrolled',
+        initialValues: {
+            weightValue: event.params.weightValue,
+        },
+        validate: weightMeasurementEventFormValidation,
+        validateInputOnChange: true,
+    });
 
     useEffect(() => {
         const unregister = registerEventModifier(
@@ -45,26 +50,27 @@ export const DetailsModifyWeightMeasurementEvent = (
                 }
 
                 return {
-                    event: modEvent,
                     isValid: true,
+                    event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>
-            <Group>
-                <IconWeight size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <Text component="div">Weight:</Text>
-                    <WeightInput {...getInputProps('weightValue')} />
-                </Group>
-            </Group>
+            <Box>
+                <WeightInput
+                    label="Measured weight"
+                    key={formKey('weightValue')}
+                    {...getInputProps('weightValue')}
+                />
+            </Box>
         </>
     );
 };

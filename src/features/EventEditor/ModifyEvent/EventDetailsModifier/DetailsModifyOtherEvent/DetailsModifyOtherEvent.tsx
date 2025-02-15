@@ -44,20 +44,7 @@ export const DetailsModifyOtherEvent = (
     useEffect(() => {
         const unregister = registerEventModifier(
             'otherEvent',
-            (modEvent, options) => {
-                let isValid = true;
-
-                if (!options?.preventValidationTrigger) {
-                    isValid = !validate().hasErrors;
-
-                    if (!isValid) {
-                        return {
-                            isValid,
-                            event: modEvent,
-                        };
-                    }
-                }
-
+            (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.Other;
                 };
@@ -67,10 +54,11 @@ export const DetailsModifyOtherEvent = (
                 }
 
                 return {
-                    isValid,
+                    isValid: true,
                     event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {

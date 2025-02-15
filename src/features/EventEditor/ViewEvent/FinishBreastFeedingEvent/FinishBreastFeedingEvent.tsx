@@ -7,7 +7,10 @@ import {
     EntryType,
     LogEntry,
 } from '../../../../common/store/types/storeData.types';
-import { EventCard } from '../../common/EventCard/EventCard';
+import {
+    EventCard,
+    EventCardBadgePosition,
+} from '../../common/components/EventCard/EventCard';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -63,35 +66,38 @@ export const FinishBreastFeedingEvent = (
         });
     };
 
+    const eventIconBadge = (() => {
+        if (event.params.type === 'LEFT_BREAST') {
+            return {
+                position: EventCardBadgePosition.BottomLeft,
+                badgeText: 'Left',
+            };
+        }
+        if (event.params.type === 'RIGHT_BREAST') {
+            return {
+                position: EventCardBadgePosition.BottomRight,
+                badgeText: 'Right',
+            };
+        }
+    })();
+
     return (
         <EventCard
             eventType={event.entryType}
-            eventIconBadges={{
-                ...(event.params.type === 'LEFT_BREAST'
+            eventIconBadges={
+                eventIconBadge
                     ? {
-                          'bottom-left': (
+                          [eventIconBadge.position]: (
                               <Badge
                                   color="orange"
                                   className={classes.inProgressDuration}
                               >
-                                  <span>Left</span>
+                                  <span>{eventIconBadge.badgeText}</span>
                               </Badge>
                           ),
                       }
-                    : {}),
-                ...(event.params.type === 'RIGHT_BREAST'
-                    ? {
-                          'bottom-right': (
-                              <Badge
-                                  color="orange"
-                                  className={classes.inProgressDuration}
-                              >
-                                  <span>Right</span>
-                              </Badge>
-                          ),
-                      }
-                    : {}),
-            }}
+                    : undefined
+            }
             middle={<EventDetails event={event} />}
             footer={
                 <ResponsiveStack>

@@ -1,6 +1,6 @@
 import { Text } from '@mantine/core';
 import { LogEntry } from '../../../common/store/types/storeData.types';
-import { EventCard } from '../common/EventCard/EventCard';
+import { EventCard } from '../common/components/EventCard/EventCard';
 import { useNavigate } from 'react-router';
 import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
 import { ResponsiveStack } from '../../../common/design/ResponsiveStack';
@@ -39,11 +39,33 @@ export const ModifyEvent = (props: ModifyEventProps) => {
     >({});
 
     const registerEventModifier: RegisterEventModifier = useCallback(
-        (name: string, modifier: EventModifier) => {
+        (
+            name: string,
+            modifier: EventModifier,
+            validate: () => { hasErrors: boolean }
+        ) => {
+            const modifierWithValidation: EventModifier = (
+                modEvent,
+                options
+            ) => {
+                const shouldRunValidation = !options?.preventValidationTrigger;
+
+                if (shouldRunValidation) {
+                    if (validate().hasErrors) {
+                        return {
+                            isValid: false,
+                            event: modEvent,
+                        };
+                    }
+                }
+
+                return modifier(modEvent, options);
+            };
+
             setEventModifiers((prevModifiers) => {
                 return {
                     ...prevModifiers,
-                    [name]: modifier,
+                    [name]: modifierWithValidation,
                 };
             });
 

@@ -26,7 +26,7 @@ export const DetailsModifyFluidTimedEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
+    const { getValues, isTouched, getInputProps, validate } =
         useForm<DetailsModifyFluidTimedEventFormSchema>({
             initialValues: {
                 fluidVolume: event.params.fluidVolume,
@@ -49,13 +49,14 @@ export const DetailsModifyFluidTimedEvent = (
                     event: modEvent,
                     isValid: true,
                 };
-            }
+            },
+            validate
         );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>

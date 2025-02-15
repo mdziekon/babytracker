@@ -1,5 +1,5 @@
-import { EntryType } from '../../../../common/store/types/storeData.types';
-import { LogsTable } from '../../../Log/LogsTable';
+import { EntryType } from '../../../../../common/store/types/storeData.types';
+import { LogsTable } from '../../../../Log/LogsTable';
 import { Card, Text } from '@mantine/core';
 
 interface RecentEventsProps {

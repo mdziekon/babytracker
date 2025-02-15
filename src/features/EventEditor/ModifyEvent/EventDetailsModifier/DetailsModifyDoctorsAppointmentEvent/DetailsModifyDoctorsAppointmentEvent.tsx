@@ -44,20 +44,7 @@ export const DetailsModifyDoctorsAppointmentEvent = (
     useEffect(() => {
         const unregister = registerEventModifier(
             'doctorsAppointmentEvent',
-            (modEvent, options) => {
-                let isValid = true;
-
-                if (!options?.preventValidationTrigger) {
-                    isValid = !validate().hasErrors;
-
-                    if (!isValid) {
-                        return {
-                            isValid,
-                            event: modEvent,
-                        };
-                    }
-                }
-
+            (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.DoctorsAppointment;
                 };
@@ -67,10 +54,11 @@ export const DetailsModifyDoctorsAppointmentEvent = (
                 }
 
                 return {
-                    isValid,
+                    isValid: true,
                     event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {

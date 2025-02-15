@@ -1,7 +1,7 @@
 import { NumberInput, rem } from '@mantine/core';
 import { ComponentProps } from 'react';
-import { MedicineDoseType } from '../../../../common/store/types/storeData.types';
-import { mapMedicineDoseTypeToSuffix } from '../../../../common/utils/entryMappers';
+import { MedicineDoseType } from '../../../../../common/store/types/storeData.types';
+import { mapMedicineDoseTypeToSuffix } from '../../../../../common/utils/entryMappers';
 
 type MedicineDoseInputProps = {
     selectedDoseType: MedicineDoseType;

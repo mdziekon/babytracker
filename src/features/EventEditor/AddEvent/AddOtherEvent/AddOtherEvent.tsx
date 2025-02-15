@@ -2,12 +2,12 @@ import { Autocomplete, Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import { EntryType } from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
-import { EventCard } from '../../common/EventCard/EventCard';
+import { EventCard } from '../../common/components/EventCard/EventCard';
 import { useMemo } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
-import { RecentEvents } from '../../common/RecentEvents/RecentEvents';
+import { RecentEvents } from '../../common/components/RecentEvents/RecentEvents';
 import { useForm } from '@mantine/form';
 import {
     OtherEventFormSchema,

@@ -7,8 +7,8 @@ import {
 import { useForm } from '@mantine/form';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
 import { useEffect, useState } from 'react';
-import { MedicineDoseInput } from '../../../common/MedicineDoseInput/MedicineDoseInput';
-import { MedicineDoseTypeInput } from '../../../common/MedicineDoseTypeInput/MedicineDoseTypeInput';
+import { MedicineDoseInput } from '../../../common/components/MedicineDoseInput/MedicineDoseInput';
+import { MedicineDoseTypeInput } from '../../../common/components/MedicineDoseTypeInput/MedicineDoseTypeInput';
 import {
     enableMedicineEventFormValidationEffects,
     MedicineEventFormSchema,
@@ -66,20 +66,7 @@ export const DetailsModifyMedicineEvent = (
     useEffect(() => {
         const unregister = registerEventModifier(
             'medicineEvent',
-            (modEvent, options) => {
-                let isValid = true;
-
-                if (!options?.preventValidationTrigger) {
-                    isValid = !validate().hasErrors;
-
-                    if (!isValid) {
-                        return {
-                            isValid,
-                            event: modEvent,
-                        };
-                    }
-                }
-
+            (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.Medicine;
                 };
@@ -99,10 +86,11 @@ export const DetailsModifyMedicineEvent = (
                 }
 
                 return {
-                    isValid,
+                    isValid: true,
                     event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {
