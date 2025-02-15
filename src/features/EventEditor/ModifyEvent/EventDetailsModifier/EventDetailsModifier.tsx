@@ -14,7 +14,7 @@ import { DetailsList } from '../../common/components/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/DetailsModifyMedicineEvent';
 import { DetailsModifyDoctorsAppointmentEvent } from './DetailsModifyDoctorsAppointmentEvent/DetailsModifyDoctorsAppointmentEvent';
-import { DetailsModifyOtherEvent } from './DetailsModifyOtherEvent/DetailsModifyDoctorsAppointmentEvent';
+import { DetailsModifyOtherEvent } from './DetailsModifyOtherEvent/DetailsModifyOtherEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
