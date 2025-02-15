@@ -22,7 +22,7 @@ export const DetailsModifyCreatedEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
+    const { getValues, isTouched, getInputProps, validate } =
         useForm<DetailsModifyCreatedEventFormSchema>({
             initialValues: {
                 createdAt: dayjs(event.metadata.createdAt).toDate(),
@@ -30,22 +30,26 @@ export const DetailsModifyCreatedEvent = (
         });
 
     useEffect(() => {
-        const unregister = registerEventModifier('createdEvent', (modEvent) => {
-            if (isTouched('createdAt')) {
-                modEvent.metadata.createdAt =
-                    getValues().createdAt.toISOString();
-            }
+        const unregister = registerEventModifier(
+            'createdEvent',
+            (modEvent) => {
+                if (isTouched('createdAt')) {
+                    modEvent.metadata.createdAt =
+                        getValues().createdAt.toISOString();
+                }
 
-            return {
-                event: modEvent,
-                isValid: true,
-            };
-        });
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
+            },
+            validate
+        );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>

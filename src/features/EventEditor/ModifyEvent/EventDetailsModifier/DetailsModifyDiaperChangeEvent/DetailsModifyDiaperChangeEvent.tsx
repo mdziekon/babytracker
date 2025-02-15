@@ -24,7 +24,7 @@ export const DetailsModifyDiaperChangeEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
+    const { getValues, isTouched, getInputProps, validate } =
         useForm<DetailsModifyDiaperChangeEventFormSchema>({
             initialValues: {
                 reason: event.params.reason,
@@ -47,13 +47,14 @@ export const DetailsModifyDiaperChangeEvent = (
                     event: modEvent,
                     isValid: true,
                 };
-            }
+            },
+            validate
         );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>

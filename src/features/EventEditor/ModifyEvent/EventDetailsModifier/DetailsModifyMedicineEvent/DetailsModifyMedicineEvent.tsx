@@ -66,20 +66,7 @@ export const DetailsModifyMedicineEvent = (
     useEffect(() => {
         const unregister = registerEventModifier(
             'medicineEvent',
-            (modEvent, options) => {
-                let isValid = true;
-
-                if (!options?.preventValidationTrigger) {
-                    isValid = !validate().hasErrors;
-
-                    if (!isValid) {
-                        return {
-                            isValid,
-                            event: modEvent,
-                        };
-                    }
-                }
-
+            (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.Medicine;
                 };
@@ -99,10 +86,11 @@ export const DetailsModifyMedicineEvent = (
                 }
 
                 return {
-                    isValid,
+                    isValid: true,
                     event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {

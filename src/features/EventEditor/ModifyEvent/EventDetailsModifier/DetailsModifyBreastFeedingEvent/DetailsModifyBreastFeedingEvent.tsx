@@ -22,7 +22,7 @@ export const DetailsModifyBreastFeedingEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
+    const { getValues, isTouched, getInputProps, validate } =
         useForm<DetailsModifyBreastFeedingEventFormSchema>({
             initialValues: {
                 type: event.params.type,
@@ -45,13 +45,14 @@ export const DetailsModifyBreastFeedingEvent = (
                     event: modEvent,
                     isValid: true,
                 };
-            }
+            },
+            validate
         );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     return (
         <>

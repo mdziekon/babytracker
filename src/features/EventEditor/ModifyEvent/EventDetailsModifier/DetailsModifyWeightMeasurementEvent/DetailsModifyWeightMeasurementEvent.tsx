@@ -40,33 +40,21 @@ export const DetailsModifyWeightMeasurementEvent = (
     useEffect(() => {
         const unregister = registerEventModifier(
             'weightMeasurementEvent',
-            (modEvent, options) => {
-                let isValid = true;
-
-                if (!options?.preventValidationTrigger) {
-                    isValid = !validate().hasErrors;
-
-                    if (!isValid) {
-                        return {
-                            isValid,
-                            event: modEvent,
-                        };
-                    }
-                }
-
+            (modEvent) => {
                 const modEvent2 = modEvent as LogEntry & {
                     entryType: EntryType.WeightMeasurement;
                 };
 
-                if (isTouched('subtype')) {
+                if (isTouched('weightValue')) {
                     modEvent2.params.weightValue = getValues().weightValue;
                 }
 
                 return {
-                    isValid,
+                    isValid: true,
                     event: modEvent,
                 };
-            }
+            },
+            validate
         );
 
         return () => {

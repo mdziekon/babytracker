@@ -30,7 +30,7 @@ export const DetailsModifyTimedEvent = (
 ) => {
     const { event, registerEventModifier } = props;
 
-    const { getValues, isTouched, getInputProps } =
+    const { getValues, isTouched, getInputProps, validate } =
         useForm<DetailsModifyTimedEventFormSchema>({
             initialValues: {
                 startedAt: dayjs(event.params.startedAt).toDate(),
@@ -40,35 +40,39 @@ export const DetailsModifyTimedEvent = (
         });
 
     useEffect(() => {
-        const unregister = registerEventModifier('timedEvent', (modEvent) => {
-            const modEvent2 = modEvent as LogEntry & {
-                entryType: TimedLogEntryTypes;
-            };
+        const unregister = registerEventModifier(
+            'timedEvent',
+            (modEvent) => {
+                const modEvent2 = modEvent as LogEntry & {
+                    entryType: TimedLogEntryTypes;
+                };
 
-            if (isTouched('startedAt')) {
-                modEvent2.params.startedAt =
-                    getValues().startedAt.toISOString();
+                if (isTouched('startedAt')) {
+                    modEvent2.params.startedAt =
+                        getValues().startedAt.toISOString();
 
-                modEvent2.metadata.createdAt = modEvent2.params.startedAt;
-            }
-            if (isTouched('endedAt')) {
-                const endedAtValue = getValues().endedAt;
+                    modEvent2.metadata.createdAt = modEvent2.params.startedAt;
+                }
+                if (isTouched('endedAt')) {
+                    const endedAtValue = getValues().endedAt;
 
-                modEvent2.params.endedAt = endedAtValue
-                    ? endedAtValue.toISOString()
-                    : undefined;
-            }
+                    modEvent2.params.endedAt = endedAtValue
+                        ? endedAtValue.toISOString()
+                        : undefined;
+                }
 
-            return {
-                event: modEvent,
-                isValid: true,
-            };
-        });
+                return {
+                    event: modEvent,
+                    isValid: true,
+                };
+            },
+            validate
+        );
 
         return () => {
             unregister();
         };
-    }, [getValues, isTouched, registerEventModifier]);
+    }, [getValues, isTouched, registerEventModifier, validate]);
 
     const formValues = getValues();
 
