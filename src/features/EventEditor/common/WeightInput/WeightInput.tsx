@@ -9,7 +9,6 @@ export const WeightInput = (props: WeightInputProps) => {
             rightSection={'g'}
             rightSectionPointerEvents="none"
             placeholder="5000"
-            mt="md"
             decimalScale={0}
             max={99_999}
             clampBehavior="strict"
