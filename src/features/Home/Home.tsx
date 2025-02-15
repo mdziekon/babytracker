@@ -73,4 +73,8 @@ const actions = [
     {
         entryType: EntryType.DoctorsAppointment,
     },
+    undefined,
+    {
+        entryType: EntryType.Other,
+    },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];

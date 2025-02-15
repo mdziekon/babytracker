@@ -11,6 +11,7 @@ import { DetailsCreatedEvent } from './DetailsCreatedEvent/DetailsCreatedEvent';
 import { DetailsList } from '../../common/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/DetailsWeightMeasurementEvent';
+import { DetailsOtherEvent } from './DetailsOtherEvent/DetailsOtherEvent';
 import { DetailsDoctorsAppointmentEvent } from './DetailsDoctorsAppointmentEvent/DetailsDoctorsAppointmentEvent';
 
 interface EventDetailsProps {
@@ -48,6 +49,9 @@ export const EventDetails = (props: EventDetailsProps) => {
     }
     if (event.entryType === EntryType.DoctorsAppointment) {
         details.push(<DetailsDoctorsAppointmentEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Other) {
+        details.push(<DetailsOtherEvent event={event} />);
     }
 
     return <DetailsList details={details} />;
