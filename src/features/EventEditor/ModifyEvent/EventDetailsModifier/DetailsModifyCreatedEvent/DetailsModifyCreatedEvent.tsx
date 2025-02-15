@@ -1,12 +1,11 @@
-import { Group, Text } from '@mantine/core';
 import { LogEntry } from '../../../../../common/store/types/storeData.types';
 import dayjs from 'dayjs';
-import { IconCalendar } from '@tabler/icons-react';
 import { RegisterEventModifier } from '../../ModifyEvent.types';
-import { useForm } from '@mantine/form';
+import { FormValidateInput, useForm } from '@mantine/form';
 import { useEffect } from 'react';
 import { DateTimePicker } from '@mantine/dates';
 import { DEFAULT_DATETIME_FORMAT } from '../../../../../common/utils/formatting';
+import { isNotInFuture } from '../../../../../common/utils/validators';
 
 interface DetailsModifyCreatedEventProps {
     event: LogEntry;
@@ -16,6 +15,10 @@ interface DetailsModifyCreatedEventProps {
 interface DetailsModifyCreatedEventFormSchema {
     createdAt: Date;
 }
+
+const oneOffEventFormValidationSchema = {
+    createdAt: isNotInFuture(),
+} satisfies FormValidateInput<DetailsModifyCreatedEventFormSchema>;
 
 export const DetailsModifyCreatedEvent = (
     props: DetailsModifyCreatedEventProps
@@ -27,6 +30,7 @@ export const DetailsModifyCreatedEvent = (
             initialValues: {
                 createdAt: dayjs(event.metadata.createdAt).toDate(),
             },
+            validate: oneOffEventFormValidationSchema,
         });
 
     useEffect(() => {
@@ -53,17 +57,12 @@ export const DetailsModifyCreatedEvent = (
 
     return (
         <>
-            <Group>
-                <IconCalendar size={16} stroke={1.5} />
-                <Group justify="space-between" style={{ flexGrow: 1 }}>
-                    <Text component="div">Date:</Text>
-                    <DateTimePicker
-                        dropdownType="modal"
-                        valueFormat={DEFAULT_DATETIME_FORMAT}
-                        {...getInputProps('createdAt')}
-                    />
-                </Group>
-            </Group>
+            <DateTimePicker
+                label="Event date"
+                dropdownType="modal"
+                valueFormat={DEFAULT_DATETIME_FORMAT}
+                {...getInputProps('createdAt')}
+            />
         </>
     );
 };
