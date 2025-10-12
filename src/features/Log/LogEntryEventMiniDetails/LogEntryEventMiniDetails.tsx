@@ -12,6 +12,7 @@ import { IconNote } from '@tabler/icons-react';
 import { MiniDetailsMedicineEvent } from './MiniDetailsMedicineEvent/MiniDetailsMedicineEvent';
 import { MiniDetailsDoctorsAppointmentEvent } from './MiniDetailsDoctorsAppointmentEvent/MiniDetailsDoctorsAppointmentEvent';
 import { MiniDetailsOtherEvent } from './MiniDetailsOtherEvent/MiniDetailsOtherEvent';
+import { MiniDetailsMealEvent } from './MiniDetailsMealEvent/MiniDetailsMealEvent';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -47,6 +48,9 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.Other) {
         details.push(<MiniDetailsOtherEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Meal) {
+        details.push(<MiniDetailsMealEvent event={event} />);
     }
 
     if ((event.metadata.notes ?? '').length > 0) {

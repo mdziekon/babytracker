@@ -52,6 +52,9 @@ const actions = [
     {
         entryType: EntryType.Sleep,
     },
+    {
+        entryType: EntryType.Meal,
+    },
     undefined,
     {
         entryType: EntryType.Walk,

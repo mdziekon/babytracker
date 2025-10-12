@@ -5,6 +5,7 @@ import { AddBreastFeedingEvent } from './AddBreastFeedingEvent/AddBreastFeedingE
 import { AddDiaperChangeEvent } from './AddDiaperChangeEvent/AddDiaperChangeEvent';
 import { AddDoctorsAppointmentEvent } from './AddDoctorsAppointmentEvent/AddDoctorsAppointmentEvent';
 import { AddFluidTimedEvent } from './AddFluidTimedEvent/AddFluidTimedEvent';
+import { AddMealEvent } from './AddMealEvent/AddMealEvent';
 import { AddMedicineEvent } from './AddMedicineEvent/AddMedicineEvent';
 import { AddOtherEvent } from './AddOtherEvent/AddOtherEvent';
 import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
@@ -49,6 +50,9 @@ export const AddEvent = (props: AddEventProps) => {
     }
     if (eventType === EntryType.Other) {
         return <AddOtherEvent />;
+    }
+    if (eventType === EntryType.Meal) {
+        return <AddMealEvent />;
     }
 
     throw new Error(`Unknown entry type "${eventType}"`);
