@@ -153,6 +153,58 @@ export const performStoreMigration = (
         );
     }
 
+    /**
+     * Migrate v4 -> v5
+     * ---
+     * Changelog:
+     * - No data schema change
+     * - Same as "v3 -> v4", but use "subtype" as data provider, not notes
+     */
+    if (migratedVersion === 4) {
+        console.log(
+            `Migrating persistedState to version ${String(migratedVersion + 1)}`
+        );
+
+        const oldState = migratedState as { data: AppState['data'] };
+
+        migratedState = {
+            ...oldState,
+            data: {
+                ...oldState.data,
+                logs: oldState.data.logs.map((entry) => {
+                    if (
+                        entry.entryType !== EntryType.Other ||
+                        !entry.params.subtype.startsWith('RD ')
+                    ) {
+                        return entry;
+                    }
+
+                    const mealNameLine = entry.params.subtype
+                        .trim()
+                        .split('\n')
+                        .find((line) => line.startsWith('RD '));
+
+                    const mealName = (mealNameLine ?? '').replace('RD ', '');
+
+                    return {
+                        entryType: EntryType.Meal,
+                        metadata: entry.metadata,
+                        params: {
+                            mealName,
+                        },
+                    } satisfies LogEntry & {
+                        entryType: EntryType.Meal;
+                    };
+                }),
+            },
+        };
+        migratedVersion = migratedVersion + 1;
+
+        console.log(
+            `Migrated persistedState to version ${String(migratedVersion)}`
+        );
+    }
+
     console.log('Migrations complete');
 
     return migratedState as { data: AppState['data'] };
