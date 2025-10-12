@@ -120,7 +120,10 @@ export const performStoreMigration = (
             data: {
                 ...oldState.data,
                 logs: oldState.data.logs.map((entry) => {
-                    if (!entry.metadata.notes?.startsWith('RD ')) {
+                    if (
+                        entry.entryType !== EntryType.Other ||
+                        !entry.metadata.notes?.startsWith('RD ')
+                    ) {
                         return entry;
                     }
 
