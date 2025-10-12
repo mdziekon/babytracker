@@ -26,4 +26,4 @@ export interface AppState {
 /**
  * Latest version identifier
  */
-export const APP_STORE_VERSION = 3;
+export const APP_STORE_VERSION = 4;

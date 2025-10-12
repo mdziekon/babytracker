@@ -4,6 +4,7 @@ import {
     IconBath,
     IconBottleFilled,
     IconBrandMcdonalds,
+    IconCarrot,
     IconDiaper,
     IconFileUnknown,
     IconMoonStars,
@@ -28,6 +29,7 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
         [EntryType.Medicine]: IconPillFilled,
         [EntryType.DoctorsAppointment]: IconStethoscope,
         [EntryType.Other]: IconFileUnknown,
+        [EntryType.Meal]: IconCarrot,
     };
 
     return mapping[entryType];
@@ -47,6 +49,7 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
         [EntryType.Medicine]: 'Medicine',
         [EntryType.DoctorsAppointment]: "Doctor's Appointment",
         [EntryType.Other]: 'Other',
+        [EntryType.Meal]: 'Meal',
     };
 
     return mapping[entryType];
@@ -66,6 +69,7 @@ export const mapEntryTypeToColor = (entryType: EntryType) => {
         [EntryType.Medicine]: 'teal',
         [EntryType.DoctorsAppointment]: 'cyan',
         [EntryType.Other]: 'gray',
+        [EntryType.Meal]: 'orange',
     };
 
     return mapping[entryType];

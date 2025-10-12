@@ -13,6 +13,7 @@ import { isTimedEntry } from '../../../../common/utils/entryGuards';
 import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/DetailsWeightMeasurementEvent';
 import { DetailsOtherEvent } from './DetailsOtherEvent/DetailsOtherEvent';
 import { DetailsDoctorsAppointmentEvent } from './DetailsDoctorsAppointmentEvent/DetailsDoctorsAppointmentEvent';
+import { DetailsMealEvent } from './DetailsMealEvent/DetailsMealEvent';
 
 interface EventDetailsProps {
     event: LogEntry;
@@ -52,6 +53,9 @@ export const EventDetails = (props: EventDetailsProps) => {
     }
     if (event.entryType === EntryType.Other) {
         details.push(<DetailsOtherEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Meal) {
+        details.push(<DetailsMealEvent event={event} />);
     }
 
     return <DetailsList details={details} />;
