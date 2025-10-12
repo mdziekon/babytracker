@@ -99,6 +99,57 @@ export const performStoreMigration = (
         );
     }
 
+    /**
+     * Migrate v3 -> v4
+     * ---
+     * Changelog:
+     * - No data schema change
+     * - Migrate entries with "RD" (Polish: "Rozszerzanie Diety") note to EntryType.Meal
+     *  - Use (starts with) "RD {MEAL_NAME}" line as `params.mealName`
+     *  - Uses one line only
+     */
+    if (migratedVersion === 3) {
+        console.log(
+            `Migrating persistedState to version ${String(migratedVersion + 1)}`
+        );
+
+        const oldState = migratedState as { data: AppState['data'] };
+
+        migratedState = {
+            ...oldState,
+            data: {
+                ...oldState.data,
+                logs: oldState.data.logs.map((entry) => {
+                    if (!entry.metadata.notes?.startsWith('RD ')) {
+                        return entry;
+                    }
+
+                    const mealNameLine = (entry.metadata.notes ?? '')
+                        .trim()
+                        .split('\n')
+                        .find((line) => line.startsWith('RD '));
+
+                    const mealName = (mealNameLine ?? '').replace('RD ', '');
+
+                    return {
+                        entryType: EntryType.Meal,
+                        metadata: entry.metadata,
+                        params: {
+                            mealName,
+                        },
+                    } satisfies LogEntry & {
+                        entryType: EntryType.Meal;
+                    };
+                }),
+            },
+        };
+        migratedVersion = migratedVersion + 1;
+
+        console.log(
+            `Migrated persistedState to version ${String(migratedVersion)}`
+        );
+    }
+
     console.log('Migrations complete');
 
     return migratedState as { data: AppState['data'] };
