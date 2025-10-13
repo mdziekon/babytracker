@@ -14,6 +14,7 @@ import { DetailsWeightMeasurementEvent } from './DetailsWeightMeasurementEvent/D
 import { DetailsOtherEvent } from './DetailsOtherEvent/DetailsOtherEvent';
 import { DetailsDoctorsAppointmentEvent } from './DetailsDoctorsAppointmentEvent/DetailsDoctorsAppointmentEvent';
 import { DetailsMealEvent } from './DetailsMealEvent/DetailsMealEvent';
+import { DetailsSicknessEvent } from './DetailsSicknessEvent/DetailsSicknessEvent';
 
 interface EventDetailsProps {
     event: LogEntry;
@@ -56,6 +57,9 @@ export const EventDetails = (props: EventDetailsProps) => {
     }
     if (event.entryType === EntryType.Meal) {
         details.push(<DetailsMealEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Sickness) {
+        details.push(<DetailsSicknessEvent event={event} />);
     }
 
     return <DetailsList details={details} />;

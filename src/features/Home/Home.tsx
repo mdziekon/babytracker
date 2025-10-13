@@ -37,6 +37,7 @@ export const Home = () => {
 };
 
 const actions = [
+    // Row #1
     {
         entryType: EntryType.BreastFeeding,
     },
@@ -46,6 +47,7 @@ const actions = [
     {
         entryType: EntryType.MilkPumping,
     },
+    // Row #2
     {
         entryType: EntryType.DiaperChange,
     },
@@ -55,7 +57,7 @@ const actions = [
     {
         entryType: EntryType.Meal,
     },
-    undefined,
+    // Row #3
     {
         entryType: EntryType.Walk,
     },
@@ -63,6 +65,7 @@ const actions = [
         entryType: EntryType.BellyPosition,
     },
     undefined,
+    // Row #4
     {
         entryType: EntryType.Bath,
     },
@@ -70,13 +73,17 @@ const actions = [
         entryType: EntryType.WeightMeasurement,
     },
     undefined,
+    // Row #5
     {
         entryType: EntryType.Medicine,
     },
     {
         entryType: EntryType.DoctorsAppointment,
     },
-    undefined,
+    {
+        entryType: EntryType.Sickness,
+    },
+    // Row #6
     {
         entryType: EntryType.Other,
     },

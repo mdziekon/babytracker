@@ -8,7 +8,6 @@ import { DetailsModifyDiaperChangeEvent } from './DetailsModifyDiaperChangeEvent
 import { DetailsModifyWeightMeasurementEvent } from './DetailsModifyWeightMeasurementEvent/DetailsModifyWeightMeasurementEvent';
 import { DetailsModifyFluidTimedEvent } from './DetailsModifyFluidTimedEvent/DetailsModifyFluidTimedEvent';
 import { DetailsModifyCreatedEvent } from './DetailsModifyCreatedEvent/DetailsModifyCreatedEvent';
-
 import { RegisterEventModifier } from '../ModifyEvent.types';
 import { DetailsList } from '../../common/components/DetailsList/DetailsList';
 import { isTimedEntry } from '../../../../common/utils/entryGuards';
@@ -16,6 +15,7 @@ import { DetailsModifyMedicineEvent } from './DetailsModifyMedicineEvent/Details
 import { DetailsModifyDoctorsAppointmentEvent } from './DetailsModifyDoctorsAppointmentEvent/DetailsModifyDoctorsAppointmentEvent';
 import { DetailsModifyOtherEvent } from './DetailsModifyOtherEvent/DetailsModifyOtherEvent';
 import { DetailsModifyMealEvent } from './DetailsModifyMealEvent/DetailsModifyMealEvent';
+import { DetailsModifySicknessEvent } from './DetailsModifySicknessEvent/DetailsModifySicknessEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -105,6 +105,14 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
     if (event.entryType === EntryType.Meal) {
         details.push(
             <DetailsModifyMealEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.Sickness) {
+        details.push(
+            <DetailsModifySicknessEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />
