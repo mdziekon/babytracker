@@ -13,6 +13,7 @@ import { MiniDetailsMedicineEvent } from './MiniDetailsMedicineEvent/MiniDetails
 import { MiniDetailsDoctorsAppointmentEvent } from './MiniDetailsDoctorsAppointmentEvent/MiniDetailsDoctorsAppointmentEvent';
 import { MiniDetailsOtherEvent } from './MiniDetailsOtherEvent/MiniDetailsOtherEvent';
 import { MiniDetailsMealEvent } from './MiniDetailsMealEvent/MiniDetailsMealEvent';
+import { MiniDetailsSicknessEvent } from './MiniDetailsSicknessEvent/MiniDetailsSicknessEvent';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -51,6 +52,9 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.Meal) {
         details.push(<MiniDetailsMealEvent event={event} />);
+    }
+    if (event.entryType === EntryType.Sickness) {
+        details.push(<MiniDetailsSicknessEvent event={event} />);
     }
 
     if ((event.metadata.notes ?? '').length > 0) {
