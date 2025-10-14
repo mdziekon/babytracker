@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconFilter } from '@tabler/icons-react';
 import { LogTypeCombobox } from './LogTypeCombobox';
 import { useCallback, useEffect, useState } from 'react';
+import { LogEntry } from '../../../common/store/types/storeData.types';
 
 interface LogFiltersProps {
     onChange: (filters: LogFiltersState) => void;
@@ -11,6 +12,10 @@ interface LogFiltersProps {
 export interface LogFiltersState {
     eventType: string[];
     limit?: number;
+    /**
+     * Custom filter handler, which replaces the original simplified filtering logic.
+     */
+    customFilterHandler?: (entries: LogEntry[]) => LogEntry[];
 }
 
 export const defaultFilters: LogFiltersState = {
