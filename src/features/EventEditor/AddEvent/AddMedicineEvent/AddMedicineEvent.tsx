@@ -2,11 +2,12 @@ import { Autocomplete, Box } from '@mantine/core';
 import { useAppStore } from '../../../../common/store/store';
 import {
     EntryType,
+    LogEntry,
     MedicineDoseType,
 } from '../../../../common/store/types/storeData.types';
 import { useNavigate } from 'react-router';
 import { EventCard } from '../../common/components/EventCard/EventCard';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ResponsiveButton } from '../../../../common/design/ResponsiveButton';
 import { createNewEvent } from '../../../../common/store/store.utils';
 import { routes } from '../../../../common/routes';
@@ -21,13 +22,18 @@ import {
     medicineEventFormValidation,
 } from '../../common/formSchemas/medicineEventForm.schema';
 import { useUniqueMedicineKinds } from '../../common/utils/useUniqueMedicineKinds';
+import dayjs from 'dayjs';
 
 const eventType = EntryType.Medicine;
+const RECENT_EVENTS_DAYS_LIMIT = 3;
+const RECENT_EVENTS_COUNT_LIMIT = 3;
 
 export const AddMedicineEvent = () => {
     const addEntry = useAppStore((store) => store.api.addEntry);
     const allEntries = useAppStore((state) => state.data.logs);
     const navigate = useNavigate();
+
+    const nowStartOfDay = dayjs().startOf('day');
 
     const { knownMedicineNames, knownMedicineActiveSubstances } =
         useUniqueMedicineKinds(allEntries);
@@ -56,6 +62,39 @@ export const AddMedicineEvent = () => {
         watch,
         validateField,
     });
+
+    /**
+     * Show all events from last X days. If nothing found,
+     * try to find Y most recent events of type ever.
+     */
+    const medicineRecentEventsFilterHandler = useCallback(
+        (entries: LogEntry[]): LogEntry[] => {
+            const recentEntriesByDays = entries.filter((entry) => {
+                if (entry.entryType !== EntryType.Medicine) {
+                    return false;
+                }
+
+                const entryCreatedAt = dayjs(entry.metadata.createdAt);
+
+                const isWithinDateRange =
+                    nowStartOfDay.diff(entryCreatedAt.startOf('day'), 'day') <
+                    RECENT_EVENTS_DAYS_LIMIT + 1;
+
+                return isWithinDateRange;
+            });
+
+            if (recentEntriesByDays.length) {
+                return recentEntriesByDays;
+            }
+
+            return entries
+                .filter((entry) => {
+                    return entry.entryType === EntryType.Medicine;
+                })
+                .slice(0, RECENT_EVENTS_COUNT_LIMIT);
+        },
+        [nowStartOfDay]
+    );
 
     const handleSubmit = useMemo(() => {
         return onFormSubmit(
@@ -132,7 +171,10 @@ export const AddMedicineEvent = () => {
         <form onSubmit={handleSubmit}>
             <EventCard eventType={eventType} middle={middle} footer={actions} />
             <Box mt={64}>
-                <RecentEvents eventType={eventType} eventsLimit={5} />
+                <RecentEvents
+                    eventType={eventType}
+                    customFilterHandler={medicineRecentEventsFilterHandler}
+                />
             </Box>
         </form>
     );

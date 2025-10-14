@@ -24,6 +24,10 @@ export const LogEntries = (props: LogEntriesProps) => {
     const rawEntries = useAppStore((state) => state.data.logs);
 
     const entries = useMemo(() => {
+        if (filters.customFilterHandler) {
+            return filters.customFilterHandler(rawEntries);
+        }
+
         let newEntries = rawEntries;
 
         if (filterInProgress) {
