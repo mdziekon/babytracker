@@ -85,6 +85,12 @@ const actions = [
     },
     // Row #6
     {
+        entryType: EntryType.TemperatureMeasurement,
+    },
+    undefined,
+    undefined,
+    // Row #7
+    {
         entryType: EntryType.Other,
     },
 ] satisfies ComponentProps<typeof ActionsGridCard>['actions'];
