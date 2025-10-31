@@ -18,6 +18,10 @@ export const TemperatureInput = (props: TemperatureInputProps) => {
             rightSectionPointerEvents="none"
             placeholder="37.0"
             decimalScale={1}
+            /**
+             * TODO: These should not be hardcoded,
+             * Fahrenheit support will need other bounds
+             */
             min={25}
             max={45}
             allowNegative={false}

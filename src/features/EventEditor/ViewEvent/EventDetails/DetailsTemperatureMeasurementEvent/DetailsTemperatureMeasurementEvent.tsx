@@ -3,8 +3,10 @@ import {
     EntryType,
     LogEntry,
 } from '../../../../../common/store/types/storeData.types';
-import { IconTemperature } from '@tabler/icons-react';
-import { mapTemperatureUnitToLabel } from '../../../../../common/utils/entryMappers';
+import {
+    mapEntryTypeToIcon,
+    mapTemperatureUnitToLabel,
+} from '../../../../../common/utils/entryMappers';
 
 interface DetailsTemperatureMeasurementEventProps {
     event: LogEntry & { entryType: EntryType.TemperatureMeasurement };
@@ -16,15 +18,15 @@ export const DetailsTemperatureMeasurementEvent = (
     const { event } = props;
 
     const unitSymbol = mapTemperatureUnitToLabel(event.params.unit);
+    const IconComponent = mapEntryTypeToIcon(event.entryType);
 
     return (
         <>
             <Group>
-                <IconTemperature size={16} stroke={1.5} />
+                <IconComponent size={16} stroke={1.5} />
                 <Text>
                     Temperature:{' '}
                     <NumberFormatter
-                        thousandSeparator=" "
                         suffix={unitSymbol}
                         value={event.params.measurement}
                     />

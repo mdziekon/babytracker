@@ -3,9 +3,9 @@ import {
     EntryType,
     LogEntry,
 } from '../../../../common/store/types/storeData.types';
-import { IconTemperature } from '@tabler/icons-react';
 import { MiniDetailsEntry } from '../MiniDetailsEntry/MiniDetailsEntry';
 import {
+    mapEntryTypeToIcon,
     mapEntryTypeToName,
     mapTemperatureUnitToLabel,
 } from '../../../../common/utils/entryMappers';
@@ -20,12 +20,13 @@ export const MiniDetailsTemperatureMeasurementEvent = (
     const { event } = props;
 
     const unitSymbol = mapTemperatureUnitToLabel(event.params.unit);
+    const IconComponent = mapEntryTypeToIcon(event.entryType);
 
     return (
         <>
             <MiniDetailsEntry
                 icon={
-                    <IconTemperature
+                    <IconComponent
                         title={mapEntryTypeToName(event.entryType)}
                     />
                 }
