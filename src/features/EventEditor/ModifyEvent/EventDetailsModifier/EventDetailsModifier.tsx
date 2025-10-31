@@ -16,6 +16,7 @@ import { DetailsModifyDoctorsAppointmentEvent } from './DetailsModifyDoctorsAppo
 import { DetailsModifyOtherEvent } from './DetailsModifyOtherEvent/DetailsModifyOtherEvent';
 import { DetailsModifyMealEvent } from './DetailsModifyMealEvent/DetailsModifyMealEvent';
 import { DetailsModifySicknessEvent } from './DetailsModifySicknessEvent/DetailsModifySicknessEvent';
+import { DetailsModifyTemperatureMeasurementEvent } from './DetailsModifyTemperatureMeasurementEvent/DetailsModifyTemperatureMeasurementEvent';
 
 interface EventDetailsModifierProps {
     event: LogEntry;
@@ -73,6 +74,14 @@ export const EventDetailsModifier = (props: EventDetailsModifierProps) => {
     if (event.entryType === EntryType.WeightMeasurement) {
         details.push(
             <DetailsModifyWeightMeasurementEvent
+                event={event}
+                registerEventModifier={registerEventModifier}
+            />
+        );
+    }
+    if (event.entryType === EntryType.TemperatureMeasurement) {
+        details.push(
+            <DetailsModifyTemperatureMeasurementEvent
                 event={event}
                 registerEventModifier={registerEventModifier}
             />

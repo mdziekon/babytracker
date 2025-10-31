@@ -13,6 +13,7 @@ export enum EntryType {
     DoctorsAppointment = 'EntryType.DoctorsAppointment',
     Sickness = 'EntryType.Sickness',
     Other = 'EntryType.Other',
+    TemperatureMeasurement = 'EntryType.TemperatureMeasurement',
 }
 
 export interface EntryBreastFeedingVariant {
@@ -49,6 +50,13 @@ export interface EntryWeightMeasurementVariant {
     entryType: EntryType.WeightMeasurement;
     params: {
         weightValue: number;
+    };
+}
+export interface EntryTemperatureMeasurementVariant {
+    entryType: EntryType.TemperatureMeasurement;
+    params: {
+        measurement: number;
+        unit: TemperatureUnit;
     };
 }
 export interface EntrySleepVariant {
@@ -131,12 +139,18 @@ export enum MedicineDoseType {
     Drop = 'MedicineDoseType.Drop',
 }
 
+export enum TemperatureUnit {
+    Celsius = 'TemperatureUnit.Celsius',
+    Fahrenheit = 'TemperatureUnit.Fahrenheit',
+}
+
 export type EntryVariants =
     | EntryBreastFeedingVariant
     | EntryBottleFeedingVariant
     | EntryMilkPumpingVariant
     | EntryDiaperChangeVariant
     | EntryWeightMeasurementVariant
+    | EntryTemperatureMeasurementVariant
     | EntrySleepVariant
     | EntryBellyPositionVariant
     | EntryBathVariant

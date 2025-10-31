@@ -13,8 +13,13 @@ import {
     IconScubaDiving,
     IconStethoscope,
     IconWeight,
+    IconTemperature,
 } from '@tabler/icons-react';
-import { EntryType, MedicineDoseType } from '../store/types/storeData.types';
+import {
+    EntryType,
+    MedicineDoseType,
+    TemperatureUnit,
+} from '../store/types/storeData.types';
 
 export const mapEntryTypeToIcon = (entryType: EntryType) => {
     const mapping = {
@@ -32,6 +37,7 @@ export const mapEntryTypeToIcon = (entryType: EntryType) => {
         [EntryType.Other]: IconFileUnknown,
         [EntryType.Meal]: IconCarrot,
         [EntryType.Sickness]: IconReportMedical,
+        [EntryType.TemperatureMeasurement]: IconTemperature,
     };
 
     return mapping[entryType];
@@ -53,6 +59,7 @@ export const mapEntryTypeToName = (entryType: EntryType) => {
         [EntryType.Other]: 'Other',
         [EntryType.Meal]: 'Meal',
         [EntryType.Sickness]: 'Sickness',
+        [EntryType.TemperatureMeasurement]: 'Temperature Measurement',
     };
 
     return mapping[entryType];
@@ -74,6 +81,7 @@ export const mapEntryTypeToColor = (entryType: EntryType) => {
         [EntryType.Other]: 'gray',
         [EntryType.Meal]: 'orange',
         [EntryType.Sickness]: 'red',
+        [EntryType.TemperatureMeasurement]: 'violet',
     };
 
     return mapping[entryType];
@@ -88,4 +96,13 @@ export const mapMedicineDoseTypeToSuffix = (doseType: MedicineDoseType) => {
     };
 
     return mapping[doseType];
+};
+
+export const mapTemperatureUnitToLabel = (unit: TemperatureUnit) => {
+    const mapping = {
+        [TemperatureUnit.Celsius]: '°C',
+        [TemperatureUnit.Fahrenheit]: '°F',
+    };
+
+    return mapping[unit];
 };

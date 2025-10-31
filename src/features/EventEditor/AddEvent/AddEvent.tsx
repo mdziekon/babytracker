@@ -10,6 +10,7 @@ import { AddMedicineEvent } from './AddMedicineEvent/AddMedicineEvent';
 import { AddOtherEvent } from './AddOtherEvent/AddOtherEvent';
 import { AddWeightMeasurementEvent } from './AddWeightMeasurementEvent/AddWeightMeasurementEvent';
 import { AddSicknessEvent } from './AddSicknessEvent/AddSicknessEvent';
+import { AddTemperatureMeasurementEvent } from './AddTemperatureMeasurementEvent/AddTemperatureMeasurementEvent';
 
 interface AddEventProps {
     eventType: EntryType | 'unknown';
@@ -57,6 +58,9 @@ export const AddEvent = (props: AddEventProps) => {
     }
     if (eventType === EntryType.Sickness) {
         return <AddSicknessEvent />;
+    }
+    if (eventType === EntryType.TemperatureMeasurement) {
+        return <AddTemperatureMeasurementEvent />;
     }
 
     throw new Error(`Unknown entry type "${eventType}"`);

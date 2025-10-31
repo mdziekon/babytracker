@@ -14,6 +14,7 @@ import { MiniDetailsDoctorsAppointmentEvent } from './MiniDetailsDoctorsAppointm
 import { MiniDetailsOtherEvent } from './MiniDetailsOtherEvent/MiniDetailsOtherEvent';
 import { MiniDetailsMealEvent } from './MiniDetailsMealEvent/MiniDetailsMealEvent';
 import { MiniDetailsSicknessEvent } from './MiniDetailsSicknessEvent/MiniDetailsSicknessEvent';
+import { MiniDetailsTemperatureMeasurementEvent } from './MiniDetailsTemperatureMeasurementEvent/MiniDetailsTemperatureMeasurementEvent';
 
 interface LogEntryEventMiniDetailsProps {
     event: LogEntry;
@@ -55,6 +56,9 @@ export const LogEntryEventMiniDetails = (
     }
     if (event.entryType === EntryType.Sickness) {
         details.push(<MiniDetailsSicknessEvent event={event} />);
+    }
+    if (event.entryType === EntryType.TemperatureMeasurement) {
+        details.push(<MiniDetailsTemperatureMeasurementEvent event={event} />);
     }
 
     if ((event.metadata.notes ?? '').length > 0) {
